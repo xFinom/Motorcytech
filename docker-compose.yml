@@ -51,7 +51,7 @@ services:
       LANG: C.UTF-8
     volumes:
       - 'dbdata:/var/lib/mysql/'
-      - './docker/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf'
+      - './docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf'
     networks:
       - app-network
   npm:
