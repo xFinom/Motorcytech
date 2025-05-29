@@ -1,0 +1,81 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - WWW_USER_ID=${DOCKER_UID:-1000}
+        - WWW_GROUP_ID=${DOCKER_GID:-1000}
+    restart: unless-stopped
+    tty: true
+    depends_on:
+      - db
+      - webserver
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    working_dir: /var/www
+    volumes:
+      - './:/var/www'
+      - './docker/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini'
+      - '/home/${DOCKER_HOME_USER}/.ssh/:/home/www/.ssh/'
+      - './docker/nginx/conf.d/:/etc/nginx/conf.d/'
+    networks:
+      - app-network
+  webserver:
+    image: 'nginx:alpine3.18-slim'
+    restart: unless-stopped
+    tty: true
+    expose:
+      - "80"
+    ports:
+      - '${DOCKER_WEB_PORT:-8085}:80'
+    volumes:
+      - './:/var/www'
+      - './docker/nginx/conf.d/:/etc/nginx/conf.d/'
+      - './docker/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini'
+    networks:
+      - app-network
+      - default
+  db:
+    image: 'mariadb:10.9.4'
+    restart: unless-stopped
+    tty: true
+    ports:
+      - '${DOCKER_DB_PORT:-3311}:3306'
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+      LANG: C.UTF-8
+    volumes:
+      - 'dbdata:/var/lib/mysql/'
+      - './docker/mysql/conf.d/my.cnf:/etc/mysql/conf.d/my.cnf'
+    networks:
+      - app-network
+  npm:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    ports:
+      - '${DOCKER_NPM_PORT:-8085}:5173'
+    working_dir: /var/www
+    depends_on:
+      - app
+    volumes:
+      - './:/var/www'
+    entrypoint: ['npm', 'run', 'dev', '--host']
+    networks:
+      - app-network
+networks:
+  app-network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
