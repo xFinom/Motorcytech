@@ -64,7 +64,7 @@ services:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
     ports:
-      - '${DOCKER_NPM_PORT:-8085}:5173'
+      - '${DOCKER_NPM_PORT:-5173}:5173'
     working_dir: /var/www
     depends_on:
       - app

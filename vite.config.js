@@ -17,13 +17,14 @@ export default defineConfig({
                 },
             },
         }),
-        server: {
-            host: '0.0.0.0',
-            port: '5173',
-            open: false,
-            hmr: {
-                host: 'localhost'
-              },
-        },
     ],
+    server: {
+        host: '0.0.0.0', // útil para Docker
+        port: 5173,
+        strictPort: true,
+        cors: true,
+        hmr: {
+            host: 'localhost', // o tu IP si estás en red/Docker
+        },
+    },
 });

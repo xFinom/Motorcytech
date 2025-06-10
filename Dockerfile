@@ -13,7 +13,7 @@ RUN apt-get update && apt-get install -y libfreetype6-dev
 
 # Install dependencies
 RUN apt-get update && apt-get install -y nano
-RUN apt-get update && apt-get install -y build-essential 
+RUN apt-get update && apt-get install -y build-essential
 RUN apt-get update && apt-get install -y poppler-utils
 RUN apt-get update && apt-get install -y npm
 RUN apt-get update && apt-get install -y default-mysql-client
@@ -50,8 +50,8 @@ ARG WWW_USER_ID
 ARG WWW_GROUP_ID
 
 
-RUN groupadd -g ${WWW_GROUP_ID} www
-RUN useradd -u ${WWW_USER_ID} -ms /bin/bash -g www www
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
 
 # Copy existing application directory contents
 #COPY ./app/ /var/www
