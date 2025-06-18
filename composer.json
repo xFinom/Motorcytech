@@ -60,7 +60,7 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
-        ]
+        ],
         "test:static": "vendor/bin/phpstan analyse --memory-limit=2G --ansi",
     },
     "extra": {
