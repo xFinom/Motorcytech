@@ -62,6 +62,7 @@
             "@php artisan test"
         ],
         "test:static": "vendor/bin/phpstan analyse --memory-limit=2G --ansi",
+        "test:style": "vendor/bin/pint --test --ansi"
     },
     "extra": {
         "laravel": {
