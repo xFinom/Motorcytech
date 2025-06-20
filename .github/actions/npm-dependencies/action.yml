@@ -1,0 +1,13 @@
+name: Setup NPM Environment
+description: Install the frontend dependencies for a laravel project
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install frontend dependencies
+      run: npm ci
+      shell: bash
+
+    - name: Build assets
+      run: npm run build
+      shell: bash

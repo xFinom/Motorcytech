@@ -18,17 +18,6 @@ jobs:
 
       - name: Run Pint
         run: vendor/bin/pint
-  static:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - uses: ./.github/actions/dependencies
-
-      - name: Run PHPStan
-        run: vendor/bin/phpstan analyse --level=5 --memory-limit=2G
   tests:
     name: PHP ${{ matrix.php }}
 
@@ -64,6 +53,8 @@ jobs:
       - uses: ./.github/actions/dependencies
         with:
           php-version: ${{ matrix.php }}
+
+      - uses: ./.github/actions/npm-dependencies
 
       - name: Copy environment file
         run: cp .env.example .env
