@@ -41,7 +41,7 @@ jobs:
 
     env:
       DB_CONNECTION: mysql
-      DB_HOST: mysql
+      DB_HOST: 127.0.0.1
       DB_DATABASE: testing
       DB_USERNAME: root
       DB_PASSWORD: password
@@ -78,5 +78,5 @@ jobs:
 
       - name: Execute tests
         env:
-          DB_PORT: 3306
+          DB_PORT: ${{ job.services.mysql.ports['3306'] }}
         run: vendor/bin/pest --compact
