@@ -1,8 +1,8 @@
 <script setup lang="ts">
+import { Head } from '@inertiajs/vue3'
 
-import HeroSection from "@/Pages/Landing/Partials/HeroSection.vue";
-import Navbar from "@/Pages/Landing/Partials/Navbar.vue";
-import {Head} from "@inertiajs/vue3";
+import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
+import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 </script>
 
 <template>
