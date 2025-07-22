@@ -3,7 +3,7 @@ import { useDark, useToggle } from '@vueuse/core'
 
 import { onMounted, onUnmounted, ref } from 'vue'
 
-import { Button } from '@/components/ui/button/index'
+import { Button } from '@/Components/ui/button/index'
 
 import { Icon } from '@iconify/vue'
 
