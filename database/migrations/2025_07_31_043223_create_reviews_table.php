@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\ReviewStatus;
 
 return new class extends Migration
 {
@@ -14,6 +15,10 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->integer('client_id');
+            $table->longText('comment');
+            $table->integer('rating');
+            $table->string('status')->default(ReviewStatus::Pendiente->value);
         });
     }
 

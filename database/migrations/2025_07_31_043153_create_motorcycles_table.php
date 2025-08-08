@@ -14,6 +14,12 @@ return new class extends Migration
         Schema::create('motorcycles', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('placa');
+            $table->string('serial_num');
+            $table->string('motor_num');
+            $table->integer('brand_id');
+            $table->integer('type_id');
+            $table->integer('id_cliente');
         });
     }
 

@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\ServiceOrderStatus;
+
 
 return new class extends Migration
 {
@@ -13,7 +15,12 @@ return new class extends Migration
     {
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->timestamps('entry_date');
+            $table->timestamps('delivery_date');
+            $table->integer('motorcycle_id');
+            $table->string('status')->default(ServiceOrderStatus::Ingresado->value);
+            $table->integer('client_id');
+            $table->longText('note');
         });
     }
 

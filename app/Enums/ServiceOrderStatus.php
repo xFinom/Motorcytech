@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Enums;
+
 enum ServiceOrderStatus: string
 {
     case Ingresado = 'Ingresado';

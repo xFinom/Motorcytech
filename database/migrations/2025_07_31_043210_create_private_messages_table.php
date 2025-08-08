@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('private_messages', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('message');
+            $table->integer('user_id');
+            $table->integer('service_order_id');
         });
     }
 

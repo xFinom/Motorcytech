@@ -9,4 +9,9 @@ class PrivateMessages extends Model
 {
     /** @use HasFactory<\Database\Factories\PrivateMessagesFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'message',
+    ];
+
 }

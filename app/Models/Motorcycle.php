@@ -9,4 +9,10 @@ class Motorcycle extends Model
 {
     /** @use HasFactory<\Database\Factories\MotorcycleFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'placa',
+        'serial_num',
+        'motor_num',
+    ];
 }

@@ -9,4 +9,9 @@ class MotorcycleType extends Model
 {
     /** @use HasFactory<\Database\Factories\MotorcycleTypeFactory> */
     use HasFactory;
+
+    protected $fillable = [
+        'type_name',
+        'model',
+    ];
 }

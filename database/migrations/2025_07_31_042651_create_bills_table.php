@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\PaymentStatus;
+
 
 return new class extends Migration
 {
@@ -14,6 +16,10 @@ return new class extends Migration
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->longText('description');
+            $table->integer('price');
+            $table->string('status')->default(PaymentStatus::Pendiente->value);
+
         });
     }
 
