@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\UserRole;
 
 return new class extends Migration
 {
@@ -19,6 +20,10 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->string('rfc');
+            $table->string('role_id')->default(UserRole::Cliente->value);
+            $table->string('address');
+            $table->integer('phone');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
