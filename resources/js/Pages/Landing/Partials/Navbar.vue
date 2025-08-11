@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { useDark, useToggle } from '@vueuse/core'
-
 import { onMounted, onUnmounted, ref } from 'vue'
-
-import { Button } from '@/Components/ui/button/index'
 
 import { Icon } from '@iconify/vue'
 
+import { Button } from '@/Components/ui/button/index'
+import { isDark, toggleDarkMode } from '@/lib/darkMode'
+
 const isScrolled = ref(false)
-
-const isDark = useDark({ selector: 'html' })
-const toggleDark = useToggle(isDark)
-
-function toggleDarkMode() {
-    toggleDark()
-}
 
 const menu = ['Inicio', 'Servicios', 'Seguimiento', 'Contacto']
 
@@ -35,7 +27,7 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="hidden w-full items-center justify-between overflow-hidden bg-[#fb5607] px-4 py-2 text-sm text-white transition-all duration-300 ease-in-out  md:flex"
+        class="hidden w-full items-center justify-between overflow-hidden bg-[#fb5607] px-4 py-2 text-sm text-white transition-all duration-300 ease-in-out md:flex"
         :class="[isScrolled ? 'pointer-events-none opacity-0' : 'opacity-100']"
         :style="{ height: isScrolled ? '0px' : `${TOP_BAR_HEIGHT}px` }"
     >
@@ -76,7 +68,7 @@ onUnmounted(() => {
     <header
         :class="[
             'sticky left-0 top-0 z-50 w-full transition-all duration-300',
-            isScrolled ? 'bg-[#061222] dark:bg-[#fb5607] shadow-sm' : 'bg-[#061222]',
+            isScrolled ? 'bg-[#061222] shadow-sm dark:bg-[#fb5607]' : 'bg-[#061222]',
         ]"
     >
         <nav class="container mx-auto flex items-center px-4 py-4">
@@ -88,19 +80,21 @@ onUnmounted(() => {
                     <Icon
                         icon="mdi:tools"
                         class="text-3xl"
-                        :class="isScrolled ? 'text-[#fb5607] dark:text-[#061222]' : 'text-[#fb5607]'"
+                        :class="
+                            isScrolled ? 'text-[#fb5607] dark:text-[#061222]' : 'text-[#fb5607]'
+                        "
                     />
                 </transition>
                 <div class="text-2xl font-black uppercase tracking-wide">
                     <transition name="slide-left" appear>
-                        <span>
-                            Motorcy
-                        </span>
+                        <span> Motorcy </span>
                     </transition>
                     <transition name="slide-left" appear>
                         <span
                             class="font-semibold"
-                            :class="isScrolled ? 'text-[#fb5607] dark:text-[#061222]' : 'text-[#fb5607]'"
+                            :class="
+                                isScrolled ? 'text-[#fb5607] dark:text-[#061222]' : 'text-[#fb5607]'
+                            "
                         >
                             tech
                         </span>
@@ -108,14 +102,15 @@ onUnmounted(() => {
                 </div>
             </div>
 
-
             <ul class="hidden flex-grow justify-center space-x-6 md:flex">
                 <li v-for="item in menu" :key="item">
                     <a
                         href="#"
                         :class="[
-                            'transition-colors duration-300 text-lg hover:underline hover:decoration-[3px] hover:underline-offset-[10px]',
-                            isScrolled ? 'text-[#fefcf9] hover:decoration-[#fb5607] dark:hover:text-[#061222] dark:hover:decoration-[#061222]' : 'text-white hover:decoration-[#fb5607]',
+                            'text-lg transition-colors duration-300 hover:underline hover:decoration-[3px] hover:underline-offset-[10px]',
+                            isScrolled
+                                ? 'text-[#fefcf9] hover:decoration-[#fb5607] dark:hover:text-[#061222] dark:hover:decoration-[#061222]'
+                                : 'text-white hover:decoration-[#fb5607]',
                         ]"
                     >
                         {{ item }}
@@ -127,7 +122,7 @@ onUnmounted(() => {
                 class="ml-auto hidden rounded-md px-4 py-2 font-semibold transition duration-300 md:block"
                 :class="
                     isScrolled
-                        ? 'border border-[#fb5607] dark:border-white text-white hover:bg-[#fb5607]'
+                        ? 'border border-[#fb5607] text-white hover:bg-[#fb5607] dark:border-white'
                         : 'border border-[#fb5607] text-white hover:bg-[#fb5607] hover:text-[#fefcf9]'
                 "
             >

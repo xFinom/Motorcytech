@@ -1,0 +1,55 @@
+<script setup lang="ts">
+import { Icon } from '@iconify/vue'
+
+import MenuSection from '@/Components/Dashboard/MenuSection.vue'
+import NavUser from '@/Components/Dashboard/NavUser.vue'
+import {
+    Sidebar,
+    SidebarContent,
+    SidebarFooter,
+    SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+    SidebarProps,
+} from '@/Components/ui/sidebar'
+import { employeeMenu, financeMenu, salesMenu, serviceOrderMenu } from '@/constants/sidebarMenus'
+
+const props = withDefaults(defineProps<SidebarProps>(), {
+    variant: 'inset',
+})
+
+const servideOrderMenuItems = serviceOrderMenu
+const financeMenuItems = financeMenu
+const salesMenuItems = salesMenu
+const employeeMenuItems = employeeMenu
+</script>
+
+<template>
+    <Sidebar v-bind="props">
+        <SidebarHeader>
+            <SidebarMenu>
+                <SidebarMenuItem>
+                    <SidebarMenuButton size="lg" as-child>
+                        <div class="flex items-center justify-center">
+                            <Icon icon="mdi:tools" class="text-2xl text-[#fb5607]" />
+                            <div class="text-xl font-black uppercase tracking-wide">
+                                <span> Motorcy</span>
+                                <span class="font-semibold text-[#fb5607]">tech </span>
+                            </div>
+                        </div>
+                    </SidebarMenuButton>
+                </SidebarMenuItem>
+            </SidebarMenu>
+        </SidebarHeader>
+        <SidebarContent>
+            <MenuSection label="Servicios" :items="servideOrderMenuItems" />
+            <MenuSection label="Finanzas" :items="financeMenuItems" />
+            <MenuSection label="Tienda" :items="salesMenuItems" />
+            <MenuSection label="Agenda" :items="employeeMenuItems" />
+        </SidebarContent>
+        <SidebarFooter>
+            <NavUser />
+        </SidebarFooter>
+    </Sidebar>
+</template>
