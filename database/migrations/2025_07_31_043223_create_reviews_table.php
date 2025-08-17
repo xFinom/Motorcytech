@@ -15,7 +15,8 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->integer('client_id');
+            $table->unsignedBigInteger('client_id');
+            $table->foreign('client_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('comment');
             $table->integer('rating');
             $table->string('status')->default(ReviewStatus::Pendiente->value);
