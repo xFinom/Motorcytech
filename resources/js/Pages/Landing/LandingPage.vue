@@ -4,7 +4,7 @@ import { Head } from '@inertiajs/vue3'
 import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
-
+import BrandSlider from '@/Pages/Landing/Partials/BrandSlider.vue'
 </script>
 
 <style>
@@ -52,6 +52,7 @@ import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
     <div class="min-h-screen font-sans antialiased">
         <Navbar />
         <HeroSection />
+        <BrandSlider />
         <BulletPoints />
     </div>
 </template>
