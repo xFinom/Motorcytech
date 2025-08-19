@@ -118,7 +118,8 @@ onUnmounted(() => {
                 </li>
             </ul>
 
-            <button
+            <a 
+                 href="https://motorcytech.test/login"
                 class="ml-auto hidden rounded-md px-4 py-2 font-semibold transition duration-300 md:block"
                 :class="
                     isScrolled
@@ -127,8 +128,8 @@ onUnmounted(() => {
                 "
             >
                 Iniciar Sesión
-            </button>
-
+            </a>
+            
             <Button
                 variant="ghost"
                 class="ml-4 rounded-md p-2 transition-colors duration-300 focus:outline-none focus:ring-2"

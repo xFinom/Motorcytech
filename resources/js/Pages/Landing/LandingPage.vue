@@ -5,6 +5,7 @@ import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
 import BrandSlider from '@/Pages/Landing/Partials/BrandSlider.vue'
+import Services from '@/Pages/Landing/Partials/Services.vue'
 </script>
 
 <style>
@@ -54,5 +55,6 @@ import BrandSlider from '@/Pages/Landing/Partials/BrandSlider.vue'
         <HeroSection />
         <BrandSlider />
         <BulletPoints />
+        <Services />
     </div>
 </template>
