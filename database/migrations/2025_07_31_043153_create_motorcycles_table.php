@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('placa');
             $table->string('serial_num');
             $table->string('motor_num');
-            $table->integer('brand_id');
-            $table->integer('type_id');
-            $table->integer('id_cliente');
+            $table->foreignId('brand_id')->constrained('brands')->onDelete('cascade');
+            $table->foreignId('type_id')->constrained('motorcycle_types')->onDelete('cascade');
+            $table->foreignId('id_cliente')->constrained('users')->onDelete('cascade');
         });
     }
 

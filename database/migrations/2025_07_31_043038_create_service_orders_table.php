@@ -5,7 +5,6 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use App\Enums\ServiceOrderStatus;
 
-
 return new class extends Migration
 {
     /**
@@ -17,9 +16,9 @@ return new class extends Migration
             $table->id();
             $table->timestamps('entry_date');
             $table->timestamps('delivery_date');
-            $table->integer('motorcycle_id');
+            $table->foreignId('motorcycle_id')->constrained('motorcycles')->onDelete('cascade');
             $table->string('status')->default(ServiceOrderStatus::Ingresado->value);
-            $table->integer('client_id');
+            $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
             $table->longText('note');
         });
     }
@@ -32,3 +31,5 @@ return new class extends Migration
         Schema::dropIfExists('service_orders');
     }
 };
+
+ 

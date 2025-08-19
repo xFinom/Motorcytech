@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('private_messages', function (Blueprint $table) {
+        Schema::create('purchase_orders_items', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->string('message');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('service_order_id')->constrained('service_orders')->onDelete('cascade');
+            $table->foreignId('purchase_order-id')->constrained('purchase_orders')->onDelete('cascade');
+            $table->foreignId('item_id')->constrained('store_items')->onDelete('cascade');
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('private_messages');
+        Schema::dropIfExists('purchase_orders_items');
     }
 };
