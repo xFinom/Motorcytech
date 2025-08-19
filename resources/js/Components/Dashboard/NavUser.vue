@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { BadgeCheck, Bell, ChevronsUpDown, CreditCard, LogOut, Sparkles } from 'lucide-vue-next'
+import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from 'lucide-vue-next'
+
+import { usePage } from '@inertiajs/vue3'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar'
 import {
@@ -18,11 +20,7 @@ import {
     useSidebar,
 } from '@/Components/ui/sidebar'
 
-const user = {
-    name: 'Motoryctech',
-    email: 'm@example.com',
-    avatar: '/avatars/shadcn.jpg',
-}
+const user = usePage().props.auth.user
 
 const { isMobile } = useSidebar()
 </script>
@@ -37,14 +35,14 @@ const { isMobile } = useSidebar()
                         class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                     >
                         <Avatar class="h-8 w-8 rounded-lg">
-                            <AvatarImage :src="user.avatar" :alt="user.name" />
-                            <AvatarFallback class="rounded-lg text-[#fb5607]"> CN </AvatarFallback>
+                            <!--                            <AvatarImage :src="user.avatar" :alt="user.name" />-->
+                            <AvatarFallback class="rounded-lg text-primary"> MT </AvatarFallback>
                         </Avatar>
                         <div class="grid flex-1 text-left text-sm leading-tight">
                             <span class="truncate font-semibold">{{ user.name }}</span>
                             <span class="truncate text-xs">{{ user.email }}</span>
                         </div>
-                        <ChevronsUpDown class="ml-auto size-4 text-[#fb5607]" />
+                        <ChevronsUpDown class="ml-auto size-4 text-primary" />
                     </SidebarMenuButton>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent
@@ -56,8 +54,10 @@ const { isMobile } = useSidebar()
                     <DropdownMenuLabel class="p-0 font-normal">
                         <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                             <Avatar class="h-8 w-8 rounded-lg">
-                                <AvatarImage :src="user.avatar" :alt="user.name" />
-                                <AvatarFallback class="rounded-lg"> CN </AvatarFallback>
+                                <!--                                <AvatarImage :src="user.avatar" :alt="user.name" />-->
+                                <AvatarFallback class="rounded-lg text-primary">
+                                    MT
+                                </AvatarFallback>
                             </Avatar>
                             <div class="grid flex-1 text-left text-sm leading-tight">
                                 <span class="truncate font-semibold">{{ user.name }}</span>
@@ -68,29 +68,18 @@ const { isMobile } = useSidebar()
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup>
                         <DropdownMenuItem>
-                            <Sparkles />
-                            Upgrade to Pro
-                        </DropdownMenuItem>
-                    </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuGroup>
-                        <DropdownMenuItem>
-                            <BadgeCheck />
-                            Account
+                            <BadgeCheck class="text-primary" />
+                            Cuenta
                         </DropdownMenuItem>
                         <DropdownMenuItem>
-                            <CreditCard />
-                            Billing
-                        </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Bell />
-                            Notifications
+                            <Bell class="text-primary" />
+                            Notificaciones
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
-                        <LogOut />
-                        Log out
+                        <LogOut class="text-primary" />
+                        Cerrar Sesión
                     </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenu>

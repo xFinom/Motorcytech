@@ -32,10 +32,10 @@ const employeeMenuItems = employeeMenu
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
                         <div class="flex items-center justify-center">
-                            <Icon icon="mdi:tools" class="text-2xl text-[#fb5607]" />
+                            <Icon icon="mdi:tools" class="text-2xl text-primary" />
                             <div class="text-xl font-black uppercase tracking-wide">
                                 <span> Motorcy</span>
-                                <span class="font-semibold text-[#fb5607]">tech </span>
+                                <span class="font-semibold text-primary">tech </span>
                             </div>
                         </div>
                     </SidebarMenuButton>

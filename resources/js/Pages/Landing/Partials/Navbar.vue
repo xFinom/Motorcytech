@@ -27,7 +27,7 @@ onUnmounted(() => {
 
 <template>
     <div
-        class="hidden w-full items-center justify-between overflow-hidden bg-[#fb5607] px-4 py-2 text-sm text-white transition-all duration-300 ease-in-out md:flex"
+        class="hidden w-full items-center justify-between overflow-hidden bg-primary px-4 py-2 text-sm text-white transition-all duration-300 ease-in-out md:flex"
         :class="[isScrolled ? 'pointer-events-none opacity-0' : 'opacity-100']"
         :style="{ height: isScrolled ? '0px' : `${TOP_BAR_HEIGHT}px` }"
     >
@@ -68,7 +68,7 @@ onUnmounted(() => {
     <header
         :class="[
             'sticky left-0 top-0 z-50 w-full transition-all duration-300',
-            isScrolled ? 'bg-[#061222] shadow-sm dark:bg-[#fb5607]' : 'bg-[#061222]',
+            isScrolled ? 'bg-[#061222] shadow-sm dark:bg-primary' : 'bg-[#061222]',
         ]"
     >
         <nav class="container mx-auto flex items-center px-4 py-4">
@@ -81,7 +81,7 @@ onUnmounted(() => {
                         icon="mdi:tools"
                         class="text-3xl"
                         :class="
-                            isScrolled ? 'text-[#fb5607] dark:text-[#061222]' : 'text-[#fb5607]'
+                            isScrolled ? 'text-primary dark:text-[#061222]' : 'text-primary'
                         "
                     />
                 </transition>
@@ -93,7 +93,7 @@ onUnmounted(() => {
                         <span
                             class="font-semibold"
                             :class="
-                                isScrolled ? 'text-[#fb5607] dark:text-[#061222]' : 'text-[#fb5607]'
+                                isScrolled ? 'text-primary dark:text-[#061222]' : 'text-primary'
                             "
                         >
                             tech
@@ -109,8 +109,8 @@ onUnmounted(() => {
                         :class="[
                             'text-lg transition-colors duration-300 hover:underline hover:decoration-[3px] hover:underline-offset-[10px]',
                             isScrolled
-                                ? 'text-[#fefcf9] hover:decoration-[#fb5607] dark:hover:text-[#061222] dark:hover:decoration-[#061222]'
-                                : 'text-white hover:decoration-[#fb5607]',
+                                ? 'text-[#fefcf9] hover:decoration-primary dark:hover:text-[#061222] dark:hover:decoration-[#061222]'
+                                : 'text-white hover:decoration-primary',
                         ]"
                     >
                         {{ item }}
@@ -118,18 +118,19 @@ onUnmounted(() => {
                 </li>
             </ul>
 
-            <a 
-                 href="https://motorcytech.test/login"
-                class="ml-auto hidden rounded-md px-4 py-2 font-semibold transition duration-300 md:block"
-                :class="
-                    isScrolled
-                        ? 'border border-[#fb5607] text-white hover:bg-[#fb5607] dark:border-white'
-                        : 'border border-[#fb5607] text-white hover:bg-[#fb5607] hover:text-[#fefcf9]'
-                "
-            >
-                Iniciar Sesión
+            <a :href="route('login')">
+                <button
+                    class="ml-auto hidden rounded-md px-4 py-2 font-semibold transition duration-300 md:block"
+                    :class="
+                        isScrolled
+                            ? 'border border-primary text-white hover:bg-primary dark:border-white'
+                            : 'border border-primary text-white hover:bg-primary hover:text-[#fefcf9]'
+                    "
+                >
+                    Iniciar Sesión
+                </button>
             </a>
-            
+
             <Button
                 variant="ghost"
                 class="ml-4 rounded-md p-2 transition-colors duration-300 focus:outline-none focus:ring-2"
