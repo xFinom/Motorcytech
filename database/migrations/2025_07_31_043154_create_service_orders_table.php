@@ -14,8 +14,9 @@ return new class extends Migration
     {
         Schema::create('service_orders', function (Blueprint $table) {
             $table->id();
-            $table->timestamps('entry_date');
-            $table->timestamps('delivery_date');
+            $table->timestamps();
+            $table->timestamp('entry_date');
+            $table->timestamp('delivery_date');
             $table->foreignId('motorcycle_id')->constrained('motorcycles')->onDelete('cascade');
             $table->string('status')->default(ServiceOrderStatus::Ingresado->value);
             $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
