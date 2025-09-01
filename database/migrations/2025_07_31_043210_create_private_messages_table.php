@@ -16,7 +16,7 @@ return new class extends Migration
             $table->timestamps();
             $table->string('message');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->foreignId('service_order_id')->constrained('service_orders')->onDelete('cascade');
+            $table->foreignUlid('service_order_id')->constrained('service_orders')->onDelete('cascade');
         });
     }
 

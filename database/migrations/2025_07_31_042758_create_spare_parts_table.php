@@ -16,8 +16,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('name_sparepart');
-            $table->integer('price');
-            $table->string('status')->default(PaymentStatus::Pendiente->value);
+            $table->double('price');
+            $table->enum('status', PaymentStatus::values())->default(PaymentStatus::Pendiente->value);
         });
     }
 

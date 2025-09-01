@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->longText('description');
-            $table->integer('price');
-            $table->string('status')->default(PaymentStatus::Pendiente->value);
+            $table->double('price');
+            $table->enum('status', PaymentStatus::values())->default(PaymentStatus::Pendiente->value);
 
         });
     }
