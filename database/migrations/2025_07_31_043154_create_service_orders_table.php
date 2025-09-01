@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('service_orders', function (Blueprint $table) {
-            $table->id();
+            $table->ulid('id')->primary();
             $table->timestamps();
             $table->timestamp('entry_date')->nullable();
             $table->timestamp('delivery_date')->nullable();

@@ -20,10 +20,10 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-            $table->string('rfc');
-            $table->string('role_id')->default(UserRole::Cliente->value);
-            $table->string('address');
-            $table->integer('phone');
+            $table->string('rfc')->nullable();
+            $table->string('role')->default(UserRole::Cliente->value);
+            $table->string('address')->nullable();
+            $table->string('phone')->nullable();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
