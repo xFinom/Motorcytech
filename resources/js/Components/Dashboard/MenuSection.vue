@@ -34,14 +34,14 @@ defineProps<{
                 <SidebarMenuItem>
                     <SidebarMenuButton as-child :tooltip="item.title">
                         <a :href="item.url">
-                            <component class="text-[#fb5607]" :is="item.icon" />
+                            <component class="text-primary" :is="item.icon" />
                             <span class="font-semibold">{{ item.title }}</span>
                         </a>
                     </SidebarMenuButton>
                     <template v-if="item.items?.length">
                         <CollapsibleTrigger as-child>
                             <SidebarMenuAction class="data-[state=open]:rotate-90">
-                                <ChevronRight class="text-[#fb5607]" />
+                                <ChevronRight class="text-primary" />
                                 <span class="sr-only">Toggle</span>
                             </SidebarMenuAction>
                         </CollapsibleTrigger>

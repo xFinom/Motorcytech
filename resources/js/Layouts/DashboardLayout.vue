@@ -31,7 +31,7 @@ import { isDark, toggleDarkMode } from '@/lib/darkMode'
                         <BreadcrumbItem class="hidden md:block">
                             <BreadcrumbLink href="#"> Ordenes de Servicio </BreadcrumbLink>
                         </BreadcrumbItem>
-                        <BreadcrumbSeparator class="hidden text-[#fb5607] md:block" />
+                        <BreadcrumbSeparator class="hidden text-primary md:block" />
                         <BreadcrumbItem>
                             <BreadcrumbPage>Registro</BreadcrumbPage>
                         </BreadcrumbItem>
