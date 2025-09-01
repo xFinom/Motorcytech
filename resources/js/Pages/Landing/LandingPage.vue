@@ -3,6 +3,8 @@ import { Head } from '@inertiajs/vue3'
 
 import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
+import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
+
 </script>
 
 <style>
@@ -50,5 +52,6 @@ import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
     <div class="min-h-screen font-sans antialiased">
         <Navbar />
         <HeroSection />
+        <BulletPoints />
     </div>
 </template>
