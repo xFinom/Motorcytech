@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('client_id')->references('id')->on('users')->onDelete('cascade');
             $table->longText('comment');
             $table->double('rating');
-            $table->string('status')->default(ReviewStatus::Pendiente->value);
+            $table->enum('status', ReviewStatus::values())->default(ReviewStatus::Pendiente->value);
         });
     }
 

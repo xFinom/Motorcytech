@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamp('entry_date')->nullable();
             $table->timestamp('delivery_date')->nullable();
             $table->foreignId('motorcycle_id')->constrained('motorcycles')->onDelete('cascade');
-            $table->string('status')->default(ServiceOrderStatus::Ingresado->value);
+            $table->enum('status', ServiceOrderStatus::values())->default(ServiceOrderStatus::Ingresado->value);
             $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
             $table->longText('note');
         });
