@@ -5,12 +5,16 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Enums\UserRole;
+use App\Models\User;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
  */
 class UserFactory extends Factory
 {
+    protected $model = User::class;
+
     /**
      * The current password being used by the factory.
      */
@@ -23,12 +27,19 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // obtenemos todos los valores del enum (Admin, Trabajador, Cliente)
+        $roles = array_column(UserRole::cases(), 'value');
+
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'rfc' => strtoupper($this->faker->bothify('????######??')), // Ejemplo RFC ficticio
+            'role' => fake()->randomElement($roles), // rol aleatorio
+            'address' => $this->faker->address(),
+            'phone' => $this->faker->phoneNumber(),
         ];
     }
 
@@ -42,3 +53,4 @@ class UserFactory extends Factory
         ]);
     }
 }
+
