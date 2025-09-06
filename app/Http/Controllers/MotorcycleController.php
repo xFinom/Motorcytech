@@ -13,7 +13,13 @@ class MotorcycleController extends Controller
      */
     public function index()
     {
-        //
+          // Cargar motos con sus relaciones
+        $motorcycles = Motorcycle::with(['brand', 'type', 'cliente'])
+            ->paginate(10);
+    
+        return Inertia::render('Dashboard/Motorcycles/MotorcyclesList', [
+            'motorcycles' => $motorcycles,
+        ]);
     }
 
     /**
