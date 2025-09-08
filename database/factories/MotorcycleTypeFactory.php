@@ -17,7 +17,8 @@ class MotorcycleTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'type_name' => $this->faker->randomElement(['Deportiva','Enduro', 'Naked', 'Scooter']),
+            'model' => $this->faker->year(),
         ];
     }
 }

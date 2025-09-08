@@ -48,7 +48,7 @@ export const serviceOrderMenu = [
     },
     {
         title: 'Motocicletas',
-        url: '#',
+        url: 'https://motorcytech.test/dashboard/motorcycleslist',
         icon: Bike,
     },
     {

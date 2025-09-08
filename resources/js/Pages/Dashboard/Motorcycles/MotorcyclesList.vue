@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import { ArrowUpDown, ChevronDown, MoreVertical } from 'lucide-vue-next'
 import { defineProps } from 'vue'
-
+import {ref, computed } from 'vue'
+const filterText = ref ('')
+const filteredMotorcycles = computed(() =>
+  props.motorcycles.data.filter((moto) =>
+    moto.brand.name.toLowerCase().includes(filterText.value.toLowerCase())
+  )
+)
 import { Button } from '@/Components/ui/button'
 import {
   DropdownMenu,
@@ -24,14 +30,14 @@ import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 const props = defineProps<{
   motorcycles: {
     data: Array<{
-      placa: string
-      serial_num: string
-      motor_num: string
-      brand: { name: string }
-      type: { type_name: string }
-      cliente: { name: string }
-    }>
-    current_page: number
+      placa: string,
+      serial_num: string,
+      motor_num: string,
+      brand: { name: string },
+      type: { type_name: string },
+      cliente: { name: string },
+    }>,
+    current_page: number,
     last_page: number
   }
 }>()
@@ -53,7 +59,7 @@ const columns = [
     <div class="w-full">
       <!-- Barra de filtrado -->
       <div class="flex items-center py-4">
-        <Input class="max-w-sm" placeholder="Filtrar por placa..." readonly />
+        <Input class="max-w-sm" placeholder="Filtrar por marca..." v-model="filterText" />
         <Button variant="outline" class="ml-auto">
           Columns <ChevronDown class="ml-2 h-4 w-4" />
         </Button>
@@ -80,7 +86,7 @@ const columns = [
           <TableBody>
             <!-- Mostrar motocicletas -->
             <TableRow
-              v-for="moto in props.motorcycles.data"
+              v-for="moto in filteredMotorcycles"
               :key="moto.serial_num"
             >
               <TableCell>{{ moto.placa }}</TableCell>
@@ -92,20 +98,14 @@ const columns = [
               <TableCell>
                 <DropdownMenu>
                   <DropdownMenuTrigger as-child>
-                    <Button variant="ghost" size="sm" class="h-8 w-8 p-0">
-                      <MoreVertical class="h-4 w-4" />
-                    </Button>
+                  
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem>Editar</DropdownMenuItem>
-                    <DropdownMenuItem>Eliminar</DropdownMenuItem>
-                  </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
             </TableRow>
 
             <!-- Fila vacía si no hay motos -->
-            <TableRow v-if="props.motorcycles.data.length === 0">
+            <TableRow v-if="filteredMotorcycles.length === 0">
               <TableCell
                 :colspan="columns.length"
                 class="h-24 text-center text-muted-foreground"

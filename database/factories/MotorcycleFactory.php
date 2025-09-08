@@ -3,10 +3,10 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Brand;
+use App\Models\MotorcycleType;
+use App\Models\User;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Motorcycle>
- */
 class MotorcycleFactory extends Factory
 {
     /**
@@ -17,7 +17,12 @@ class MotorcycleFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'placa' => strtoupper($this->faker->bothify('??-###')),
+            'serial_num' => strtoupper($this->faker->bothify('SN-#####')),
+            'motor_num' => strtoupper($this->faker->bothify('MN-#####')),
+            'brand_id' => Brand::factory(),
+            'type_id' => MotorcycleType::factory(),
+            'id_cliente' => User::factory(),
         ];
     }
 }
