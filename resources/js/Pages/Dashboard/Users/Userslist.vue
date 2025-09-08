@@ -51,7 +51,8 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="w-full">
+        <div class="pl-20 pr-20 pt-2">
+        <div class="pl-20 pr-20">
             <!-- Barra visual de filtrado y selector de columnas -->
             <div class="flex items-center py-4">
                 <Input class="max-w-sm" placeholder="Filter emails..." readonly />
@@ -141,6 +142,7 @@ const columns = [
                     Siguiente
                 </Button>
             </div>
+        </div>
         </div>
     </DashboardLayout>
 </template>
