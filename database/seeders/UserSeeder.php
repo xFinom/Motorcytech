@@ -24,6 +24,10 @@ class UserSeeder extends Seeder
             'role' => UserRole::Cliente->value,
         ]);
 
+        User::factory(15)->create([
+            'role' => UserRole::Trabajador->value,
+        ]);
+
         // Crear algunos usuarios aleatorios (opcional)
         User::factory(10)->create();
     }

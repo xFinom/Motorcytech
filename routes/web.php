@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use Inertia\Inertia;
 use App\Http\Controllers\UserListController;
+use App\Http\Controllers\WorkerlistController;
 
 Route::get('/', function () {
     return Inertia::render('Landing/LandingPage', [
@@ -24,6 +25,10 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/userslist', [UserListController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('userslist');
+
+Route::get('/dashboard/workerslist', [WorkerlistController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('workerslist');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

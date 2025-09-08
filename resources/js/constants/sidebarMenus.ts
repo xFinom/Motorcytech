@@ -22,7 +22,7 @@ export const serviceOrderMenu = [
         items: [
             {
                 title: 'Registro',
-                url: '#',
+                url: route('dashboard'),
             },
             {
                 title: 'Histórico',
@@ -38,7 +38,7 @@ export const serviceOrderMenu = [
         items: [
             {
                 title: 'Listado',
-                url: '#',
+                url: route('userslist'),
             },
             {
                 title: 'Mensajes',
@@ -79,7 +79,7 @@ export const financeMenu = [
 export const employeeMenu = [
     {
         title: 'Personal',
-        url: '#',
+        url: route('workerslist'),
         icon: UserCog,
     },
     {
