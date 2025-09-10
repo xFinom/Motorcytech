@@ -5,15 +5,15 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Proveedor;
+use App\Models\Supplier;
 
-class ProveedorSeeder extends Seeder
+class SupplierSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        Proveedor::factory()->count(15)->create();
+        Supplier::factory()->count(15)->create();
     }
 }

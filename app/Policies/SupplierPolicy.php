@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Proveedor;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class ProveedorPolicy
+class SupplierPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class ProveedorPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Proveedor $proveedor): bool
+    public function view(User $user, Supplier $supplier): bool
     {
         return false;
     }
@@ -35,7 +35,7 @@ class ProveedorPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Proveedor $proveedor): bool
+    public function update(User $user, Supplier $supplier): bool
     {
         return false;
     }
@@ -43,7 +43,7 @@ class ProveedorPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Proveedor $proveedor): bool
+    public function delete(User $user, Supplier $supplier): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class ProveedorPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Proveedor $proveedor): bool
+    public function restore(User $user, Supplier $supplier): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class ProveedorPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Proveedor $proveedor): bool
+    public function forceDelete(User $user, Supplier $supplier): bool
     {
         return false;
     }

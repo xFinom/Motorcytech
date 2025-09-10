@@ -2,12 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Proveedor>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Supplier>
  */
-class ProveedorFactory extends Factory
+class SupplierFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,14 +18,14 @@ class ProveedorFactory extends Factory
      */
      public function definition(): array
     {
-        $empresas = [
+        $companies = [
             'Honda S.A de C.V', 'Suzuki S.A de C.V',
             'Refaccionaria MotoPlus', 'Refaccionaria Moto Race',
             'Refacciones MX', 'MotoRefacciones Express',
             'MotoRefa GDL'
         ];
 
-        $productos = [
+        $products = [
             'Refacciones varias',
             'Aceite',
             'Limpiadores',
@@ -34,12 +36,12 @@ class ProveedorFactory extends Factory
         ];
 
         return [
-            'empresa' => $this->faker->randomElement($empresas),
-            'representante' => $this->faker->name(),
-            'direccion' => $this->faker->address(),
-            'correo' => $this->faker->unique()->safeEmail(),
-            'telefono' => $this->faker->phoneNumber(),
-            'producto' => $this->faker->randomElement($productos),
+            'company' => $this->faker->randomElement($companies),
+            'representative' => $this->faker->name(),
+            'address' => $this->faker->address(),
+            'email' => $this->faker->unique()->safeEmail(),
+            'phone' => $this->faker->phoneNumber(),
+            'product' => $this->faker->randomElement($products),
         ];
     }
 }
