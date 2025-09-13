@@ -21,14 +21,21 @@ Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-
+// Usuarios
 Route::get('/dashboard/userslist', [UserListController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('userslist');
 
+Route::put('/users/{user}', [UserListController::class, 'update'])->name('users.update');
+Route::delete('/users/{user}', [UserListController::class, 'destroy'])->name('users.destroy');
+
+// Trabajadores
 Route::get('/dashboard/workerslist', [WorkerlistController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('workerslist');
+
+Route::put('/workers/{worker}', [WorkerlistController::class, 'update'])->name('workers.update');
+Route::delete('/workers/{worker}', [WorkerlistController::class, 'destroy'])->name('workers.destroy');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
