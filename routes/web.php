@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use Inertia\Inertia;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\MotorcycleController;
+use App\Http\Controllers\SupplierController;
 
 Route::get('/', function () {
     return Inertia::render('Landing/LandingPage', [
@@ -29,6 +30,10 @@ Route::get('/dashboard/userslist', [UserListController::class, 'index'])
 Route::get('/dashboard/motorcycleslist', [MotorcycleController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('motorcycleslist');
+
+Route::get('/dashboard/supplierslist', [SupplierController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('supplierslist');    
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

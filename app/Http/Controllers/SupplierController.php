@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
-
+use Inertia\Inertia; 
 class SupplierController extends Controller
 {
     /**
@@ -13,7 +13,12 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::orderBy('company')
+                             ->paginate(10);
+
+        return Inertia::render('Dashboard/Supplier/SuppliersList', [
+            'suppliers' => $suppliers
+        ]);
     }
 
     /**
