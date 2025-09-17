@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
+use GrahamCampbell\ResultType\Success;
 use Inertia\Inertia; 
+use Illuminate\Http\Request;
 class SupplierController extends Controller
 {
     /**
@@ -34,7 +36,19 @@ class SupplierController extends Controller
      */
     public function store(StoreSupplierRequest $request)
     {
-        //
+        $validated = $request->validate([
+            'company' => 'required|string|max:255',
+            'representative' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255',
+            'phone' => 'nullable|string|max:50',
+            'product' => 'nullable|string|max:255',
+        ]);
+
+         $supplier = Supplier::create($validated);
+
+        // Responder con Inertia o redirigir
+        return redirect()->route('supplierslist')->with('success', 'Proveedor creado correctamente');
     }
 
     /**
@@ -58,7 +72,19 @@ class SupplierController extends Controller
      */
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        $validated = $request->validate([
+            'company' => 'required|string|max:255',
+            'representative' => 'nullable|string|max:255',
+            'address' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:suppliers,email,'.$supplier->id,
+            'phone' => 'nullable|string|max:20',
+            'product' => 'required|string|max:150',
+
+        ]);
+
+        $supplier->update($validated);
+
+        return redirect()->route('supplierslist')->with('success', 'Proveedor actualizado correctamente.');
     }
 
     /**
@@ -66,6 +92,8 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        $supplier->delete();
+
+         return redirect()->route('supplierslist')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

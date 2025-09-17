@@ -1,13 +1,9 @@
 <script lang="ts" setup>
-import { ArrowUpDown, ChevronDown, MoreVertical } from 'lucide-vue-next'
-import { defineProps, ref, computed } from 'vue'
+import { ArrowUpDown, MoreVertical } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+
+import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import { Button } from '@/Components/ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/Components/ui/dropdown-menu'
 import { Input } from '@/Components/ui/input'
 import {
   Table,
@@ -17,37 +13,54 @@ import {
   TableHeader,
   TableRow,
 } from '@/Components/ui/table'
-import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/Components/ui/dropdown-menu'
 
-// Recibir proveedores desde el backend (paginados)
+import CreateSupplier from '@/Pages/Dashboard/Supplier/CreateSupplier.vue'
+import UpdateSupplier from '@/Pages/Dashboard/Supplier/UpdateSupplier.vue'
+import DeleteSupplier from '@/Pages/Dashboard/Supplier/DeleteSupplier.vue'
+
+const isScrolled = ref(false)
+// Props del backend
 const props = defineProps<{
   suppliers: {
     data: Array<{
-      id: number,
-      company: string,
-      representative: string | null,
-      address: string | null,
-      email: string | null,
-      phone: string | null,
-      product: string,
-    }>,
-    current_page: number,
+      id: number
+      company: string
+      representative: string
+      address: string
+      email: string
+      phone: string
+      product: string
+    }>
+    current_page: number
     last_page: number
   }
 }>()
 
-// Input de filtrado
-const filterText = ref('')
+type SupplierRow = typeof props.suppliers.data[number]
 
-// Filtrado solo en frontend por company o representative
+// Estado de modales / Sheets
+const showCreateSupplier = ref(false)
+const selectedSupplier = ref<SupplierRow | null>(null)
+const isEditOpen = ref(false)
+const isDeleteOpen = ref(false)
+
+// Filtrado
+const filterText = ref('')
 const filteredSuppliers = computed(() =>
-  props.suppliers.data.filter((supplier) =>
-    (supplier.company || '').toLowerCase().includes(filterText.value.toLowerCase()) ||
-    (supplier.representative || '').toLowerCase().includes(filterText.value.toLowerCase())
+  props.suppliers.data.filter(
+    (supplier) =>
+      supplier.company.toLowerCase().includes(filterText.value.toLowerCase()) ||
+      supplier.representative.toLowerCase().includes(filterText.value.toLowerCase())
   )
 )
 
-// Columnas visuales
+// Columnas de la tabla
 const columns = [
   { name: 'Compañía', sortable: false },
   { name: 'Representante', sortable: false },
@@ -57,24 +70,44 @@ const columns = [
   { name: 'Producto', sortable: false },
   { name: 'Acciones', sortable: false, hideHeader: true },
 ]
+
+// Acciones
+function onClickEdit(supplier: SupplierRow) {
+  selectedSupplier.value = { ...supplier }
+  isEditOpen.value = true
+}
+
+function onClickDelete(supplier: SupplierRow) {
+  selectedSupplier.value = { ...supplier }
+  isDeleteOpen.value = true
+}
+
 </script>
 
 <template>
   <DashboardLayout>
     <div class="w-full">
-      <!-- Barra de filtrado -->
+      <!-- Barra de filtrado y botón crear -->
       <div class="flex items-center py-4">
         <Input
           class="max-w-sm"
           placeholder="Filtrar por compañía o representante..."
           v-model="filterText"
         />
-        <Button variant="outline" class="ml-auto">
-          Columns <ChevronDown class="ml-2 h-4 w-4" />
-        </Button>
+        <button
+          class="ml-auto justify-end rounded-md px-4 py-1 font-semibold transition duration-300"
+        :class="
+          isScrolled
+            ? 'border border-[#fb5607] dark:border-white text-white hover:bg-[#fb5607]'
+            : 'border border-[#fb5607] text-black hover:bg-[#fb5607] hover:text-[#fefcf9] dark:text-white'
+        "
+          @click="showCreateSupplier = true"
+        >
+          Agregar 
+        </button>
       </div>
 
-      <!-- Tabla -->
+      <!-- Tabla de proveedores -->
       <div class="rounded-md border">
         <Table>
           <TableHeader>
@@ -89,7 +122,6 @@ const columns = [
           </TableHeader>
 
           <TableBody>
-            <!-- Mostrar proveedores -->
             <TableRow v-for="supplier in filteredSuppliers" :key="supplier.id">
               <TableCell>{{ supplier.company }}</TableCell>
               <TableCell>{{ supplier.representative }}</TableCell>
@@ -105,14 +137,13 @@ const columns = [
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent>
-                    <DropdownMenuItem>Editar</DropdownMenuItem>
-                    <DropdownMenuItem>Eliminar</DropdownMenuItem>
+                    <DropdownMenuItem @click="onClickEdit(supplier)">Editar</DropdownMenuItem>
+                    <DropdownMenuItem @click="onClickDelete(supplier)">Eliminar</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </TableCell>
             </TableRow>
 
-            <!-- Fila vacía si no hay proveedores -->
             <TableRow v-if="filteredSuppliers.length === 0">
               <TableCell :colspan="columns.length" class="h-24 text-center text-muted-foreground">
                 No data.
@@ -133,7 +164,6 @@ const columns = [
         >
           Anterior
         </Button>
-
         <Button
           class="text-primary"
           variant="outline"
@@ -145,5 +175,23 @@ const columns = [
         </Button>
       </div>
     </div>
+
+    <!-- Componentes modales / sheets -->
+      <CreateSupplier
+        v-model:open="showCreateSupplier"
+        @success="$inertia.reload()"
+      />
+    <UpdateSupplier
+      v-if="selectedSupplier"
+      v-model:open="isEditOpen"
+      :supplier="selectedSupplier"
+      @success="$inertia.reload()"
+    />
+    <DeleteSupplier
+      v-if="selectedSupplier"
+      v-model:open="isDeleteOpen"
+      :supplier="selectedSupplier"
+      @success="$inertia.reload()"
+    />
   </DashboardLayout>
 </template>
