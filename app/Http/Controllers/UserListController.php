@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Enums\UserRole;
-use Illuminate\Http\Request;
+use App\Http\Requests\UserUpdateRequest;
 
 class UserListController extends Controller
 {
@@ -21,18 +21,9 @@ class UserListController extends Controller
         ]);
     }
 
-    public function update(Request $request, User $user)
+public function update(UserUpdateRequest $request, User $user)
 {
-    $validated = $request->validate([
-        'name' => 'required|string|max:255',
-        'email' => 'required|email|unique:users,email,'.$user->id,
-        'rfc' => 'nullable|string|max:13',
-        'role' => 'nullable|string',
-        'address' => 'nullable|string|max:255',
-        'phone' => 'nullable|string|max:20',
-    ]);
-
-    $user->update($validated);
+    $user->update($request->validated());
 
     return redirect()->route('userslist')->with('success', 'Usuario actualizado correctamente.');
 }
