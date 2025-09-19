@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod'
 import { Check, Circle, Dot } from 'lucide-vue-next'
-import * as z from 'zod'
+import type { ZodObject } from 'zod'
 
 import { ref } from 'vue'
+import { defineProps } from 'vue'
+
+import { router } from '@inertiajs/vue3'
 
 import { Button } from '@/Components/ui/button'
 import { Form } from '@/Components/ui/form'
@@ -19,10 +22,21 @@ import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import FormClient from '@/Pages/Dashboard/ServiceOrders/Partials/FormClient.vue'
 import FormMotorcycle from '@/Pages/Dashboard/ServiceOrders/Partials/FormMotorcycle.vue'
 import FormService from '@/Pages/Dashboard/ServiceOrders/Partials/FormService.vue'
+import { clientSchema } from '@/constants/validation/client'
+import { motorcycleSchema } from '@/constants/validation/motorcycle'
+import { serviceSchema } from '@/constants/validation/service'
+import { serviceOrderSchema } from '@/constants/validation/serviceOrder'
 import { ServiceOrderStep } from '@/enums/ServiceOrderStep'
 import { StepperState } from '@/enums/StepperState'
 
-const initialStep = ref(ServiceOrderStep.FillingMotorcycleData)
+interface Props {
+    motorcycleTypes: string[]
+    brands: string[]
+}
+
+defineProps<Props>()
+
+const initialStep = ref(ServiceOrderStep.FillingClientData)
 const steps = [
     {
         step: ServiceOrderStep.FillingClientData,
@@ -32,42 +46,50 @@ const steps = [
     {
         step: ServiceOrderStep.FillingMotorcycleData,
         title: 'Motocicleta',
-        description: 'Choose a password',
+        description: 'Datos de la motocicleta',
     },
     {
         step: ServiceOrderStep.FillingServiceData,
         title: 'Servicio',
-        description: 'Choose a drink',
+        description: 'Servicio a realizar',
     },
 ]
 
-function onSubmit(values: any) {
-    //
+function formatValues(values: any) {
+    return {
+        client: {
+            name: values.name,
+            email: values.email,
+            phone: values.phone,
+            address: values.address,
+            rfc: values.rfc,
+        },
+        motorcycle: {
+            serial_num: values.serial_num,
+            motor_num: values.motor_num,
+            placa: values.placa,
+            brand_id: values.brand_id,
+            type_id: values.type_id,
+            year: values.year,
+        },
+        service: {
+            service_id: values.service_id,
+            note: values.note,
+        },
+    }
 }
 
-const formSchema = [
-    z.object({
-        fullName: z.string(),
-        email: z.string().email(),
-    }),
-    z
-        .object({
-            password: z.string().min(2).max(50),
-            confirmPassword: z.string(),
-        })
-        .refine(
-            (values) => {
-                return values.password === values.confirmPassword
-            },
-            {
-                message: 'Passwords must match!',
-                path: ['confirmPassword'],
-            }
-        ),
-    z.object({
-        favoriteDrink: z.union([z.literal('coffee'), z.literal('tea'), z.literal('soda')]),
-    }),
-]
+function onSubmit(values: any) {
+    const formattedValues = formatValues(values)
+
+    const validation = serviceOrderSchema.safeParse(formattedValues)
+
+    if (validation.success) {
+        router.post(route('service.order.store'), formattedValues)
+    }
+}
+
+const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSchema]
 </script>
 
 <template>
@@ -120,7 +142,7 @@ const formSchema = [
                                     class="z-10 shrink-0 rounded-full"
                                     :class="[
                                         state === StepperState.Active &&
-                                            'ring-2 ring-offset-2 ring-offset-background ring-primary',
+                                            'ring-2 ring-primary ring-offset-2 ring-offset-background',
                                     ]"
                                     :disabled="state !== StepperState.Completed && !meta.valid"
                                 >
@@ -153,7 +175,7 @@ const formSchema = [
                         </template>
 
                         <template v-if="initialStep === ServiceOrderStep.FillingMotorcycleData">
-                            <FormMotorcycle />
+                            <FormMotorcycle :types="motorcycleTypes" :brands="brands" />
                         </template>
 
                         <template v-if="initialStep === ServiceOrderStep.FillingServiceData">

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
+use App\Models\MotorcycleType;
 use App\Models\ServiceOrders;
 use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
+use Inertia\Inertia;
 
 class ServiceOrdersController extends Controller
 {
@@ -13,7 +16,13 @@ class ServiceOrdersController extends Controller
      */
     public function index()
     {
-        //
+        $serviceOrders = ServiceOrders::query()
+            ->with(['motorcycle', 'client', 'motorcycle.brand'])
+            ->paginate(10);
+
+        return Inertia::render('Dashboard/ServiceOrders/IndexServiceOrder', [
+            'serviceOrders' => $serviceOrders
+        ]);
     }
 
     /**
@@ -21,7 +30,14 @@ class ServiceOrdersController extends Controller
      */
     public function create()
     {
-        //
+        // TODO: crear tabla de servicios
+        $brands = Brand::all()->pluck('name')->toArray();
+        $motorcycleTypes = MotorcycleType::all()->pluck('type_name')->toArray();
+
+        return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder', [
+            'motorcycleTypes' => $motorcycleTypes,
+            'brands' => $brands,
+        ]);
     }
 
     /**
@@ -29,7 +45,7 @@ class ServiceOrdersController extends Controller
      */
     public function store(StoreServiceOrdersRequest $request)
     {
-        //
+        dd($request);
     }
 
     /**

@@ -22,11 +22,11 @@ export const serviceOrderMenu = [
         items: [
             {
                 title: 'Registro',
-                url: route('dashboard'),
+                url: route('service.order.create'),
             },
             {
                 title: 'Histórico',
-                url: '#',
+                url: route('service.order.index'),
             },
         ],
     },
@@ -48,7 +48,7 @@ export const serviceOrderMenu = [
     },
     {
         title: 'Motocicletas',
-        url: 'https://motorcytech.test/dashboard/motorcycleslist',
+        url: route('motorcycleslist'),
         icon: Bike,
     },
     {
