@@ -12,7 +12,7 @@ const toggleDark = useToggle(isDark)
 
 function toggleDarkMode() {
     toggleDark()
-}
+}   
 
 const form = useForm({
   email: '',

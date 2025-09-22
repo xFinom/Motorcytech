@@ -84,7 +84,7 @@ export const employeeMenu = [
     },
     {
         title: 'Proveedores',
-        url: '#',
+        url: 'https://motorcytech.test/dashboard/supplierslist',
         icon: Wrench,
     },
 ]
