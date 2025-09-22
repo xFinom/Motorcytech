@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Motorcycle;
+use Inertia\Inertia;
 use App\Http\Requests\StoreMotorcycleRequest;
 use App\Http\Requests\UpdateMotorcycleRequest;
 
@@ -13,7 +14,13 @@ class MotorcycleController extends Controller
      */
     public function index()
     {
-        //
+          // Cargar motos con sus relaciones
+        $motorcycles = Motorcycle::with(['type', 'cliente', 'type.brand'])
+            ->paginate(10);
+
+        return Inertia::render('Dashboard/Motorcycles/MotorcyclesList', [
+            'motorcycles' => $motorcycles,
+        ]);
     }
 
     /**

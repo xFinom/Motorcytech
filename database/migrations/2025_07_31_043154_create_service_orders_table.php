@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('motorcycle_id')->constrained('motorcycles')->onDelete('cascade');
             $table->enum('status', ServiceOrderStatus::values())->default(ServiceOrderStatus::Ingresado->value);
             $table->foreignId('client_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
             $table->longText('note');
         });
     }
