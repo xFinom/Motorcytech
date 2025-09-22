@@ -170,7 +170,7 @@ const columns = [
                         size="sm"
                         :disabled="props.workers.current_page === 1"
                         @click="
-                            $inertia.get(route('userslist'), {
+                            $inertia.get(route('workerslist'), {
                                 page: props.workers.current_page - 1,
                             })
                         "
@@ -184,7 +184,7 @@ const columns = [
                         size="sm"
                         :disabled="props.workers.current_page === props.workers.last_page"
                         @click="
-                            $inertia.get(route('userslist'), {
+                            $inertia.get(route('workerslist'), {
                                 page: props.workers.current_page + 1,
                             })
                         "
