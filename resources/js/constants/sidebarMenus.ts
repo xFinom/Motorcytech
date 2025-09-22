@@ -22,11 +22,11 @@ export const serviceOrderMenu = [
         items: [
             {
                 title: 'Registro',
-                url: '#',
+                url: route('service.order.create'),
             },
             {
                 title: 'Histórico',
-                url: '#',
+                url: route('service.order.index'),
             },
         ],
     },
@@ -38,7 +38,7 @@ export const serviceOrderMenu = [
         items: [
             {
                 title: 'Listado',
-                url: '#',
+                url: route('userslist'),
             },
             {
                 title: 'Mensajes',
@@ -48,7 +48,7 @@ export const serviceOrderMenu = [
     },
     {
         title: 'Motocicletas',
-        url: '#',
+        url: route('motorcycleslist'),
         icon: Bike,
     },
     {
@@ -79,7 +79,7 @@ export const financeMenu = [
 export const employeeMenu = [
     {
         title: 'Personal',
-        url: '#',
+        url: route('workerslist'),
         icon: UserCog,
     },
     {

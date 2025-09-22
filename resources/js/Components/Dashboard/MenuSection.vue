@@ -13,7 +13,7 @@ import {
     SidebarMenuSubButton,
     SidebarMenuSubItem,
 } from '@/Components/ui/sidebar'
-import { MenuItem } from '@/types/MenuItem'
+import { MenuItem } from '@/interfaces/MenuItem'
 
 defineProps<{
     label?: string

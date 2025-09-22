@@ -7,12 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 
 class Motorcycle extends Model
 {
-    /** @use HasFactory<\Database\Factories\MotorcycleFactory> */
     use HasFactory;
 
     protected $fillable = [
         'placa',
         'serial_num',
         'motor_num',
+        'year',
+        'type_id',
+        'id_cliente',
     ];
+
+    public function type()
+    {
+        return $this->belongsTo(MotorcycleType::class);
+    }
+
+    public function cliente()
+    {
+        return $this->belongsTo(User::class, 'id_cliente');
+    }
 }

@@ -1,13 +1,23 @@
 <script setup>
-import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/Components/ui/form';
-import { Input } from '@/Components/ui/input';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/Components/ui/form'
+import { Input } from '@/Components/ui/input'
 </script>
 
 <template>
     <div class="flex flex-col gap-4">
-        <FormField v-slot="{ componentField }" name="fullName">
+        <FormField v-slot="{ componentField }" name="email">
             <FormItem>
-                <FormLabel>Full Name</FormLabel>
+                <FormLabel>Correo electrónico</FormLabel>
+                <FormControl>
+                    <Input type="email" v-bind="componentField" />
+                </FormControl>
+                <FormMessage />
+            </FormItem>
+        </FormField>
+
+        <FormField v-slot="{ componentField }" name="name">
+            <FormItem>
+                <FormLabel>Nombre Completo</FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>
@@ -15,11 +25,31 @@ import { Input } from '@/Components/ui/input';
             </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="email">
+        <FormField v-slot="{ componentField }" name="phone">
             <FormItem>
-                <FormLabel>Email</FormLabel>
+                <FormLabel>Teléfono</FormLabel>
                 <FormControl>
-                    <Input type="email" v-bind="componentField" />
+                    <Input type="text" v-bind="componentField" />
+                </FormControl>
+                <FormMessage />
+            </FormItem>
+        </FormField>
+
+        <FormField v-slot="{ componentField }" name="address">
+            <FormItem>
+                <FormLabel>Dirección</FormLabel>
+                <FormControl>
+                    <Input type="text" v-bind="componentField" />
+                </FormControl>
+                <FormMessage />
+            </FormItem>
+        </FormField>
+
+        <FormField v-slot="{ componentField }" name="rfc">
+            <FormItem>
+                <FormLabel>RFC</FormLabel>
+                <FormControl>
+                    <Input type="text" v-bind="componentField" />
                 </FormControl>
                 <FormMessage />
             </FormItem>

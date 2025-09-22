@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ServiceOrders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ServiceOrdersSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        ServiceOrders::factory()->count(15)->create();
     }
 }

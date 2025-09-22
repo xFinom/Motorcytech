@@ -22,14 +22,14 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id',
+        'role',
         'rfc',
         'phone',
         'address',
     ];
 
-        protected $casts = [
-        'status' => UserRole::class,
+    protected $casts = [
+        'role' => UserRole::class,
     ];
 
     /**

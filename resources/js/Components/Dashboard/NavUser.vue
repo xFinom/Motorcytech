@@ -19,6 +19,7 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/Components/ui/sidebar'
+import { generateInitials } from '@/utils/name'
 
 const user = usePage().props.auth.user
 
@@ -36,7 +37,7 @@ const { isMobile } = useSidebar()
                     >
                         <Avatar class="h-8 w-8 rounded-lg">
                             <!--                            <AvatarImage :src="user.avatar" :alt="user.name" />-->
-                            <AvatarFallback class="rounded-lg text-primary"> MT </AvatarFallback>
+                            <AvatarFallback class="rounded-lg text-primary"> {{ generateInitials(user.name) }} </AvatarFallback>
                         </Avatar>
                         <div class="grid flex-1 text-left text-sm leading-tight">
                             <span class="truncate font-semibold">{{ user.name }}</span>
@@ -56,7 +57,7 @@ const { isMobile } = useSidebar()
                             <Avatar class="h-8 w-8 rounded-lg">
                                 <!--                                <AvatarImage :src="user.avatar" :alt="user.name" />-->
                                 <AvatarFallback class="rounded-lg text-primary">
-                                    MT
+                                    {{ generateInitials(user.name) }}
                                 </AvatarFallback>
                             </Avatar>
                             <div class="grid flex-1 text-left text-sm leading-tight">
