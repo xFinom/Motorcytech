@@ -20,7 +20,7 @@ class MotorcycleFactory extends Factory
             'placa' => strtoupper($this->faker->bothify('??-###')),
             'serial_num' => strtoupper($this->faker->bothify('SN-#####')),
             'motor_num' => strtoupper($this->faker->bothify('MN-#####')),
-            'brand_id' => Brand::factory(),
+            'year' => $this->faker->year(),
             'type_id' => MotorcycleType::factory(),
             'id_cliente' => User::factory(),
         ];

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\StoreItems;
 use Illuminate\Database\Seeder;
 
 class StoreItemsSeeder extends Seeder
@@ -12,6 +12,6 @@ class StoreItemsSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        StoreItems::factory()->count(15)->create();
     }
 }

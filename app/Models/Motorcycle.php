@@ -13,15 +13,10 @@ class Motorcycle extends Model
         'placa',
         'serial_num',
         'motor_num',
-        'brand_id',
+        'year',
         'type_id',
         'id_cliente',
     ];
-
-    public function brand()
-    {
-        return $this->belongsTo(Brand::class);
-    }
 
     public function type()
     {
