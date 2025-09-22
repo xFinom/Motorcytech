@@ -15,6 +15,10 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/tracking-order', function () {
+    return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
+});
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');
 })->middleware(['auth', 'verified'])->name('dashboard');
