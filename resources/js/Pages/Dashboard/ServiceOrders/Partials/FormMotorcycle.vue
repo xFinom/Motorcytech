@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/Components/ui/form'
 import { Input } from '@/Components/ui/input'
@@ -11,13 +11,14 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/Components/ui/select'
+import { MotorcycleType } from '@/interfaces/MotorcycleType'
 
-interface Props {
-    types: string[]
-    brands: string[]
-}
+defineProps<{
+    types: Record<number, MotorcycleType[]>
+    brands: Record<number, string>
+}>();
 
-const props = defineProps<Props>()
+const selectedBrandId = ref<number | null>(null)
 </script>
 
 <template>
@@ -55,7 +56,7 @@ const props = defineProps<Props>()
         <FormField v-slot="{ componentField }" name="brand_id">
             <FormItem>
                 <FormLabel>Marca</FormLabel>
-                <Select v-bind="componentField">
+                <Select v-bind="componentField" v-model="selectedBrandId">
                     <FormControl>
                         <SelectTrigger>
                             <SelectValue placeholder="Selecciona una marca" />
@@ -64,11 +65,11 @@ const props = defineProps<Props>()
                     <SelectContent>
                         <SelectGroup>
                             <SelectItem
-                                v-for="(brand, index) in props.brands"
+                                v-for="(brand, index) in brands"
                                 :key="index"
-                                :value="index"
+                                :value="index "
                             >
-                                {{ brand }}
+                            {{ brand }}
                             </SelectItem>
                         </SelectGroup>
                     </SelectContent>
@@ -77,23 +78,23 @@ const props = defineProps<Props>()
             </FormItem>
         </FormField>
 
-        <FormField v-slot="{ componentField }" name="type_id">
+        <FormField v-if="selectedBrandId" v-slot="{ componentField }" name="type_id">
             <FormItem>
                 <FormLabel>Tipo</FormLabel>
                 <Select v-bind="componentField">
                     <FormControl>
                         <SelectTrigger>
-                            <SelectValue placeholder="Selecciona un servicio" />
+                            <SelectValue placeholder="Selecciona un tipo" />
                         </SelectTrigger>
                     </FormControl>
                     <SelectContent>
                         <SelectGroup>
                             <SelectItem
-                                v-for="(type, index) in props.types"
-                                :key="index"
-                                :value="index"
+                                v-for="type in types[selectedBrandId]"
+                                :key="type.id"
+                                :value="type.id"
                             >
-                                {{ type }}
+                                {{ type.name }}
                             </SelectItem>
                         </SelectGroup>
                     </SelectContent>

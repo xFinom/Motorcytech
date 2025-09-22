@@ -28,10 +28,11 @@ import { serviceSchema } from '@/constants/validation/service'
 import { serviceOrderSchema } from '@/constants/validation/serviceOrder'
 import { ServiceOrderStep } from '@/enums/ServiceOrderStep'
 import { StepperState } from '@/enums/StepperState'
+import { MotorcycleType } from '@/interfaces/MotorcycleType'
 
 interface Props {
-    motorcycleTypes: string[]
-    brands: string[]
+    types: Record<number, MotorcycleType[]>
+    brands: Record<number, string>
 }
 
 defineProps<Props>()
@@ -68,7 +69,6 @@ function formatValues(values: any) {
             serial_num: values.serial_num,
             motor_num: values.motor_num,
             placa: values.placa,
-            brand_id: values.brand_id,
             type_id: values.type_id,
             year: values.year,
         },
@@ -175,7 +175,7 @@ const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSch
                         </template>
 
                         <template v-if="initialStep === ServiceOrderStep.FillingMotorcycleData">
-                            <FormMotorcycle :types="motorcycleTypes" :brands="brands" />
+                            <FormMotorcycle :types="types" :brands="brands" />
                         </template>
 
                         <template v-if="initialStep === ServiceOrderStep.FillingServiceData">

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +18,8 @@ class MotorcycleTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'type_name' => $this->faker->randomElement(['Deportiva','Enduro', 'Naked', 'Scooter']),
-            'model' => $this->faker->year(),
+            'name' => $this->faker->randomElement(['Deportiva','Enduro', 'Naked', 'Scooter']),
+            'brand_id' => Brand::factory(),
         ];
     }
 }

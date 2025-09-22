@@ -17,7 +17,7 @@ class ServiceOrdersController extends Controller
     public function index()
     {
         $serviceOrders = ServiceOrders::query()
-            ->with(['motorcycle', 'client', 'motorcycle.brand'])
+            ->with(['motorcycle', 'client', 'motorcycle.type', 'motorcycle.type.brand', 'service'])
             ->paginate(10);
 
         return Inertia::render('Dashboard/ServiceOrders/IndexServiceOrder', [
@@ -31,12 +31,20 @@ class ServiceOrdersController extends Controller
     public function create()
     {
         // TODO: crear tabla de servicios
-        $brands = Brand::all()->pluck('name')->toArray();
-        $motorcycleTypes = MotorcycleType::all()->pluck('type_name')->toArray();
+        $groupedTypes = Brand::with('types')->get()->mapWithKeys(function ($brand) {
+            return [
+                $brand->id => $brand->types->map(fn($type) => [
+                    'id' => $type->id,
+                    'name' => $type->name,
+                ])->toArray(),
+            ];
+        })->toArray();
+
+        $brands = Brand::query()->pluck('name', 'id')->toArray();
 
         return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder', [
-            'motorcycleTypes' => $motorcycleTypes,
-            'brands' => $brands,
+            'types' => $groupedTypes,
+            'brands' => $brands
         ]);
     }
 

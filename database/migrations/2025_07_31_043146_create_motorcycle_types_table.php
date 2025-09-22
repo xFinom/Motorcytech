@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('motorcycle_types', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('type_name');
-            $table->year('model');
+            $table->string('name');
+            $table->foreignId('brand_id')->constrained('brands');
         });
     }
 

@@ -101,5 +101,28 @@ export default {
     	}
     },
 
+    safelist: [
+        "bg-neutral-100",
+        "text-neutral-700",
+        "dark:bg-neutral-800",
+        "dark:text-neutral-200",
+        "bg-sky-100",
+        "text-sky-700",
+        "dark:bg-sky-800",
+        "dark:text-sky-200",
+        "bg-red-100",
+        "text-red-700",
+        "dark:bg-red-800",
+        "dark:text-red-200",
+        "bg-emerald-100",
+        "text-emerald-700",
+        "dark:bg-emerald-800",
+        "dark:text-emerald-200",
+        "bg-green-100",
+        "text-green-700",
+        "dark:bg-green-800",
+        "dark:text-green-200",
+    ],
+
     plugins: [forms, require("tailwindcss-animate")],
 };

@@ -3,16 +3,20 @@
 namespace App\Models;
 
 use Database\Factories\ServiceOrdersFactory;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\ServiceOrderStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ServiceOrders extends Model
 {
     /** @use HasFactory<ServiceOrdersFactory> */
     use HasFactory;
+
+    use HasUlids;
 
     protected $fillable = [
         'entry_date',
@@ -35,5 +39,15 @@ class ServiceOrders extends Model
     public function motorcycle(): HasOne
     {
         return $this->hasOne(Motorcycle::class, 'id', 'motorcycle_id');
+    }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(Service::class, 'service_id');
+    }
+
+    public function spareParts(): HasMany
+    {
+        return $this->hasMany(ServiceOrderSparePart::class, 'service_order_id', 'id');
     }
 }
