@@ -1,10 +1,13 @@
 import { UserRole } from '@/constants/enums/UserRole'
+import { PrivateMessage } from '@/interfaces/PrivateMessage'
+import { Review } from '@/interfaces/Review'
 
 export interface BaseUser {
     id?: number,
     name: string,
     email: string,
     role: UserRole,
+    privateMessages: PrivateMessage[],
 }
 
 export interface Client extends BaseUser {
@@ -12,6 +15,7 @@ export interface Client extends BaseUser {
     rfc: string | null;
     phone: string;
     address: string;
+    reviews: Review[];
 }
 
 export interface Worker extends BaseUser {
