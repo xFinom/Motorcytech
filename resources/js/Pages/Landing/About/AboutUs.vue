@@ -1,12 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-
-import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
-import BrandSlider from '@/Pages/Landing/Partials/BrandSlider.vue'
-import Services from '@/Pages/Landing/Partials/Services.vue'
-import Footer from './Partials/Footer.vue'
+import Footer from '../Partials/Footer.vue';
 
 </script>
 
@@ -51,13 +46,10 @@ import Footer from './Partials/Footer.vue'
 </style>
 
 <template>
-    <Head title="Inicio" />
-    <div class="min-h-screen font-sans antialiased">
+    <Head title="Sobre Nosotros" />
+    <div class="min-h-screen font-sans antialiased pb-12">
         <Navbar />
-        <HeroSection />
-        <BrandSlider />
-        <BulletPoints />
-        <Services />
+
         <Footer/>
     </div>
 </template>
