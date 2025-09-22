@@ -22,8 +22,8 @@ import {
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import UpdateWorker from '@/Pages/Dashboard/Workers/Partials/UpdateWorker.vue'
 
-import DeleteWorker from './Partials/DeleteWorker.vue'
 import CreateWorker from './Partials/CreateWorker.vue'
+import DeleteWorker from './Partials/DeleteWorker.vue'
 
 // Recibir trabajadores desde el backend (paginados)
 const props = defineProps<{
@@ -99,18 +99,15 @@ const columns = [
         <div class="pl-20 pr-20 pt-2">
             <div class="pl-20 pr-20">
                 <!-- Barra de filtrado -->
-<div class="flex items-center justify-between py-4">
-    <Input
-        v-model="filter"
-        class="max-w-sm"
-        placeholder="Filtrar trabajadores..."
-    />
-    <Button  @click="isCreateOpen = true">
-        Crear
-    </Button>
-</div>
+                <div class="flex items-center justify-between py-4">
+                    <Input
+                        v-model="filter"
+                        class="max-w-sm"
+                        placeholder="Filtrar trabajadores..."
+                    />
+                    <Button @click="isCreateOpen = true"> Crear </Button>
+                </div>
 
-                    
                 <!-- Tabla -->
                 <div class="rounded-md border">
                     <Table>

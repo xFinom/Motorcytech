@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
-import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-import Footer from '../Partials/Footer.vue';
 
+import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
+
+import Footer from '../Partials/Footer.vue'
 </script>
 
 <style>
@@ -42,14 +43,13 @@ import Footer from '../Partials/Footer.vue';
     opacity: 1;
     transform: translateY(0);
 }
-
 </style>
 
 <template>
     <Head title="Sobre Nosotros" />
-    <div class="min-h-screen font-sans antialiased pb-12">
+    <div class="min-h-screen pb-12 font-sans antialiased">
         <Navbar />
 
-        <Footer/>
+        <Footer />
     </div>
 </template>

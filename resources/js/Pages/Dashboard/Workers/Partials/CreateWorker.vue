@@ -19,17 +19,17 @@ import {
 } from '@/Components/ui/sheet'
 
 type WorkerForm = {
-  name: string
-  email: string
-  address: string
-  phone: string
+    name: string
+    email: string
+    address: string
+    phone: string
 }
 
 const formData = reactive<WorkerForm>({
-  name: '',
-  email: '',
-  address: '',
-  phone: '',
+    name: '',
+    email: '',
+    address: '',
+    phone: '',
 })
 
 // Errores de validación
@@ -58,20 +58,20 @@ function guardarCambios() {
     }
 
     // Si pasa, mandamos al backend
-router.post(route('workers.store'), formData, {
-  preserveScroll: true,
-  onSuccess: () => {
-    console.log('Trabajador creado correctamente')
-    // Limpiar formulario
-    formData.name = ''
-    formData.email = ''
-    formData.address = ''
-    formData.phone = ''
+    router.post(route('workers.store'), formData, {
+        preserveScroll: true,
+        onSuccess: () => {
+            console.log('Trabajador creado correctamente')
+            // Limpiar formulario
+            formData.name = ''
+            formData.email = ''
+            formData.address = ''
+            formData.phone = ''
 
-    // Recargar lista de trabajadores
-    router.get(route('workerslist'))
-  },
-})
+            // Recargar lista de trabajadores
+            router.get(route('workerslist'))
+        },
+    })
 }
 </script>
 

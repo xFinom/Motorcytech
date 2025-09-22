@@ -1,10 +1,4 @@
-import {
-    Inbox,
-    Clock,
-    PauseCircle,
-    CheckCircle,
-    BadgeCheck,
-} from "lucide-vue-next";
+import { BadgeCheck, CheckCircle, Clock, Inbox, PauseCircle } from 'lucide-vue-next'
 
 export enum ServiceOrderStatus {
     INGRESADO = 'Ingresado',
@@ -14,7 +8,7 @@ export enum ServiceOrderStatus {
     FINALIZADO = 'Finalizado',
 }
 
-type Status = typeof ServiceOrderStatus[keyof typeof ServiceOrderStatus];
+type Status = (typeof ServiceOrderStatus)[keyof typeof ServiceOrderStatus]
 
 export const ServiceOrderStatusLabels: Record<Status, string> = {
     [ServiceOrderStatus.INGRESADO]: 'Ingresado',
@@ -22,24 +16,22 @@ export const ServiceOrderStatusLabels: Record<Status, string> = {
     [ServiceOrderStatus.DETENIDO]: 'Detenido',
     [ServiceOrderStatus.LISTO]: 'Listo',
     [ServiceOrderStatus.FINALIZADO]: 'Finalizado',
-} as const;
+} as const
 
 export const ServiceOrderStatusBadges: Record<Status, string> = {
     [ServiceOrderStatus.INGRESADO]:
-        "bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200",
+        'bg-neutral-100 text-neutral-700 dark:bg-neutral-800 dark:text-neutral-200',
 
-    [ServiceOrderStatus.EN_PROCESO]:
-        "bg-sky-100 text-sky-700 dark:bg-sky-800 dark:text-sky-200",
+    [ServiceOrderStatus.EN_PROCESO]: 'bg-sky-100 text-sky-700 dark:bg-sky-800 dark:text-sky-200',
 
-    [ServiceOrderStatus.DETENIDO]:
-        "bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200",
+    [ServiceOrderStatus.DETENIDO]: 'bg-red-100 text-red-700 dark:bg-red-800 dark:text-red-200',
 
     [ServiceOrderStatus.LISTO]:
-        "bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-200",
+        'bg-emerald-100 text-emerald-700 dark:bg-emerald-800 dark:text-emerald-200',
 
     [ServiceOrderStatus.FINALIZADO]:
-        "bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200",
-} as const;
+        'bg-green-100 text-green-700 dark:bg-green-800 dark:text-green-200',
+} as const
 
 export const ServiceOrderStatusIcons: Record<Status, any> = {
     [ServiceOrderStatus.INGRESADO]: Inbox,
@@ -47,4 +39,4 @@ export const ServiceOrderStatusIcons: Record<Status, any> = {
     [ServiceOrderStatus.DETENIDO]: PauseCircle,
     [ServiceOrderStatus.LISTO]: CheckCircle,
     [ServiceOrderStatus.FINALIZADO]: BadgeCheck,
-} as const;
+} as const

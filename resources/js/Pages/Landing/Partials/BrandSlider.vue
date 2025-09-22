@@ -48,9 +48,18 @@ const handleImageError = (e) => {
 
 <template>
     <div class="relative w-full overflow-hidden bg-[#061222]">
-        <h1 class="text-center mb-4 mt-3 text-4xl font-extrabold tracking-tight leading-none text-[#fb5607] md:text-5xl lg:text-6xl">We invest in the world’s potential</h1>
-        <p class="text-center mb-8 text-lg font-normal text-white lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.</p>
-        <div class="relative mx-auto h-full overflow-hidden mb-4" style="width: 50%">
+        <h1
+            class="mb-4 mt-3 text-center text-4xl font-extrabold leading-none tracking-tight text-[#fb5607] md:text-5xl lg:text-6xl"
+        >
+            We invest in the world’s potential
+        </h1>
+        <p
+            class="mb-8 text-center text-lg font-normal text-white dark:text-gray-400 sm:px-16 lg:text-xl xl:px-48"
+        >
+            Here at Flowbite we focus on markets where technology, innovation, and capital can
+            unlock long-term value and drive economic growth.
+        </p>
+        <div class="relative mx-auto mb-4 h-full overflow-hidden" style="width: 50%">
             <div
                 class="pointer-events-none absolute left-0 top-0 z-10 h-full w-5"
                 style="background: linear-gradient(to right, #061222, transparent)"
@@ -77,7 +86,7 @@ const handleImageError = (e) => {
                     <img
                         :src="logo.url"
                         :alt="logo.name"
-                        class="max-h-full max-w-full object-contain transition-transform duration-300 hover:scale-110 filter brightness-0 invert"
+                        class="max-h-full max-w-full object-contain brightness-0 invert filter transition-transform duration-300 hover:scale-110"
                         @error="handleImageError"
                     />
                 </div>

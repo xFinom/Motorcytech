@@ -16,7 +16,7 @@ import { MotorcycleType } from '@/interfaces/MotorcycleType'
 defineProps<{
     types: Record<number, MotorcycleType[]>
     brands: Record<number, string>
-}>();
+}>()
 
 const selectedBrandId = ref<number | null>(null)
 </script>
@@ -67,9 +67,9 @@ const selectedBrandId = ref<number | null>(null)
                             <SelectItem
                                 v-for="(brand, index) in brands"
                                 :key="index"
-                                :value="index "
+                                :value="index"
                             >
-                            {{ brand }}
+                                {{ brand }}
                             </SelectItem>
                         </SelectGroup>
                     </SelectContent>

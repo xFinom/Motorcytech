@@ -10,4 +10,4 @@ export const serviceOrderSchema = z.object({
     service: serviceSchema,
 })
 
-export type ServiceOrderForm = z.infer<typeof serviceOrderSchema>;
+export type ServiceOrderForm = z.infer<typeof serviceOrderSchema>

@@ -1,4 +1,5 @@
-import { z } from "zod";
+import { z } from 'zod'
+
 import { rfcRegex } from '@/utils/regex'
 
 export const clientSchema = z.object({
@@ -6,7 +7,7 @@ export const clientSchema = z.object({
     email: z.string().email(),
     phone: z.string(),
     address: z.string(),
-    rfc: z.string().regex(rfcRegex, "RFC invalido").optional().or(z.literal("")),
+    rfc: z.string().regex(rfcRegex, 'RFC invalido').optional().or(z.literal('')),
 })
 
-export type ClientForm = z.infer<typeof clientSchema>;
+export type ClientForm = z.infer<typeof clientSchema>

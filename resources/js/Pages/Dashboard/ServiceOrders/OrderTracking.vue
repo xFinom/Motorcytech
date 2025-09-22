@@ -2,9 +2,8 @@
 import { ref } from 'vue'
 
 import { Icon } from '@iconify/vue'
-import { Button } from "@/Components/ui/button"
-import { Textarea } from "@/Components/ui/textarea"
 
+import { Button } from '@/Components/ui/button'
 import {
     Stepper,
     StepperDescription,
@@ -14,6 +13,7 @@ import {
     StepperTitle,
     StepperTrigger,
 } from '@/Components/ui/stepper'
+import { Textarea } from '@/Components/ui/textarea'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 
 const open = ref(false)
@@ -301,8 +301,11 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                                 </ul>
                             </div>
                         </div>
-                        <div class="grid w-full gap-2, mt-5">
-                            <Textarea class= "rounded-e-xl rounded-es-xl bg-gray-100 p-4 dark:bg-gray-700" placeholder="Escribe tu mensaje aquí." />
+                        <div class="gap-2, mt-5 grid w-full">
+                            <Textarea
+                                class="rounded-e-xl rounded-es-xl bg-gray-100 p-4 dark:bg-gray-700"
+                                placeholder="Escribe tu mensaje aquí."
+                            />
                             <Button class="mt-5">Enviar</Button>
                         </div>
                     </div>

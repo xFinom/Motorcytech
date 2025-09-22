@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 
+import BrandSlider from '@/Pages/Landing/Partials/BrandSlider.vue'
+import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
 import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
-import BrandSlider from '@/Pages/Landing/Partials/BrandSlider.vue'
 import Services from '@/Pages/Landing/Partials/Services.vue'
-import Footer from './Partials/Footer.vue'
 
+import Footer from './Partials/Footer.vue'
 </script>
 
 <style>
@@ -47,7 +47,6 @@ import Footer from './Partials/Footer.vue'
     opacity: 1;
     transform: translateY(0);
 }
-
 </style>
 
 <template>
@@ -58,6 +57,6 @@ import Footer from './Partials/Footer.vue'
         <BrandSlider />
         <BulletPoints />
         <Services />
-        <Footer/>
+        <Footer />
     </div>
 </template>

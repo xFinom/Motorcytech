@@ -20,8 +20,8 @@ import {
     TableRow,
 } from '@/Components/ui/table'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
-import UpdateUser from '@/Pages/Dashboard/Users/Partials/UpdateUser.vue'
 import DeleteUser from '@/Pages/Dashboard/Users/Partials/DeleteUser.vue'
+import UpdateUser from '@/Pages/Dashboard/Users/Partials/UpdateUser.vue'
 
 // Recibir usuarios desde el backend (paginados)
 const props = defineProps<{
@@ -59,7 +59,7 @@ const isDeleteOpen = ref(false)
 
 function onClickDelete(user: UserRow) {
     selectedUser.value = { ...user } // guardamos la fila
-    isDeleteOpen.value = true             // abrimos el modal
+    isDeleteOpen.value = true // abrimos el modal
 }
 
 function onClickEdit(user: UserRow) {
@@ -137,7 +137,7 @@ const columns = [
                                             >Editar</DropdownMenuItem
                                         >
                                         <DropdownMenuItem @click="onClickDelete(user)"
-                                        >Eliminar</DropdownMenuItem
+                                            >Eliminar</DropdownMenuItem
                                         >
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -155,7 +155,6 @@ const columns = [
                         </TableRow>
                     </TableBody>
                 </Table>
-        
             </div>
 
             <!-- Paginación -->

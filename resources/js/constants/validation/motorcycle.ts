@@ -7,6 +7,6 @@ export const motorcycleSchema = z.object({
     brand_id: z.number().int().positive(),
     type_id: z.number().int().positive(),
     year: z.number().int().positive(),
-});
+})
 
-export type MotorcycleForm = z.infer<typeof motorcycleSchema>;
+export type MotorcycleForm = z.infer<typeof motorcycleSchema>

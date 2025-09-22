@@ -80,9 +80,7 @@ onUnmounted(() => {
                     <Icon
                         icon="mdi:tools"
                         class="text-3xl"
-                        :class="
-                            isScrolled ? 'text-primary dark:text-[#061222]' : 'text-primary'
-                        "
+                        :class="isScrolled ? 'text-primary dark:text-[#061222]' : 'text-primary'"
                     />
                 </transition>
                 <div class="text-2xl font-black uppercase tracking-wide">
