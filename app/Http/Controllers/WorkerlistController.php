@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Enums\UserRole;
-use Illuminate\Http\Request;
-
+use App\Http\Requests\WorkerUpdateRequest;
+use App\http\Requests\WorkerStoreRequest;
 class WorkerlistController extends Controller
 {
 public function index()
@@ -21,19 +21,28 @@ public function index()
     ]);
 }
 
-        public function update(Request $request, User $worker)
-    {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,'.$worker->id,
-            'address' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:20',
-        ]);
+public function store(WorkerStoreRequest $request)
+{
+    User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'address' => $request->address,
+        'phone' => $request->phone,
+        'role' => UserRole::Trabajador->value, // siempre asignamos rol trabajador
+        // password opcional o generado automáticamente
+        'password' => bcrypt('defaultpassword123'),
+    ]);
 
-        $worker->update($validated);
+    return redirect()->route('workerslist')
+        ->with('success', 'Trabajador creado correctamente.');
+}
 
-        return redirect()->route('workerslist')->with('success', 'Trabajador actualizado correctamente.');
-    }
+public function update(WorkerUpdateRequest $request, User $worker)
+{
+    $worker->update($request->validated());
+
+    return redirect()->route('workerslist')->with('success', 'Trabajador actualizado correctamente.');
+}
 
     public function destroy(User $worker)
     {

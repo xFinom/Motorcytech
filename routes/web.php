@@ -44,8 +44,11 @@ Route::get('/dashboard/workerslist', [WorkerlistController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('workerslist');
 
-Route::put('/workers/{worker}', [WorkerlistController::class, 'update'])->name('workers.update');
-Route::delete('/workers/{worker}', [WorkerlistController::class, 'destroy'])->name('workers.destroy');
+Route::prefix('workers')->name('workers.')->group(function() {
+    Route::post('/', [WorkerlistController::class,'store'])->name('store');
+    Route::put('/{worker}', [WorkerlistController::class,'update'])->name('update');
+    Route::delete('/{worker}', [WorkerlistController::class,'destroy'])->name('destroy');
+});
 
 Route::get('/dashboard/motorcycleslist', [MotorcycleController::class, 'index'])
     ->middleware(['auth', 'verified'])

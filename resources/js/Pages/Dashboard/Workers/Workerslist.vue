@@ -21,7 +21,9 @@ import {
 } from '@/Components/ui/table'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import UpdateWorker from '@/Pages/Dashboard/Workers/Partials/UpdateWorker.vue'
+
 import DeleteWorker from './Partials/DeleteWorker.vue'
+import CreateWorker from './Partials/CreateWorker.vue'
 
 // Recibir trabajadores desde el backend (paginados)
 const props = defineProps<{
@@ -54,10 +56,11 @@ const selectedWorker = ref<WorkerRow | null>(null)
 // (Opcional para el siguiente paso) bandera para abrir/cerrar modal/hoja de edición
 const isEditOpen = ref(false)
 const isDeleteOpen = ref(false)
+const isCreateOpen = ref(false)
 
 function onClickDelete(worker: WorkerRow) {
-    selectedWorker.value = { ...worker} // guardamos la fila
-    isDeleteOpen.value = true             // abrimos el modal
+    selectedWorker.value = { ...worker } // guardamos la fila
+    isDeleteOpen.value = true // abrimos el modal
 }
 
 function onClickEdit(worker: WorkerRow) {
@@ -96,14 +99,18 @@ const columns = [
         <div class="pl-20 pr-20 pt-2">
             <div class="pl-20 pr-20">
                 <!-- Barra de filtrado -->
-                <div class="flex items-center py-4">
-                    <Input
-                        v-model="filter"
-                        class="max-w-sm"
-                        placeholder="Filtrar trabajadores..."
-                    />
-                </div>
+<div class="flex items-center justify-between py-4">
+    <Input
+        v-model="filter"
+        class="max-w-sm"
+        placeholder="Filtrar trabajadores..."
+    />
+    <Button  @click="isCreateOpen = true">
+        Crear
+    </Button>
+</div>
 
+                    
                 <!-- Tabla -->
                 <div class="rounded-md border">
                     <Table>
@@ -138,7 +145,7 @@ const columns = [
                                                 >Editar</DropdownMenuItem
                                             >
                                             <DropdownMenuItem @click="onClickDelete(worker)"
-                                            >Eliminar</DropdownMenuItem
+                                                >Eliminar</DropdownMenuItem
                                             >
                                         </DropdownMenuContent>
                                     </DropdownMenu>
@@ -193,4 +200,5 @@ const columns = [
     </DashboardLayout>
     <DeleteWorker v-model:open="isDeleteOpen" v-if="selectedWorker" :worker="selectedWorker" />
     <UpdateWorker v-model:open="isEditOpen" v-if="selectedWorker" :worker="selectedWorker" />
+    <CreateWorker v-model:open="isCreateOpen" />
 </template>

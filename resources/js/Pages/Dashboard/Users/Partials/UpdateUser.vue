@@ -11,10 +11,10 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
 } from '@/Components/ui/sheet'
 
 import { router } from "@inertiajs/vue3"
+import { z } from "zod"
 
 type UserRow = {
   id: number
@@ -30,7 +30,7 @@ const props = defineProps<{
   user: UserRow | null
 }>()
 
-// Creamos un objeto reactivo para edición
+// Datos del formulario
 const formData = reactive<UserRow>({
   id: 0,
   name: '',
@@ -41,7 +41,20 @@ const formData = reactive<UserRow>({
   phone: '',
 })
 
-// Copiamos los datos del prop al formData cuando cambie
+// Errores de validación (Zod + Laravel)
+const errors = reactive<Record<string, string>>({})
+
+// Zod schema
+const schema = z.object({
+  name: z.string().min(3, { message: "El nombre debe tener al menos 3 caracteres" }),
+  email: z.string().email({ message: "El correo no es válido" }),
+  rfc: z.string().min(12, { message: "El RFC debe tener al menos 12 caracteres" }).max(13, { message: "El RFC no puede tener más de 13 caracteres" }),
+  address: z.string().min(5, { message: "La dirección es obligatoria" }),
+  phone: z.string().regex(/^[0-9]{10}$/, { message: "El teléfono debe tener 10 dígitos" }),
+  role: z.string().optional(),
+})
+
+// Copiamos los datos cuando cambie el prop
 watch(
   () => props.user,
   (newUser) => {
@@ -53,13 +66,30 @@ watch(
 )
 
 function guardarCambios() {
+  // Resetear errores
+  Object.keys(errors).forEach(k => errors[k] = "")
+
+  // Validar con Zod
+  const result = schema.safeParse(formData)
+
+  if (!result.success) {
+    result.error.errors.forEach(e => {
+      errors[e.path[0]] = e.message
+    })
+    return
+  }
+
+  // Si pasa, enviar al backend
   router.put(route("users.update", formData.id), formData, {
     preserveScroll: true,
     onSuccess: () => {
-      console.log("Usuario actualizado correctamente")
+      console.log("Usuario actualizado correctamente ✅")
     },
-    onError: (errors) => {
-      console.error(errors)
+    onError: (serverErrors) => {
+      // Mapear errores de Laravel al mismo objeto
+      for (const field in serverErrors) {
+        errors[field] = serverErrors[field][0] // tomamos el primer mensaje
+      }
     }
   })
 }
@@ -79,33 +109,37 @@ function guardarCambios() {
         <div class="grid gap-3">
           <Label>Nombre</Label>
           <Input v-model="formData.name" placeholder="Nombre del cliente" />
+          <p v-if="errors.name" class="text-red-500 text-sm">{{ errors.name }}</p>
         </div>
 
         <div class="grid gap-3">
           <Label>Correo electrónico</Label>
           <Input v-model="formData.email" type="email" placeholder="ejemplo@correo.com" />
+          <p v-if="errors.email" class="text-red-500 text-sm">{{ errors.email }}</p>
         </div>
 
         <div class="grid gap-3">
           <Label>RFC</Label>
           <Input v-model="formData.rfc" placeholder="RFC del cliente" />
+          <p v-if="errors.rfc" class="text-red-500 text-sm">{{ errors.rfc }}</p>
         </div>
 
         <div class="grid gap-3">
           <Label>Dirección</Label>
           <Input v-model="formData.address" placeholder="Dirección del cliente" />
+          <p v-if="errors.address" class="text-red-500 text-sm">{{ errors.address }}</p>
         </div>
 
         <div class="grid gap-3">
           <Label>Teléfono</Label>
           <Input v-model="formData.phone" type="tel" placeholder="Número de teléfono" />
+          <p v-if="errors.phone" class="text-red-500 text-sm">{{ errors.phone }}</p>
         </div>
       </div>
 
       <SheetFooter class="mt-6">
-        <SheetClose asChild>
+        <!-- No cierres el modal si hay errores -->
         <Button type="button" @click="guardarCambios">Guardar cambios</Button>
-        </SheetClose>
         <SheetClose asChild>
           <Button variant="outline">Cerrar</Button>
         </SheetClose>
