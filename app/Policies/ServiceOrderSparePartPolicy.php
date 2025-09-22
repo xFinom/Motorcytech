@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Bills;
+use App\Models\ServiceOrderSparePart;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class BillsPolicy
+class ServiceOrderSparePartPolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,7 +19,7 @@ class BillsPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Bills $bills): bool
+    public function view(User $user, ServiceOrderSparePart $spareParts): bool
     {
         return false;
     }
@@ -35,7 +35,7 @@ class BillsPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Bills $bills): bool
+    public function update(User $user, ServiceOrderSparePart $spareParts): bool
     {
         return false;
     }
@@ -43,7 +43,7 @@ class BillsPolicy
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Bills $bills): bool
+    public function delete(User $user, ServiceOrderSparePart $spareParts): bool
     {
         return false;
     }
@@ -51,7 +51,7 @@ class BillsPolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Bills $bills): bool
+    public function restore(User $user, ServiceOrderSparePart $spareParts): bool
     {
         return false;
     }
@@ -59,7 +59,7 @@ class BillsPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Bills $bills): bool
+    public function forceDelete(User $user, ServiceOrderSparePart $spareParts): bool
     {
         return false;
     }

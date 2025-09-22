@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Bills;
+use App\Models\ServiceOrderBill;
 use App\Http\Requests\StoreBillsRequest;
 use App\Http\Requests\UpdateBillsRequest;
 
-class BillsController extends Controller
+class ServiceOrderBillController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class BillsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Bills $bills)
+    public function show(ServiceOrderBill $bills)
     {
         //
     }
@@ -43,7 +43,7 @@ class BillsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Bills $bills)
+    public function edit(ServiceOrderBill $bills)
     {
         //
     }
@@ -51,7 +51,7 @@ class BillsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBillsRequest $request, Bills $bills)
+    public function update(UpdateBillsRequest $request, ServiceOrderBill $bills)
     {
         //
     }
@@ -59,7 +59,7 @@ class BillsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bills $bills)
+    public function destroy(ServiceOrderBill $bills)
     {
         //
     }

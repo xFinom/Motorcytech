@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\PaymentStatus;
 
-class Bills extends Model
+class ServiceOrderBill extends Model
 {
-    /** @use HasFactory<\Database\Factories\BillsFactory> */
+    /** @use HasFactory<\Database\Factories\ServiceOrderBillFactory> */
     use HasFactory;
 
     protected $fillable = [
         'description',
         'price',
-        'status',
+        'payment_status',
+        'service_order_id',
     ];
 
     protected $casts = [
-        'status' => PaymentStatus::class,
+        'payment_status' => PaymentStatus::class,
     ];
 }

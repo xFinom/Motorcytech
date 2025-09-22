@@ -3,6 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use App\Enums\PaymentStatus;
+
 
 return new class extends Migration
 {
@@ -13,9 +15,11 @@ return new class extends Migration
     {
         Schema::create('service_orders_bills', function (Blueprint $table) {
             $table->id();
-            $table->foreignUlid('service_order_id')->constrained('service_orders')->onDelete('cascade');
-            $table->foreignId('bill_id')->constrained('bills')->onDelete('cascade');
-
+            $table->timestamps();
+            $table->longText('description');
+            $table->double('price');
+            $table->enum('payment_status', PaymentStatus::values())->default(PaymentStatus::Pendiente->value);
+            $table->foreignUlid('service_order_id')->constrained('service_orders');
         });
     }
 

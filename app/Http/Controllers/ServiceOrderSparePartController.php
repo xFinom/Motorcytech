@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SpareParts;
+use App\Models\ServiceOrderSparePart;
 use App\Http\Requests\StoreSparePartsRequest;
 use App\Http\Requests\UpdateSparePartsRequest;
 
-class SparePartsController extends Controller
+class ServiceOrderSparePartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -35,7 +35,7 @@ class SparePartsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(SpareParts $spareParts)
+    public function show(ServiceOrderSparePart $spareParts)
     {
         //
     }
@@ -43,7 +43,7 @@ class SparePartsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(SpareParts $spareParts)
+    public function edit(ServiceOrderSparePart $spareParts)
     {
         //
     }
@@ -51,7 +51,7 @@ class SparePartsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateSparePartsRequest $request, SpareParts $spareParts)
+    public function update(UpdateSparePartsRequest $request, ServiceOrderSparePart $spareParts)
     {
         //
     }
@@ -59,7 +59,7 @@ class SparePartsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(SpareParts $spareParts)
+    public function destroy(ServiceOrderSparePart $spareParts)
     {
         //
     }
