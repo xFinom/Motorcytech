@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class WorkerStoreRequest extends FormRequest
 {
@@ -15,10 +14,10 @@ class WorkerStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required','string','max:255'],
-            'email' => ['required','email','unique:users,email'],
-            'address' => ['required','string','max:255'],
-            'phone' => ['required','string','max:20'],
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'unique:users,email'],
+            'address' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
         ];
     }
 

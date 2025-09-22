@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MotorcycleType;
 use App\Http\Requests\StoreMotorcycleTypeRequest;
 use App\Http\Requests\UpdateMotorcycleTypeRequest;
+use App\Models\MotorcycleType;
 
 class MotorcycleTypeController extends Controller
 {

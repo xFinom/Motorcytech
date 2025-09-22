@@ -29,7 +29,7 @@ class StoreServiceOrdersRequest extends FormRequest
             'client.email' => 'required|string|email|unique:users,email|max:255',
             'client.phone' => 'required|string|max:255',
             'client.address' => 'required|string|max:255',
-            'client.rfc' => ['string', new RfcValid()],
+            'client.rfc' => ['string', new RfcValid],
             'motorcycle' => 'required',
             'motorcycle.placa' => 'required|string|max:255',
             'motorcycle.serial_num' => 'required|string|max:255',

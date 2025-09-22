@@ -1,14 +1,14 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use Inertia\Inertia;
+use App\Http\Controllers\MotorcycleController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\WorkerlistController;
-use App\Http\Controllers\MotorcycleController;
-use App\Http\Controllers\SupplierController;
+use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('Landing/LandingPage', [
@@ -31,7 +31,6 @@ Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index']
 Route::get('/dashboard/service/order/create', [ServiceOrdersController::class, 'create'])->middleware(['auth', 'verified'])->name('service.order.create');
 Route::post('/dashboard/service/order', [ServiceOrdersController::class, 'store'])->middleware(['auth', 'verified'])->name('service.order.store');
 
-
 Route::get('/dashboard/userslist', [UserListController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('userslist');
@@ -44,10 +43,10 @@ Route::get('/dashboard/workerslist', [WorkerlistController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('workerslist');
 
-Route::prefix('workers')->name('workers.')->group(function() {
-    Route::post('/', [WorkerlistController::class,'store'])->name('store');
-    Route::put('/{worker}', [WorkerlistController::class,'update'])->name('update');
-    Route::delete('/{worker}', [WorkerlistController::class,'destroy'])->name('destroy');
+Route::prefix('workers')->name('workers.')->group(function () {
+    Route::post('/', [WorkerlistController::class, 'store'])->name('store');
+    Route::put('/{worker}', [WorkerlistController::class, 'update'])->name('update');
+    Route::delete('/{worker}', [WorkerlistController::class, 'destroy'])->name('destroy');
 });
 
 Route::get('/dashboard/motorcycleslist', [MotorcycleController::class, 'index'])

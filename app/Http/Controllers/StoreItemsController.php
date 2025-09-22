@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\StoreItems;
 use App\Http\Requests\StoreStoreItemsRequest;
 use App\Http\Requests\UpdateStoreItemsRequest;
+use App\Models\StoreItems;
 
 class StoreItemsController extends Controller
 {

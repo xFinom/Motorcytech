@@ -13,5 +13,4 @@ class PrivateMessages extends Model
     protected $fillable = [
         'message',
     ];
-
 }

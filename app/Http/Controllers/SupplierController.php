@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
-use GrahamCampbell\ResultType\Success;
-use Inertia\Inertia; 
-use Illuminate\Http\Request;
+use App\Models\Supplier;
+use Inertia\Inertia;
+
 class SupplierController extends Controller
 {
     /**
@@ -16,10 +15,10 @@ class SupplierController extends Controller
     public function index()
     {
         $suppliers = Supplier::orderBy('company')
-                             ->paginate(10);
+            ->paginate(10);
 
         return Inertia::render('Dashboard/Supplier/SuppliersList', [
-            'suppliers' => $suppliers
+            'suppliers' => $suppliers,
         ]);
     }
 
@@ -45,7 +44,7 @@ class SupplierController extends Controller
             'product' => 'nullable|string|max:255',
         ]);
 
-         $supplier = Supplier::create($validated);
+        $supplier = Supplier::create($validated);
 
         // Responder con Inertia o redirigir
         return redirect()->route('supplierslist')->with('success', 'Proveedor creado correctamente');
@@ -94,6 +93,6 @@ class SupplierController extends Controller
     {
         $supplier->delete();
 
-         return redirect()->route('supplierslist')->with('success', 'Proveedor eliminado correctamente.');
+        return redirect()->route('supplierslist')->with('success', 'Proveedor eliminado correctamente.');
     }
 }

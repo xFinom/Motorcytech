@@ -4,7 +4,6 @@ namespace App\Policies;
 
 use App\Models\MotorcycleType;
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
 class MotorcycleTypePolicy
 {

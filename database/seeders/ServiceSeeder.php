@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Throwable;
@@ -11,6 +10,7 @@ class ServiceSeeder extends Seeder
 {
     /**
      * Run the database seeds.
+     *
      * @throws Throwable
      */
     public function run(): void

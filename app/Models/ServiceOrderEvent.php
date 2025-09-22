@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Enums\ServiceOrderEvents;
 use App\Enums\ApprovalStatus;
+use App\Enums\ServiceOrderEvents;
 use Database\Factories\ServiceOrderEventFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

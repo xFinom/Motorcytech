@@ -1,9 +1,9 @@
 <?php
 
+use App\Enums\ServiceOrderStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Enums\ServiceOrderStatus;
 
 return new class extends Migration
 {
@@ -33,4 +33,3 @@ return new class extends Migration
         Schema::dropIfExists('service_orders');
     }
 };
-

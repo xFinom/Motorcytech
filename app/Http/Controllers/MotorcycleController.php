@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Motorcycle;
-use Inertia\Inertia;
 use App\Http\Requests\StoreMotorcycleRequest;
 use App\Http\Requests\UpdateMotorcycleRequest;
+use App\Models\Motorcycle;
+use Inertia\Inertia;
 
 class MotorcycleController extends Controller
 {
@@ -14,7 +14,7 @@ class MotorcycleController extends Controller
      */
     public function index()
     {
-          // Cargar motos con sus relaciones
+        // Cargar motos con sus relaciones
         $motorcycles = Motorcycle::with(['type', 'cliente', 'type.brand'])
             ->paginate(10);
 

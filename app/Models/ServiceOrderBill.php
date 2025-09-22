@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\PaymentStatus;
 
 class ServiceOrderBill extends Model
 {

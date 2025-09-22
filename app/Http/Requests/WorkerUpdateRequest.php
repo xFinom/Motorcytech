@@ -18,7 +18,7 @@ class WorkerUpdateRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', Rule::unique('users','email')->ignore($workerId)],
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($workerId)],
             'address' => ['nullable', 'string', 'max:255'],
             'phone' => ['nullable', 'string', 'max:20'],
         ];

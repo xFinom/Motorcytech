@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ServiceOrderBill;
 use App\Http\Requests\StoreBillsRequest;
 use App\Http\Requests\UpdateBillsRequest;
+use App\Models\ServiceOrderBill;
 
 class ServiceOrderBillController extends Controller
 {

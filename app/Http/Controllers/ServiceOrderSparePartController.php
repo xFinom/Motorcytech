@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ServiceOrderSparePart;
 use App\Http\Requests\StoreSparePartsRequest;
 use App\Http\Requests\UpdateSparePartsRequest;
+use App\Models\ServiceOrderSparePart;
 
 class ServiceOrderSparePartController extends Controller
 {

@@ -18,7 +18,7 @@ class MotorcycleTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->randomElement(['Deportiva','Enduro', 'Naked', 'Scooter']),
+            'name' => $this->faker->randomElement(['Deportiva', 'Enduro', 'Naked', 'Scooter']),
             'brand_id' => Brand::factory(),
         ];
     }

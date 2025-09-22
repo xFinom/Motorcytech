@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use App\Models\MotorcycleType;
-use App\Models\ServiceOrders;
 use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
+use App\Models\Brand;
+use App\Models\ServiceOrders;
 use Inertia\Inertia;
 
 class ServiceOrdersController extends Controller
@@ -21,7 +20,7 @@ class ServiceOrdersController extends Controller
             ->paginate(10);
 
         return Inertia::render('Dashboard/ServiceOrders/IndexServiceOrder', [
-            'serviceOrders' => $serviceOrders
+            'serviceOrders' => $serviceOrders,
         ]);
     }
 
@@ -33,7 +32,7 @@ class ServiceOrdersController extends Controller
         // TODO: crear tabla de servicios
         $groupedTypes = Brand::with('types')->get()->mapWithKeys(function ($brand) {
             return [
-                $brand->id => $brand->types->map(fn($type) => [
+                $brand->id => $brand->types->map(fn ($type) => [
                     'id' => $type->id,
                     'name' => $type->name,
                 ])->toArray(),
@@ -44,7 +43,7 @@ class ServiceOrdersController extends Controller
 
         return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder', [
             'types' => $groupedTypes,
-            'brands' => $brands
+            'brands' => $brands,
         ]);
     }
 

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PrivateMessages;
 use App\Http\Requests\StorePrivateMessagesRequest;
 use App\Http\Requests\UpdatePrivateMessagesRequest;
+use App\Models\PrivateMessages;
 
 class PrivateMessagesController extends Controller
 {

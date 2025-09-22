@@ -9,8 +9,8 @@ class StoreItems extends Model
 {
     /** @use HasFactory<\Database\Factories\StoreItemsFactory> */
     use HasFactory;
-    
-     protected $fillable = [
+
+    protected $fillable = [
         'name',
         'quantity',
         'price',

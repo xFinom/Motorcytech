@@ -3,10 +3,10 @@
 namespace App\Models;
 
 use App\Enums\ApprovalStatus;
+use App\Enums\PaymentStatus;
 use Database\Factories\ServiceOrderSparePartFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Enums\PaymentStatus;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class ServiceOrderSparePart extends Model
@@ -14,7 +14,7 @@ class ServiceOrderSparePart extends Model
     /** @use HasFactory<ServiceOrderSparePartFactory> */
     use HasFactory;
 
-     protected $fillable = [
+    protected $fillable = [
         'name',
         'quantity',
         'price',

@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
-use App\Models\Motorcycle;
 use App\Models\Brand;
+use App\Models\Motorcycle;
 use App\Models\MotorcycleType;
 use App\Models\User;
+use Illuminate\Database\Seeder;
 
 class MotorcycleSeeder extends Seeder
 {

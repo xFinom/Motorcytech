@@ -2,9 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Supplier;
 use Illuminate\Database\Eloquent\Factories\Factory;
-
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Supplier>
@@ -16,13 +14,13 @@ class SupplierFactory extends Factory
      *
      * @return array<string, mixed>
      */
-     public function definition(): array
+    public function definition(): array
     {
         $companies = [
             'Honda S.A de C.V', 'Suzuki S.A de C.V',
             'Refaccionaria MotoPlus', 'Refaccionaria Moto Race',
             'Refacciones MX', 'MotoRefacciones Express',
-            'MotoRefa GDL'
+            'MotoRefa GDL',
         ];
 
         $products = [
@@ -32,7 +30,7 @@ class SupplierFactory extends Factory
             'Filtros',
             'Llantas',
             'Cascos',
-            'Accesorios'
+            'Accesorios',
         ];
 
         return [
