@@ -2,8 +2,11 @@
 import { Head } from '@inertiajs/vue3'
 
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-
+import About from './Partials/About.vue'
+import OurTeam from './Partials/OurTeam.vue'
+import Numbers from './Partials/Numbers.vue'
 import Footer from '../Partials/Footer.vue'
+
 </script>
 
 <style>
@@ -47,9 +50,11 @@ import Footer from '../Partials/Footer.vue'
 
 <template>
     <Head title="Sobre Nosotros" />
-    <div class="min-h-screen pb-12 font-sans antialiased">
+    <div class="min-h-screen font-sans antialiased">
         <Navbar />
-
+        <About />
+        <Numbers />
+        <OurTeam />
         <Footer />
     </div>
 </template>
