@@ -6,6 +6,7 @@ import About from './Partials/About.vue'
 import OurTeam from './Partials/OurTeam.vue'
 import Numbers from './Partials/Numbers.vue'
 import Footer from '../Partials/Footer.vue'
+import Chatbot from '../Chatbot/Chatbot.vue'
 
 </script>
 
@@ -56,5 +57,6 @@ import Footer from '../Partials/Footer.vue'
         <Numbers />
         <OurTeam />
         <Footer />
+        <Chatbot/>
     </div>
 </template>

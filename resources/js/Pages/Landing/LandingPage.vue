@@ -6,6 +6,7 @@ import BulletPoints from '@/Pages/Landing/Partials/BulletPoints.vue'
 import HeroSection from '@/Pages/Landing/Partials/HeroSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 import Services from '@/Pages/Landing/Partials/Services.vue'
+import Chatbot from './Chatbot/Chatbot.vue'
 
 import Footer from './Partials/Footer.vue'
 </script>
@@ -58,5 +59,6 @@ import Footer from './Partials/Footer.vue'
         <BulletPoints />
         <Services />
         <Footer />
+        <Chatbot/>
     </div>
 </template>
