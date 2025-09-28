@@ -14,17 +14,10 @@ import {
     StepperTrigger,
 } from '@/Components/ui/stepper'
 import { Textarea } from '@/Components/ui/textarea'
+import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-
-const open = ref(false)
-
-const toggle = () => {
-    open.value = !open.value
-}
-
-const close = () => {
-    open.value = false
-}
+import { UserRole } from '@/constants/enums/UserRole'
+import { PrivateMessage } from '@/interfaces/PrivateMessage'
 
 const steps = [
     {
@@ -114,6 +107,52 @@ const statusIcons: Record<OrderEvent['status'], string> = {
     completed: 'mdi:check-bold',
     delivered: 'mdi:truck-delivery-outline',
 }
+
+const comments = ref<PrivateMessage[]>([
+    {
+        id: 2,
+        message: "That's awesome. I think our users will really appreciate the improvements.",
+        created_at: '2025-09-25T11:46:00Z',
+        user: {
+            id: 2,
+            name: 'Juan Perez',
+            email: 'juan@example.com',
+            phone: '333142312',
+            address: 'calle 123',
+            role: UserRole.TRABAJADOR,
+            privateMessages: [],
+        },
+    },
+    {
+        id: 1,
+        message: 'Yes, totally agree! This will make the workflow so much smoother.',
+        created_at: '2025-09-25T11:50:00Z',
+        user: {
+            id: 1,
+            name: 'Maria Lopez',
+            email: 'maria@example.com',
+            role: UserRole.CLIENTE,
+            rfc: '1312312312',
+            phone: '333142312',
+            address: 'calle 123',
+            privateMessages: [],
+        },
+    },
+    {
+        id: 3,
+        message: 'Can we also add notifications for better UX?',
+        created_at: '2025-09-25T12:00:00Z',
+        user: {
+            id: 3,
+            name: 'Carlos Sanchez',
+            email: 'carlos@example.com',
+            phone: '333142312',
+            address: 'calle 123',
+            role: UserRole.TRABAJADOR,
+            privateMessages: [],
+        },
+    },
+])
 </script>
 
 <template>
@@ -213,102 +252,7 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                             </div>
                         </dl>
                     </div>
-                    <div
-                        class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                    >
-                        <h2 class="mb-4 text-xl font-semibold text-primary dark:text-primary">
-                            Conversación
-                        </h2>
-
-                        <div class="relative flex items-start gap-2.5">
-                            <img
-                                class="h-8 w-8 rounded-full"
-                                src="https://cdn-icons-png.flaticon.com/512/10337/10337609.png"
-                                alt="Jese image"
-                            />
-
-                            <div
-                                class="leading-1.5 flex w-full max-w-[320px] flex-col rounded-e-xl rounded-es-xl bg-gray-100 p-4 dark:bg-gray-700"
-                            >
-                                <div class="flex items-center space-x-2">
-                                    <span
-                                        class="text-sm font-semibold text-gray-900 dark:text-white"
-                                        >Juan Perez</span
-                                    >
-                                    <span
-                                        class="text-sm font-normal text-gray-500 dark:text-gray-400"
-                                        >11:46</span
-                                    >
-                                </div>
-                                <p class="py-2.5 text-sm font-normal text-gray-900 dark:text-white">
-                                    That's awesome. I think our users will really appreciate the
-                                    improvements.
-                                </p>
-                                <span class="text-sm font-normal text-gray-500 dark:text-gray-400"
-                                    >Received</span
-                                >
-                            </div>
-
-                            <button
-                                @click="toggle"
-                                class="inline-flex items-center self-center rounded-lg bg-white p-2 text-sm font-medium text-gray-900 hover:bg-gray-100 focus:outline-none dark:bg-gray-900 dark:text-white dark:hover:bg-gray-800"
-                                type="button"
-                            >
-                                ⋮
-                            </button>
-
-                            <div
-                                v-if="open"
-                                @click.outside="close"
-                                class="z-5 absolute right-14 top-10 w-40 divide-y divide-gray-100 rounded-lg bg-white shadow-sm dark:divide-gray-600 dark:bg-gray-700"
-                            >
-                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Responder</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Reenviar</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Copiar</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Reportar</a
-                                        >
-                                    </li>
-                                    <li>
-                                        <a
-                                            href="#"
-                                            class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600"
-                                            >Eliminar</a
-                                        >
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="gap-2, mt-5 grid w-full">
-                            <Textarea
-                                class="rounded-e-xl rounded-es-xl bg-gray-100 p-4 dark:bg-gray-700"
-                                placeholder="Escribe tu mensaje aquí."
-                            />
-                            <Button class="mt-5">Enviar</Button>
-                        </div>
-                    </div>
+                    <CommentSection :comments="comments" />
                 </div>
                 <div class="mt-6 grow sm:mt-8 lg:mt-0">
                     <div
