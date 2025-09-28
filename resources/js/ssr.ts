@@ -6,7 +6,7 @@ import { DefineComponent, createSSRApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import createServer from '@inertiajs/vue3/server'
 
-import { ZiggyVue } from '../../vendor/tightenco/ziggy'
+import { ZiggyVue } from 'ziggy-js'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel'
 

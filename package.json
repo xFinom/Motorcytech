@@ -46,6 +46,7 @@
         "vaul-vue": "^0.4.1",
         "vee-validate": "^4.15.1",
         "vue-sonner": "^2.0.1",
+        "ziggy-js": "^2.6.0",
         "zod": "^3.25.74"
     }
 }
