@@ -35,7 +35,8 @@ services:
       timeout: 5s
       retries: 3
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
 
   mariadb:
     image: 'mariadb:10.9.4'
@@ -54,6 +55,12 @@ services:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:Z
     networks:
       - laravel-production
+    healthcheck:
+      test: [ "CMD-SHELL", "mysqladmin ping -h localhost -p${DB_PASSWORD} > /dev/null 2>&1 || exit 1" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
 networks:
   laravel-production:
