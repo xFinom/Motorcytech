@@ -21,7 +21,10 @@ class ServiceOrders extends Model
     protected $fillable = [
         'entry_date',
         'delivery_date',
+        'motorcycle_id',
         'status',
+        'client_id',
+        'service_id',
         'note',
     ];
 

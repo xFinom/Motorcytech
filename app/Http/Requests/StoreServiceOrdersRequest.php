@@ -34,7 +34,6 @@ class StoreServiceOrdersRequest extends FormRequest
             'motorcycle.placa' => 'required|string|max:255',
             'motorcycle.serial_num' => 'required|string|max:255',
             'motorcycle.motor_num' => 'required|string|max:255',
-            'motorcycle.brand_id' => 'required|integer|exists:brands,id',
             'motorcycle.type_id' => 'required|integer|exists:motorcycle_types,id',
             'motorcycle.year' => 'required|integer|digits:4',
             'service' => 'required',

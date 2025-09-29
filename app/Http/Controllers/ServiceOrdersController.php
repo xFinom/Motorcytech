@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
 use App\Models\Brand;
+use App\Models\Motorcycle;
 use App\Models\ServiceOrders;
-use App\Models\ServiceOrderEvent;
-use App\Enums\ServiceOrderEvents;
-use App\Enums\ServiceOrderStatus;
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 
-
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class ServiceOrdersController extends Controller
@@ -25,6 +25,7 @@ class ServiceOrdersController extends Controller
     {
         $serviceOrders = ServiceOrders::query()
             ->with(['motorcycle', 'client', 'motorcycle.type', 'motorcycle.type.brand', 'service'])
+            ->latest()
             ->paginate(10);
 
         return Inertia::render('Dashboard/ServiceOrders/IndexServiceOrder', [
@@ -60,7 +61,20 @@ class ServiceOrdersController extends Controller
      */
     public function store(StoreServiceOrdersRequest $request)
     {
-        dd($request);
+        $userData = array_merge($request->client, ['password' => Str::password()]);
+        $user = User::query()->create($userData);
+
+        $motorcycleData = array_merge($request->motorcycle, ['id_cliente' => $user->id]);
+        $motorcycle = Motorcycle::query()->create($motorcycleData);
+
+        $user->serviceOrders()->create([
+            'entry_date' => Carbon::now(),
+            'motorcycle_id' => $motorcycle->id,
+            'service_id' => $request->service['service_id'],
+            'note' => $request->service['note'],
+        ]);
+
+        return redirect()->route('service.order.index');
     }
 
     /**
