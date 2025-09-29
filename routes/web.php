@@ -20,10 +20,15 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/tracking-order', function () {
-    return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
-});
+Route::get('/service-orders/{serviceOrder:id}', [ServiceOrdersController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('service-orders.show');
+Route::patch('/service-orders/{serviceOrder}/status', [ServiceOrdersController::class, 'updateStatus'])
+    ->name('service-orders.update-status');
 
+
+
+    
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -31,6 +36,7 @@ Route::get('/dashboard', function () {
 Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');
 Route::get('/dashboard/service/order/create', [ServiceOrdersController::class, 'create'])->middleware(['auth', 'verified'])->name('service.order.create');
 Route::post('/dashboard/service/order', [ServiceOrdersController::class, 'store'])->middleware(['auth', 'verified'])->name('service.order.store');
+
 
 Route::get('/dashboard/userslist', [UserListController::class, 'index'])
     ->middleware(['auth', 'verified'])
