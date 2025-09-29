@@ -52,7 +52,7 @@ Route::delete('/reviews/{review}', [ReviewsController::class, 'destroy'])
 
 Route::get('/AboutUs', function () {
     return Inertia::render('Landing/About/AboutUs');
-});
+})->name('aboutUs');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');

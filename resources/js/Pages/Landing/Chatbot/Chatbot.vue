@@ -54,7 +54,7 @@ const sendMessage = () => {
                             <Icon icon="mdi:robot-outline" class="h-6 w-6 text-white" />
                         </div>
                         <div>
-                            <CardTitle class="text-sm">Motorcybot</CardTitle>
+                            <CardTitle class="text-center text-sm">Motorcybot</CardTitle>
                             <CardDescription class="text-xs text-gray-500 dark:text-gray-400">
                                 Asistente virtual
                             </CardDescription>

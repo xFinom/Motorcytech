@@ -10,9 +10,9 @@ const isScrolled = ref(false)
 
 const menu = [
     { title: 'Inicio', href: route('home'), },
-    { title: 'Servicios', href: '/servicios' },
     { title: 'Seguimiento', href: '/seguimiento' },
-    { title: 'Sobre nosotros', href: '/contacto' }
+    { title: 'Reseñas', href: route('reviews.index') },
+    { title: 'Sobre nosotros', href: route('aboutUs') }
 ];
 
 

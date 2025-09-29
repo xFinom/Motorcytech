@@ -50,13 +50,12 @@ const handleImageError = (e) => {
         <h1
             class="mb-4 mt-3 text-center text-4xl font-extrabold leading-none tracking-tight text-[#fb5607] md:text-5xl lg:text-6xl"
         >
-            We invest in the world’s potential
+            Las marcas que conoces, en manos de expertos
         </h1>
         <p
             class="mb-8 text-center text-lg font-normal text-white dark:text-gray-400 sm:px-16 lg:text-xl xl:px-48"
         >
-            Here at Flowbite we focus on markets where technology, innovation, and capital can
-            unlock long-term value and drive economic growth.
+            Contamos con alta experiencia en reparación en las mejores marcas líderes en el sector
         </p>
         <div class="relative mx-auto mb-4 h-full overflow-hidden" style="width: 50%">
             <div
