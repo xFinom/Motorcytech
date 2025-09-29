@@ -1,5 +1,4 @@
 import {
-    AtSign,
     BanknoteArrowDown,
     BanknoteArrowUp,
     Bike,
@@ -53,7 +52,7 @@ export const serviceOrderMenu = [
     },
     {
         title: 'Reseñas',
-        url: '#',
+        url: route('reviews.validreview'),
         icon: Star,
     },
 ]

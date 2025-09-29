@@ -15,9 +15,15 @@ class Reviews extends Model
         'comment',
         'rating',
         'status',
+        'client_id',
     ];
 
     protected $casts = [
         'status' => ReviewStatus::class,
     ];
+
+    public function client()
+    {
+        return $this->belongsTo(User::class, 'client_id');
+    }
 }

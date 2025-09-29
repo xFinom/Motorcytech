@@ -21,9 +21,8 @@ class MotorcycleSeeder extends Seeder
         $users = User::all();
 
         // Crear 15 motocicletas
-        Motorcycle::factory(15)->state(function () use ($brands, $types, $users) {
+        Motorcycle::factory(15)->state(function () use ($types, $users) {
             return [
-                'brand_id' => $brands->random()->id,
                 'type_id' => $types->random()->id,
                 'id_cliente' => $users->random()->id,
             ];

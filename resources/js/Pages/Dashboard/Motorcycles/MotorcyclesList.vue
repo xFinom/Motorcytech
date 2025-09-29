@@ -49,13 +49,10 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="w-full">
+        <div class="pl-10 pr-10">
             <!-- Barra de filtrado -->
             <div class="flex items-center py-4">
-                <Input class="max-w-sm" placeholder="Filtrar por marca..." v-model="filterText" />
-                <Button variant="outline" class="ml-auto">
-                    Columns <ChevronDown class="ml-2 h-4 w-4" />
-                </Button>
+                <Input class="max-w-sm" placeholder="Buscar" v-model="filterText" />
             </div>
 
             <!-- Tabla -->

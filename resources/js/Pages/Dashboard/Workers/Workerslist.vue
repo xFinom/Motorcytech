@@ -96,102 +96,100 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="pl-20 pr-20 pt-2">
-            <div class="pl-20 pr-20">
-                <!-- Barra de filtrado -->
-                <div class="flex items-center justify-between py-4">
-                    <Input
-                        v-model="filter"
-                        class="max-w-sm"
-                        placeholder="Filtrar trabajadores..."
-                    />
-                    <Button @click="isCreateOpen = true"> Crear </Button>
-                </div>
+        <div class="pl-10 pr-10">
+            <!-- Barra de filtrado -->
+            <div class="flex items-center justify-between py-4">
+                <Input
+                    v-model="filter"
+                    class="max-w-sm"
+                    placeholder="Buscar"
+                />
+                <Button @click="isCreateOpen = true"> Crear </Button>
+            </div>
 
-                <!-- Tabla -->
-                <div class="rounded-md border">
-                    <Table>
-                        <TableHeader>
-                            <TableRow>
-                                <TableHead v-for="col in columns" :key="col.name" class="text-left">
-                                    <div class="flex items-center text-primary">
-                                        <span v-if="!col.hideHeader">{{ col.name }}</span>
-                                        <ArrowUpDown v-if="col.sortable" class="ml-2 h-4 w-4" />
-                                    </div>
-                                </TableHead>
-                            </TableRow>
-                        </TableHeader>
+            <!-- Tabla -->
+            <div class="rounded-md border">
+                <Table>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead v-for="col in columns" :key="col.name" class="text-left">
+                                <div class="flex items-center text-primary">
+                                    <span v-if="!col.hideHeader">{{ col.name }}</span>
+                                    <ArrowUpDown v-if="col.sortable" class="ml-2 h-4 w-4" />
+                                </div>
+                            </TableHead>
+                        </TableRow>
+                    </TableHeader>
 
-                        <TableBody>
-                            <!-- Mostrar trabajadores filtrados -->
-                            <TableRow v-for="worker in filteredWorkers" :key="worker.email">
-                                <TableCell>{{ worker.name }}</TableCell>
-                                <TableCell>{{ worker.email }}</TableCell>
-                                <TableCell>{{ worker.role }}</TableCell>
-                                <TableCell>{{ worker.address }}</TableCell>
-                                <TableCell>{{ worker.phone }}</TableCell>
-                                <TableCell>
-                                    <DropdownMenu>
-                                        <DropdownMenuTrigger as-child>
-                                            <Button variant="ghost" size="sm" class="h-8 w-8 p-0">
-                                                <MoreVertical class="h-4 w-4" />
-                                            </Button>
-                                        </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuItem @click="onClickEdit(worker)"
-                                                >Editar</DropdownMenuItem
-                                            >
-                                            <DropdownMenuItem @click="onClickDelete(worker)"
-                                                >Eliminar</DropdownMenuItem
-                                            >
-                                        </DropdownMenuContent>
-                                    </DropdownMenu>
-                                </TableCell>
-                            </TableRow>
+                    <TableBody>
+                        <!-- Mostrar trabajadores filtrados -->
+                        <TableRow v-for="worker in filteredWorkers" :key="worker.email">
+                            <TableCell>{{ worker.name }}</TableCell>
+                            <TableCell>{{ worker.email }}</TableCell>
+                            <TableCell>{{ worker.role }}</TableCell>
+                            <TableCell>{{ worker.address }}</TableCell>
+                            <TableCell>{{ worker.phone }}</TableCell>
+                            <TableCell>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger as-child>
+                                        <Button variant="ghost" size="sm" class="h-8 w-8 p-0">
+                                            <MoreVertical class="h-4 w-4" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuItem @click="onClickEdit(worker)"
+                                            >Editar</DropdownMenuItem
+                                        >
+                                        <DropdownMenuItem @click="onClickDelete(worker)"
+                                            >Eliminar</DropdownMenuItem
+                                        >
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </TableCell>
+                        </TableRow>
 
-                            <!-- Fila vacía si no hay coincidencias -->
-                            <TableRow v-if="filteredWorkers.length === 0">
-                                <TableCell
-                                    :colspan="columns.length"
-                                    class="h-24 text-center text-muted-foreground"
-                                >
-                                    No se encontraron resultados.
-                                </TableCell>
-                            </TableRow>
-                        </TableBody>
-                    </Table>
-                </div>
+                        <!-- Fila vacía si no hay coincidencias -->
+                        <TableRow v-if="filteredWorkers.length === 0">
+                            <TableCell
+                                :colspan="columns.length"
+                                class="h-24 text-center text-muted-foreground"
+                            >
+                                No se encontraron resultados.
+                            </TableCell>
+                        </TableRow>
+                    </TableBody>
+                </Table>
+            </div>
 
-                <!-- Paginación -->
-                <div class="mt-4 flex justify-end space-x-2">
-                    <Button
-                        class="text-primary"
-                        variant="outline"
-                        size="sm"
-                        :disabled="props.workers.current_page === 1"
-                        @click="
-                            $inertia.get(route('workerslist'), {
-                                page: props.workers.current_page - 1,
-                            })
-                        "
-                    >
-                        Anterior
-                    </Button>
+            <!-- Paginación -->
+            <div class="mt-4 flex justify-end space-x-2">
+                <Button
+                    class="text-primary"
+                    variant="outline"
+                    size="sm"
+                    :disabled="props.workers.current_page === 1"
+                    @click="
+                        $inertia.get(route('workerslist'), {
+                            page: props.workers.current_page - 1,
+                        })
+                    "
+                >
+                    Anterior
+                </Button>
 
-                    <Button
-                        class="text-primary"
-                        variant="outline"
-                        size="sm"
-                        :disabled="props.workers.current_page === props.workers.last_page"
-                        @click="
-                            $inertia.get(route('workerslist'), {
-                                page: props.workers.current_page + 1,
-                            })
-                        "
-                    >
-                        Siguiente
-                    </Button>
-                </div>
+                <Button
+                    class="text-primary"
+                    variant="outline"
+                    size="sm"
+                    :disabled="props.workers.current_page === props.workers.last_page"
+                    @click="
+                        $inertia.get(route('workerslist'), {
+                            page: props.workers.current_page + 1,
+                        })
+                    "
+                >
+                    Siguiente
+                </Button>
             </div>
         </div>
     </DashboardLayout>

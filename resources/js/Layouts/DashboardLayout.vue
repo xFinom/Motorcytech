@@ -52,7 +52,7 @@ import { isDark, toggleDarkMode } from '@/lib/darkMode'
                 </Button>
             </header>
             <div class="flex flex-1 flex-col gap-4 px-4 py-10">
-                <slot></slot>
+                <slot />
             </div>
         </SidebarInset>
     </SidebarProvider>

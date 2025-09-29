@@ -1,13 +1,9 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 
+import Footer from '@/Pages/Landing/Partials/Footer.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-import About from './Partials/About.vue'
-import OurTeam from './Partials/OurTeam.vue'
-import Numbers from './Partials/Numbers.vue'
-import Footer from '../Partials/Footer.vue'
-import Chatbot from '../Chatbot/Chatbot.vue'
-
+import Chatbot from '@/Pages/Landing/Chatbot/Chatbot.vue'
 </script>
 
 <style>
@@ -50,13 +46,11 @@ import Chatbot from '../Chatbot/Chatbot.vue'
 </style>
 
 <template>
-    <Head title="Sobre Nosotros" />
+    <Head title="Inicio" />
     <div class="min-h-screen font-sans antialiased">
         <Navbar />
-        <About />
-        <Numbers />
-        <OurTeam />
+        <slot />
+        <Chatbot />
         <Footer />
-        <Chatbot/>
     </div>
 </template>

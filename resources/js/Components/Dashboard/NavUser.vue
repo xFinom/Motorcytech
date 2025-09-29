@@ -38,12 +38,12 @@ const { isMobile } = useSidebar()
                         <Avatar class="h-8 w-8 rounded-lg">
                             <!--                            <AvatarImage :src="user.avatar" :alt="user.name" />-->
                             <AvatarFallback class="rounded-lg text-primary">
-                                {{ generateInitials(user.name) }}
+                                {{ generateInitials(user?.name ?? 'John Doe') }}
                             </AvatarFallback>
                         </Avatar>
                         <div class="grid flex-1 text-left text-sm leading-tight">
-                            <span class="truncate font-semibold">{{ user.name }}</span>
-                            <span class="truncate text-xs">{{ user.email }}</span>
+                            <span class="truncate font-semibold">{{ user?.name }}</span>
+                            <span class="truncate text-xs">{{ user?.email }}</span>
                         </div>
                         <ChevronsUpDown class="ml-auto size-4 text-primary" />
                     </SidebarMenuButton>
@@ -59,12 +59,12 @@ const { isMobile } = useSidebar()
                             <Avatar class="h-8 w-8 rounded-lg">
                                 <!--                                <AvatarImage :src="user.avatar" :alt="user.name" />-->
                                 <AvatarFallback class="rounded-lg text-primary">
-                                    {{ generateInitials(user.name) }}
+                                    {{ generateInitials(user?.name ?? 'John Doe') }}
                                 </AvatarFallback>
                             </Avatar>
                             <div class="grid flex-1 text-left text-sm leading-tight">
-                                <span class="truncate font-semibold">{{ user.name }}</span>
-                                <span class="truncate text-xs">{{ user.email }}</span>
+                                <span class="truncate font-semibold">{{ user?.name }}</span>
+                                <span class="truncate text-xs">{{ user?.email }}</span>
                             </div>
                         </div>
                     </DropdownMenuLabel>
