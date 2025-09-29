@@ -3,6 +3,7 @@ import { Head } from '@inertiajs/vue3'
 
 import Footer from '@/Pages/Landing/Partials/Footer.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
+import Chatbot from '@/Pages/Landing/Chatbot/Chatbot.vue'
 </script>
 
 <style>
@@ -49,6 +50,7 @@ import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
     <div class="min-h-screen font-sans antialiased">
         <Navbar />
         <slot />
+        <Chatbot />
         <Footer />
     </div>
 </template>
