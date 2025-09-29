@@ -29,7 +29,6 @@ Route::post('/service/order/message', [PrivateMessagesController::class, 'store'
 
 Route::get('/reviews', [ReviewsController::class, 'index'])->name('reviews.index');
 
-
 Route::middleware(['auth', 'verified'])->group(function () {
     // Mostrar formulario
     Route::get('/ReviewsForm', function () {

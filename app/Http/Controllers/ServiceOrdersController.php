@@ -10,8 +10,6 @@ use App\Models\ServiceOrders;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-
-
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
@@ -20,7 +18,6 @@ class ServiceOrdersController extends Controller
     /**
      * Display a listing of the resource.
      **/
-
     public function index()
     {
         $serviceOrders = ServiceOrders::query()
@@ -41,7 +38,7 @@ class ServiceOrdersController extends Controller
         // TODO: crear tabla de servicios
         $groupedTypes = Brand::with('types')->get()->mapWithKeys(function ($brand) {
             return [
-                $brand->id => $brand->types->map(fn($type) => [
+                $brand->id => $brand->types->map(fn ($type) => [
                     'id' => $type->id,
                     'name' => $type->name,
                 ])->toArray(),
@@ -115,6 +112,7 @@ class ServiceOrdersController extends Controller
             'orderHistory' => $orderHistory,
         ]);
     }
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -127,8 +125,6 @@ class ServiceOrdersController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateServiceOrdersRequest $request, ServiceOrders $serviceOrder) {}
-
-
 
     /**
      * Remove the specified resource from storage.

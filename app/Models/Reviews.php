@@ -22,7 +22,7 @@ class Reviews extends Model
         'status' => ReviewStatus::class,
     ];
 
-        public function client()
+    public function client()
     {
         return $this->belongsTo(User::class, 'client_id');
     }

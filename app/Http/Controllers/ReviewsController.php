@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ReviewStatus;
 use App\Http\Requests\StoreReviewsRequest;
 use App\Models\Reviews;
-use App\Enums\ReviewStatus;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -20,7 +20,7 @@ class ReviewsController extends Controller
             ->get();
 
         return Inertia::render('Dashboard/Reviews/ReviewsShow', [
-            'reviews' => $reviews
+            'reviews' => $reviews,
         ]);
     }
 
@@ -31,9 +31,10 @@ class ReviewsController extends Controller
             ->get();
 
         return Inertia::render('Dashboard/Reviews/ValidReviews', [
-            'reviews' => $reviews
+            'reviews' => $reviews,
         ]);
     }
+
     /**
      * Show the form for creating a new resource.
      */
