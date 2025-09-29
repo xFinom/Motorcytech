@@ -16,13 +16,14 @@ import {
 import { Textarea } from '@/Components/ui/textarea'
 import { PrivateMessage } from '@/interfaces/PrivateMessage'
 
-defineProps<{
+const props = defineProps<{
     privateMessages: Array<PrivateMessage>
+    serviceOrderId: string
 }>()
 
 const form = useForm({
     message: '',
-    service_order_id: '01K69316CE5P89NDGDQ65910VP',
+    service_order_id: props.serviceOrderId,
 })
 
 function submit() {

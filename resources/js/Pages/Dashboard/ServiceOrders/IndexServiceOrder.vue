@@ -45,12 +45,6 @@ const selectedOrder = ref<ServiceOrder | null>(null)
 
 // (Opcional para el siguiente paso) bandera para abrir/cerrar modal/hoja de edición
 const isEditOpen = ref(false)
-const isDeleteOpen = ref(false)
-
-function onClickDelete(order: ServiceOrder) {
-    selectedOrder.value = { ...order } // guardamos la fila
-    isDeleteOpen.value = true // abrimos el modal
-}
 
 function onClickEdit(order: ServiceOrder) {
     selectedOrder.value = { ...order }
@@ -177,9 +171,9 @@ function goToTracking(order: ServiceOrder) {
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
-                                            <DropdownMenuItem @click="onClickEdit(order)"
-                                                >Cambiar estatus</DropdownMenuItem
-                                            >
+                                            <DropdownMenuItem @click="onClickEdit(order)">
+                                                Cambiar estatus
+                                            </DropdownMenuItem>
                                             <DropdownMenuItem @click="goToTracking(order)">
                                                 Seguimiento de orden
                                             </DropdownMenuItem>

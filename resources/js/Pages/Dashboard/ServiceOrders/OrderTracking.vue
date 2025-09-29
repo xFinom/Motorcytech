@@ -3,7 +3,6 @@ import { ref, watch } from 'vue'
 
 import { Icon } from '@iconify/vue'
 
-import { Button } from '@/Components/ui/button'
 import {
     Stepper,
     StepperDescription,
@@ -15,8 +14,6 @@ import {
 } from '@/Components/ui/stepper'
 import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-import { UserRole } from '@/constants/enums/UserRole'
-import { PrivateMessage } from '@/interfaces/PrivateMessage'
 import { ServiceOrderStatus } from '@/enums/ServiceOrderStatus'
 import { ServiceOrder } from '@/interfaces/ServiceOrder'
 import { formatDate } from '@/utils/date'
@@ -132,52 +129,6 @@ const statusIcons: Record<OrderEvent['status'], string> = {
     completed: 'mdi:check-bold',
     delivered: 'mdi:truck-delivery-outline',
 }
-
-const privateMessages = ref<PrivateMessage[]>([
-    {
-        id: 2,
-        message: "That's awesome. I think our users will really appreciate the improvements.",
-        created_at: '2025-09-25T11:46:00Z',
-        user: {
-            id: 2,
-            name: 'Juan Perez',
-            email: 'juan@example.com',
-            phone: '333142312',
-            address: 'calle 123',
-            role: UserRole.TRABAJADOR,
-            privateMessages: [],
-        },
-    },
-    {
-        id: 1,
-        message: 'Yes, totally agree! This will make the workflow so much smoother.',
-        created_at: '2025-09-25T11:50:00Z',
-        user: {
-            id: 1,
-            name: 'Maria Lopez',
-            email: 'maria@example.com',
-            role: UserRole.CLIENTE,
-            rfc: '1312312312',
-            phone: '333142312',
-            address: 'calle 123',
-            privateMessages: [],
-        },
-    },
-    {
-        id: 3,
-        message: 'Can we also add notifications for better UX?',
-        created_at: '2025-09-25T12:00:00Z',
-        user: {
-            id: 3,
-            name: 'Carlos Sanchez',
-            email: 'carlos@example.com',
-            phone: '333142312',
-            address: 'calle 123',
-            role: UserRole.TRABAJADOR,
-            privateMessages: [],
-        },
-    },
-])
 </script>
 
 <template>
@@ -185,10 +136,10 @@ const privateMessages = ref<PrivateMessage[]>([
     <h2
         class="py-6 text-center font-semibold text-gray-900 text-primary dark:bg-gray-900 dark:text-primary sm:text-2xl"
     >
-        Seguimiento de orden de servicio #123456
+        Seguimiento de orden de servicio #{{ serviceOrder.id }}
     </h2>
 
-    <Stepper class="bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
+    <Stepper class="flex justify-center bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
         <StepperItem v-for="item in steps" :key="item.step" class="basis-1/10" :step="item.step">
             <StepperTrigger>
                 <StepperIndicator>
@@ -252,6 +203,10 @@ const privateMessages = ref<PrivateMessage[]>([
                         </h2>
                         <dl class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
                             <div class="flex justify-between">
+                                <dt class="font-medium">Fecha de ingreso:</dt>
+                                <dd>{{ formatDate(serviceOrder.entry_date) }}</dd>
+                            </div>
+                            <div class="flex justify-between">
                                 <dt class="font-medium">Placa:</dt>
                                 <dd>{{ serviceOrder.motorcycle.placa }}</dd>
                             </div>
@@ -275,14 +230,13 @@ const privateMessages = ref<PrivateMessage[]>([
                                 <dt class="font-medium">Número de motor:</dt>
                                 <dd>{{ serviceOrder.motorcycle.motor_num }}</dd>
                             </div>
+                            <dt class="font-medium">Nota:</dt> {{ serviceOrder.note }}
                         </dl>
-                        <p><strong>Nota:</strong> {{ serviceOrder.note }}</p>
-                        <p>
-                            <strong>Fecha de ingreso:</strong>
-                            {{ formatDate(serviceOrder.entry_date) }}
-                        </p>
                     </div>
-                    <CommentSection :privateMessages="privateMessages" />
+                    <CommentSection
+                        :private-messages="serviceOrder.private_messages ?? []"
+                        :service-order-id="serviceOrder.id"
+                    />
                 </div>
 
                 <!-- Historial -->

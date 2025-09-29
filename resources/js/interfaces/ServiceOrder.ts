@@ -18,7 +18,7 @@ export interface ServiceOrder {
     service: Service
     spareParts?: ServiceOrderSparePart[]
     bills?: ServiceOrderBill[]
-    privateMessages?: PrivateMessage[]
+    private_messages?: PrivateMessage[]
 }
 
 export type PaginatedServiceOrderList = PaginatedList<ServiceOrder>

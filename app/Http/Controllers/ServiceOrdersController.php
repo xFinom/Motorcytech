@@ -17,8 +17,8 @@ use Inertia\Inertia;
 
 class ServiceOrdersController extends Controller
 {
-    /**                                   
-     * Display a listing of the resource.  
+    /**
+     * Display a listing of the resource.
      **/
 
     public function index()
@@ -75,6 +75,8 @@ class ServiceOrdersController extends Controller
             'motorcycle.type',
             'motorcycle.type.brand',
             'service',
+            'privateMessages',
+            'privateMessages.user',
         ]);
 
         // Historial de eventos mapeado para el front-end

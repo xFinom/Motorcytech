@@ -50,4 +50,14 @@ class ServiceOrders extends Model
     {
         return $this->hasMany(ServiceOrderSparePart::class, 'service_order_id', 'id');
     }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(ServiceOrderEvent::class, 'service_order_id', 'id');
+    }
+
+    public function privateMessages(): HasMany
+    {
+        return $this->hasMany(PrivateMessages::class, 'service_order_id', 'id');
+    }
 }
