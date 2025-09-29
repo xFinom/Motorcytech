@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MotorcycleController;
 use App\Http\Controllers\PrivateMessagesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ServiceOrdersController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserListController;
@@ -25,6 +26,33 @@ Route::patch('/service-orders/{serviceOrder}/status', [ServiceOrdersController::
     ->name('service-orders.update-status');
 
 Route::post('/service/order/message', [PrivateMessagesController::class, 'store'])->name('service.order.message.store');
+
+Route::get('/reviews', [ReviewsController::class, 'index'])->name('reviews.index');
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Mostrar formulario
+    Route::get('/ReviewsForm', function () {
+        return Inertia::render('Dashboard/Reviews/ReviewsForm');
+    })->name('reviews.form');
+
+    // Guardar review
+    Route::post('/reviews', [ReviewsController::class, 'store'])->name('reviews.store');
+});
+
+Route::get('/Validreviews', [ReviewsController::class, 'validreview'])->name('reviews.validreview');
+
+Route::put('/reviews/{review}/validate', [ReviewsController::class, 'validateReview'])
+    ->middleware(['auth', 'verified'])
+    ->name('reviews.validate');
+
+Route::delete('/reviews/{review}', [ReviewsController::class, 'destroy'])
+    ->middleware(['auth', 'verified'])
+    ->name('reviews.destroy');
+
+Route::get('/AboutUs', function () {
+    return Inertia::render('Landing/About/AboutUs');
+});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');

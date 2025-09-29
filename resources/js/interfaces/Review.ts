@@ -7,4 +7,5 @@ export interface Review {
     rating: number
     status: ReviewStatus
     client: Client
+    created_at: string
 }
