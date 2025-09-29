@@ -85,12 +85,12 @@ function onClickDelete(supplier: SupplierRow) {
 
 <template>
     <DashboardLayout>
-        <div class="w-full">
+        <div class="pl-10 pr-10">
             <!-- Barra de filtrado y botón crear -->
             <div class="flex items-center py-4">
                 <Input
                     class="max-w-sm"
-                    placeholder="Filtrar por compañía o representante..."
+                    placeholder="Buscar"
                     v-model="filterText"
                 />
                 <button
