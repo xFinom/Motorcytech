@@ -29,7 +29,11 @@ class PrivateMessagesController extends Controller
      */
     public function store(StorePrivateMessagesRequest $request)
     {
-        //
+        $request->merge(['user_id' => $request->user()->id]);
+
+        PrivateMessages::query()->create($request->all());
+
+        return back();
     }
 
     /**

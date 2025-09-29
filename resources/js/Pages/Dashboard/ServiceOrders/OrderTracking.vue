@@ -3,7 +3,6 @@ import { ref } from 'vue'
 
 import { Icon } from '@iconify/vue'
 
-import { Button } from '@/Components/ui/button'
 import {
     Stepper,
     StepperDescription,
@@ -13,7 +12,6 @@ import {
     StepperTitle,
     StepperTrigger,
 } from '@/Components/ui/stepper'
-import { Textarea } from '@/Components/ui/textarea'
 import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSection.vue'
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 import { UserRole } from '@/constants/enums/UserRole'
@@ -108,7 +106,7 @@ const statusIcons: Record<OrderEvent['status'], string> = {
     delivered: 'mdi:truck-delivery-outline',
 }
 
-const comments = ref<PrivateMessage[]>([
+const privateMessages = ref<PrivateMessage[]>([
     {
         id: 2,
         message: "That's awesome. I think our users will really appreciate the improvements.",
@@ -252,7 +250,7 @@ const comments = ref<PrivateMessage[]>([
                             </div>
                         </dl>
                     </div>
-                    <CommentSection :comments="comments" />
+                    <CommentSection :privateMessages="privateMessages" />
                 </div>
                 <div class="mt-6 grow sm:mt-8 lg:mt-0">
                     <div

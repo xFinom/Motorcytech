@@ -12,5 +12,7 @@ class PrivateMessages extends Model
 
     protected $fillable = [
         'message',
+        'user_id',
+        'service_order_id',
     ];
 }

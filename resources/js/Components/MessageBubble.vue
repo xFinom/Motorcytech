@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import { Clock } from 'lucide-vue-next'
-
 import { PrivateMessage } from '@/interfaces/PrivateMessage'
-import { formatHour24 } from '@/utils/date'
 import { User } from '@/interfaces/User'
+import { formatDate } from '@/utils/date'
 
 const props = defineProps<{
     message: PrivateMessage
@@ -26,6 +24,7 @@ const displayName = isCurrentUser ? 'You' : props.message.user.name
         >
             <div class="flex items-center space-x-2">
                 <span class="text-sm font-semibold">{{ displayName }}</span>
+                <span v-if="!isCurrentUser" class="text-xs">{{ props.message.user.role }}</span>
             </div>
 
             <p class="py-2.5 text-sm font-normal">{{ message.message }}</p>
@@ -34,8 +33,7 @@ const displayName = isCurrentUser ? 'You' : props.message.user.name
                 class="mt-1 flex items-center justify-end text-xs"
                 :class="isCurrentUser ? 'text-[#E5E5E5]' : 'text-gray-500 dark:text-gray-400'"
             >
-                <Clock class="mr-1 h-3 w-3" />
-                <span>{{ formatHour24(message.created_at) }}</span>
+                <span>{{ formatDate(message.created_at) }}</span>
             </div>
         </div>
     </div>
