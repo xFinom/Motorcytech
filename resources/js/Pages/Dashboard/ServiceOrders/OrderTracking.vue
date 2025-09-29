@@ -13,10 +13,10 @@ import {
     StepperTrigger,
 } from '@/Components/ui/stepper'
 import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSection.vue'
-import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 import { ServiceOrderStatus } from '@/enums/ServiceOrderStatus'
 import { ServiceOrder } from '@/interfaces/ServiceOrder'
 import { formatDate } from '@/utils/date'
+import MainLayout from '@/Layouts/MainLayout.vue'
 
 // Props
 const props = defineProps<{ serviceOrder: ServiceOrder }>()
@@ -132,136 +132,140 @@ const statusIcons: Record<OrderEvent['status'], string> = {
 </script>
 
 <template>
-    <Navbar />
-    <h2
-        class="py-6 text-center font-semibold text-gray-900 text-primary dark:bg-gray-900 dark:text-primary sm:text-2xl"
-    >
-        Seguimiento de orden de servicio #{{ serviceOrder.id }}
-    </h2>
+    <MainLayout>
+        <h2
+            class="py-6 text-center font-semibold text-gray-900 text-primary dark:bg-gray-900 dark:text-primary sm:text-2xl"
+        >
+            Seguimiento de orden de servicio #{{ serviceOrder.id }}
+        </h2>
 
-    <Stepper class="flex justify-center bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
-        <StepperItem v-for="item in steps" :key="item.step" class="basis-1/10" :step="item.step">
-            <StepperTrigger>
-                <StepperIndicator>
-                    <Icon :icon="item.icon" class="h-12 w-12" />
-                </StepperIndicator>
-                <div class="flex flex-col">
-                    <StepperTitle>
-                        {{ item.title }}
-                    </StepperTitle>
-                    <StepperDescription>
-                        {{ item.description }}
-                    </StepperDescription>
-                </div>
-            </StepperTrigger>
-            <StepperSeparator
-                v-if="item.step !== steps[steps.length - 1].step"
-                class="h-px w-full"
-            />
-        </StepperItem>
-    </Stepper>
+        <Stepper class="flex justify-center bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
+            <StepperItem v-for="item in steps" :key="item.step" class="basis-1/10" :step="item.step">
+                <StepperTrigger>
+                    <StepperIndicator>
+                        <Icon :icon="item.icon" class="h-12 w-12" />
+                    </StepperIndicator>
+                    <div class="flex flex-col">
+                        <StepperTitle>
+                            {{ item.title }}
+                        </StepperTitle>
+                        <StepperDescription>
+                            {{ item.description }}
+                        </StepperDescription>
+                    </div>
+                </StepperTrigger>
+                <StepperSeparator
+                    v-if="item.step !== steps[steps.length - 1].step"
+                    class="h-px w-full"
+                />
+            </StepperItem>
+        </Stepper>
 
-    <section class="bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
-        <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-            <div class="lg:flex lg:gap-8">
-                <div class="w-full space-y-6 lg:max-w-xl xl:max-w-2xl">
-                    <div
-                        class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                    >
-                        <h2
-                            class="mb-4 text-xl font-semibold text-gray-900 text-primary dark:text-primary"
+        <section class="bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
+            <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
+                <div class="lg:flex lg:gap-8">
+                    <div class="w-full space-y-6 lg:max-w-xl xl:max-w-2xl">
+                        <div
+                            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
                         >
-                            Datos del cliente
-                        </h2>
-                        <dl class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Nombre:</dt>
-                                <dd>Juan Pérez</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Dirección:</dt>
-                                <dd>Calle 123, Col. Centro, GDL</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Teléfono:</dt>
-                                <dd>+52 3313141516</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Correo:</dt>
-                                <dd>juan.perez@email.com</dd>
-                            </div>
-                        </dl>
+                            <h2
+                                class="mb-4 text-xl font-semibold text-gray-900 text-primary dark:text-primary"
+                            >
+                                Datos del cliente
+                            </h2>
+                            <dl class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Nombre:</dt>
+                                    <dd>{{ serviceOrder.client.name }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Dirección:</dt>
+                                    <dd>{{ serviceOrder.client.address }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Teléfono:</dt>
+                                    <dd>{{ serviceOrder.client.phone }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Correo:</dt>
+                                    <dd>{{ serviceOrder.client.email }}</dd>
+                                </div>
+                                <div v-if="serviceOrder.client.rfc" class="flex justify-between">
+                                    <dt class="font-medium">RFC:</dt>
+                                    <dd>{{ serviceOrder.client.rfc }}</dd>
+                                </div>
+                            </dl>
+                        </div>
+
+                        <div
+                            class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
+                        >
+                            <h2
+                                class="mb-4 text-xl font-semibold text-gray-900 text-primary dark:text-primary"
+                            >
+                                Datos de la motocicleta
+                            </h2>
+                            <dl class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Fecha de ingreso:</dt>
+                                    <dd>{{ formatDate(serviceOrder.entry_date) }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Placa:</dt>
+                                    <dd>{{ serviceOrder.motorcycle.placa }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Marca:</dt>
+                                    <dd>{{ serviceOrder.motorcycle.type.brand.name }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Tipo:</dt>
+                                    <dd>{{ serviceOrder.motorcycle.type.name }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Año:</dt>
+                                    <dd>{{ serviceOrder.motorcycle.year }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Número de serie:</dt>
+                                    <dd>{{ serviceOrder.motorcycle.serial_num }}</dd>
+                                </div>
+                                <div class="flex justify-between">
+                                    <dt class="font-medium">Número de motor:</dt>
+                                    <dd>{{ serviceOrder.motorcycle.motor_num }}</dd>
+                                </div>
+                                <dt class="font-medium">Nota:</dt> {{ serviceOrder.note }}
+                            </dl>
+                        </div>
+                        <CommentSection
+                            :private-messages="serviceOrder.private_messages ?? []"
+                            :service-order-id="serviceOrder.id"
+                        />
                     </div>
 
-                    <div
-                        class="rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                    >
-                        <h2
-                            class="mb-4 text-xl font-semibold text-gray-900 text-primary dark:text-primary"
+                    <!-- Historial -->
+                    <div class="mt-6 grow sm:mt-8 lg:mt-0">
+                        <div
+                            class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
                         >
-                            Datos de la motocicleta
-                        </h2>
-                        <dl class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Fecha de ingreso:</dt>
-                                <dd>{{ formatDate(serviceOrder.entry_date) }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Placa:</dt>
-                                <dd>{{ serviceOrder.motorcycle.placa }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Marca:</dt>
-                                <dd>{{ serviceOrder.motorcycle.type.brand.name }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Tipo:</dt>
-                                <dd>{{ serviceOrder.motorcycle.type.name }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Año:</dt>
-                                <dd>{{ serviceOrder.motorcycle.year }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Número de serie:</dt>
-                                <dd>{{ serviceOrder.motorcycle.serial_num }}</dd>
-                            </div>
-                            <div class="flex justify-between">
-                                <dt class="font-medium">Número de motor:</dt>
-                                <dd>{{ serviceOrder.motorcycle.motor_num }}</dd>
-                            </div>
-                            <dt class="font-medium">Nota:</dt> {{ serviceOrder.note }}
-                        </dl>
-                    </div>
-                    <CommentSection
-                        :private-messages="serviceOrder.private_messages ?? []"
-                        :service-order-id="serviceOrder.id"
-                    />
-                </div>
+                            <h3
+                                class="text-xl font-semibold text-gray-900 text-primary dark:text-primary"
+                            >
+                                Historial de la orden de servicio
+                            </h3>
 
-                <!-- Historial -->
-                <div class="mt-6 grow sm:mt-8 lg:mt-0">
-                    <div
-                        class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"
-                    >
-                        <h3
-                            class="text-xl font-semibold text-gray-900 text-primary dark:text-primary"
-                        >
-                            Historial de la orden de servicio
-                        </h3>
-
-                        <ol class="relative ms-3 border-s border-gray-200 dark:border-gray-700">
-                            <li
-                                v-for="(event, i) in orderHistory"
-                                :key="i"
-                                class="mb-10 ms-6 last:mb-0"
-                                :class="{
+                            <ol class="relative ms-3 border-s border-gray-200 dark:border-gray-700">
+                                <li
+                                    v-for="(event, i) in orderHistory"
+                                    :key="i"
+                                    class="mb-10 ms-6 last:mb-0"
+                                    :class="{
                                     'text-primary-700 dark:text-primary-500': [
                                         'completed',
                                         'delivered',
                                     ].includes(event.status),
                                 }"
-                            >
+                                >
                                 <span
                                     class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full ring-8 ring-white dark:ring-gray-800"
                                     :class="{
@@ -291,16 +295,17 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                                     />
                                 </span>
 
-                                <h4 class="mb-0.5 font-semibold">{{ event.date }}</h4>
-                                <p class="text-sm font-medium">{{ event.title }}</p>
-                                <p class="text-sm text-gray-500 dark:text-gray-400">
-                                    {{ event.description }}
-                                </p>
-                            </li>
-                        </ol>
+                                    <h4 class="mb-0.5 font-semibold">{{ event.date }}</h4>
+                                    <p class="text-sm font-medium">{{ event.title }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ event.description }}
+                                    </p>
+                                </li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </MainLayout>
 </template>
