@@ -19,7 +19,7 @@ class MotorcycleTypeFactory extends Factory
     {
         return [
             'name' => $this->faker->randomElement(['Deportiva', 'Enduro', 'Naked', 'Scooter']),
-            'brand_id' => Brand::factory(),
+            'brand_id' => Brand::query()->inRandomOrder()->value('id'),
         ];
     }
 }

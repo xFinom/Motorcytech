@@ -16,7 +16,6 @@ class MotorcycleSeeder extends Seeder
     public function run(): void
     {
         // Obtener todas las marcas, tipos y usuarios existentes
-        $brands = Brand::all();
         $types = MotorcycleType::all();
         $users = User::all();
 
