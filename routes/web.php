@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MotorcycleController;
+use App\Http\Controllers\PrivateMessagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ServiceOrdersController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\WorkerlistController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -15,14 +15,14 @@ Route::get('/', function () {
     return Inertia::render('Landing/LandingPage', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
 Route::get('/tracking-order', function () {
     return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
 });
+
+Route::post('/service/order/message', [PrivateMessagesController::class, 'store'])->name('service.order.message.store');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');

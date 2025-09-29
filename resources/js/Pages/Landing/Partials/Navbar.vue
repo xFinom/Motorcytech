@@ -8,7 +8,13 @@ import { isDark, toggleDarkMode } from '@/lib/darkMode'
 
 const isScrolled = ref(false)
 
-const menu = ['Inicio', 'Servicios', 'Seguimiento', 'Contacto']
+const menu = [
+    { title: 'Inicio', href: route('home'), },
+    { title: 'Servicios', href: '/servicios' },
+    { title: 'Seguimiento', href: '/seguimiento' },
+    { title: 'Sobre nosotros', href: '/contacto' }
+];
+
 
 const TOP_BAR_HEIGHT = 48
 
@@ -72,22 +78,23 @@ onUnmounted(() => {
         ]"
     >
         <nav class="container mx-auto flex items-center px-4 py-4">
-            <div
-                class="flex items-center space-x-2 text-2xl font-bold transition-colors duration-300"
-                :class="isScrolled ? 'text-[#fefcf9]' : 'text-white'"
-            >
-                <transition name="slide-left" appear>
-                    <Icon
-                        icon="mdi:tools"
-                        class="text-3xl"
-                        :class="isScrolled ? 'text-primary dark:text-[#061222]' : 'text-primary'"
-                    />
-                </transition>
-                <div class="text-2xl font-black uppercase tracking-wide">
+            <a :href="route('home')">
+                <div
+                    class="flex items-center space-x-2 text-2xl font-bold transition-colors duration-300"
+                    :class="isScrolled ? 'text-[#fefcf9]' : 'text-white'"
+                >
                     <transition name="slide-left" appear>
-                        <span> Motorcy </span>
+                        <Icon
+                            icon="mdi:tools"
+                            class="text-3xl"
+                            :class="isScrolled ? 'text-primary dark:text-[#061222]' : 'text-primary'"
+                        />
                     </transition>
-                    <transition name="slide-left" appear>
+                    <div class="text-2xl font-black uppercase tracking-wide">
+                        <transition name="slide-left" appear>
+                            <span> Motorcy </span>
+                        </transition>
+                        <transition name="slide-left" appear>
                         <span
                             class="font-semibold"
                             :class="
@@ -96,14 +103,15 @@ onUnmounted(() => {
                         >
                             tech
                         </span>
-                    </transition>
+                        </transition>
+                    </div>
                 </div>
-            </div>
+            </a>
 
             <ul class="hidden flex-grow justify-center space-x-6 md:flex">
-                <li v-for="item in menu" :key="item">
+                <li v-for="item in menu" :key="item.title">
                     <a
-                        href="#"
+                        :href="item.href"
                         :class="[
                             'text-lg transition-colors duration-300 hover:underline hover:decoration-[3px] hover:underline-offset-[10px]',
                             isScrolled
@@ -111,7 +119,7 @@ onUnmounted(() => {
                                 : 'text-white hover:decoration-primary',
                         ]"
                     >
-                        {{ item }}
+                        {{ item.title }}
                     </a>
                 </li>
             </ul>
@@ -125,7 +133,7 @@ onUnmounted(() => {
                             : 'border border-primary text-white hover:bg-primary hover:text-[#fefcf9]'
                     "
                 >
-                    Iniciar Sesión
+                    {{$page.props.auth.user ? 'Dashboard' :'Iniciar Sesión'}}
                 </button>
             </a>
 
@@ -150,6 +158,7 @@ onUnmounted(() => {
             </Button>
 
             <Button
+                variant="ghost"
                 class="rounded-md p-2 focus:outline-none focus:ring-2 md:hidden"
                 :class="
                     isScrolled

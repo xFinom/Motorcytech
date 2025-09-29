@@ -1,5 +1,4 @@
 import {
-    AtSign,
     BanknoteArrowDown,
     BanknoteArrowUp,
     Bike,

@@ -9,7 +9,6 @@ const sponsorLogos = [
     { id: 5, name: 'Suzuki', url: 'https://i.ibb.co/wNYBp3Z4/Suzuki-logo-2025.png' },
     { id: 6, name: 'Honda', url: 'https://i.ibb.co/0yk8Mp3n/Honda-logo.png' },
     { id: 7, name: 'Triumph', url: 'https://i.ibb.co/wNnrKV8Z/Logo-Triumph.png' },
-    // { id: 8, name: 'MV Augusta', url: 'https://i.ibb.co/5gt832j6/mv-augusta.png' },
 ]
 
 const duplicatedLogos = computed(() =>
