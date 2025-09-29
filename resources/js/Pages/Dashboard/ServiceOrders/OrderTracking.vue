@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import { Icon } from '@iconify/vue'
 
+import { Button } from '@/Components/ui/button'
 import {
     Stepper,
     StepperDescription,
@@ -16,38 +17,64 @@ import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSect
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
 import { UserRole } from '@/constants/enums/UserRole'
 import { PrivateMessage } from '@/interfaces/PrivateMessage'
+import { ServiceOrderStatus } from '@/enums/ServiceOrderStatus'
+import { ServiceOrder } from '@/interfaces/ServiceOrder'
+import { formatDate } from '@/utils/date'
 
+// Props
+const props = defineProps<{ serviceOrder: ServiceOrder }>()
+
+// 🔹 Mapeo entre el enum y los pasos
+const statusStepMap: Record<ServiceOrderStatus, number> = {
+    [ServiceOrderStatus.INGRESADO]: 1,
+    [ServiceOrderStatus.EN_PROCESO]: 2,
+    [ServiceOrderStatus.DETENIDO]: 3,
+    [ServiceOrderStatus.LISTO]: 4,
+    [ServiceOrderStatus.FINALIZADO]: 5,
+}
+
+// 🔹 Inicializa el step actual según el estado recibido
+const currentStep = ref<number>(statusStepMap[props.serviceOrder.status])
+
+// 🔹 Actualiza si cambia la orden (p. ej., navegación o recarga)
+watch(
+    () => props.serviceOrder.status,
+    (newStatus) => {
+        if (newStatus) currentStep.value = statusStepMap[newStatus]
+    },
+    { immediate: true }
+)
+
+// 🔹 Definición de los pasos
 const steps = [
     {
         step: 1,
         title: 'Ingresado',
-        description: 'La motocicleta ha sido registrada para el servicio correspodiente',
+        description: 'La motocicleta ha sido registrada.',
         icon: 'emojione-monotone:motorcycle',
     },
     {
         step: 2,
         title: 'En proceso',
-        description:
-            'Se está trabajando sobre los procedimientos descritos en la orden de servicio',
+        description: 'Se está trabajando en el servicio.',
         icon: 'mingcute:loading-line',
     },
     {
         step: 3,
         title: 'Detenido',
-        description:
-            'En espera de autorización o refacciones para seguir con los procedimientos requeridos',
+        description: 'En espera de autorización o refacciones.',
         icon: 'healthicons:stop',
     },
     {
         step: 4,
         title: 'Listo',
-        description: 'Se finalizaron los procedimientos descritos en la orden de servicio',
+        description: 'Se finalizaron los procedimientos.',
         icon: 'material-symbols:fact-check',
     },
     {
         step: 5,
         title: 'Finalizado',
-        description: 'Se realizó el pago del servicio y la motocicleta salió del taller',
+        description: 'El pago fue realizado y la moto salió del taller.',
         icon: 'hugeicons:time-schedule',
     },
 ]
@@ -68,31 +95,31 @@ const orderHistory: OrderEvent[] = [
     {
         date: '19 Sep 2025, 11:20',
         title: 'En reparación',
-        description: 'Técnico inició el diagnóstico del equipo',
+        description: 'Técnico inició el diagnóstico.',
         status: 'in-progress',
     },
     {
         date: '20 Sep 2025, 14:00',
         title: 'Trabajo detenido',
-        description: 'En espera de autorización del cliente para continuar',
+        description: 'En espera de autorización del cliente.',
         status: 'paused',
     },
     {
         date: '22 Sep 2025, 10:30',
         title: 'Listo para entrega',
-        description: 'El servicio está finalizado',
+        description: 'El servicio está finalizado.',
         status: 'waiting',
     },
     {
         date: '22 Sep 2025, 12:15',
         title: 'Servicio pagado',
-        description: 'Se confirmó el pago vía tarjeta',
+        description: 'Pago confirmado vía tarjeta.',
         status: 'completed',
     },
     {
         date: '22 Sep 2025, 13:00',
         title: 'Entregado',
-        description: 'El equipo salió del taller',
+        description: 'El equipo salió del taller.',
         status: 'delivered',
     },
 ]
@@ -226,32 +253,39 @@ const privateMessages = ref<PrivateMessage[]>([
                         <dl class="space-y-3 text-sm text-gray-700 dark:text-gray-300">
                             <div class="flex justify-between">
                                 <dt class="font-medium">Placa:</dt>
-                                <dd>XYZ-123</dd>
+                                <dd>{{ serviceOrder.motorcycle.placa }}</dd>
                             </div>
                             <div class="flex justify-between">
                                 <dt class="font-medium">Marca:</dt>
-                                <dd>Yamaha</dd>
+                                <dd>{{ serviceOrder.motorcycle.type.brand.name }}</dd>
                             </div>
                             <div class="flex justify-between">
                                 <dt class="font-medium">Tipo:</dt>
-                                <dd>Deportiva</dd>
+                                <dd>{{ serviceOrder.motorcycle.type.name }}</dd>
                             </div>
                             <div class="flex justify-between">
                                 <dt class="font-medium">Año:</dt>
-                                <dd>2022</dd>
+                                <dd>{{ serviceOrder.motorcycle.year }}</dd>
                             </div>
                             <div class="flex justify-between">
                                 <dt class="font-medium">Número de serie:</dt>
-                                <dd>ASDF123456XYZ</dd>
+                                <dd>{{ serviceOrder.motorcycle.serial_num }}</dd>
                             </div>
                             <div class="flex justify-between">
                                 <dt class="font-medium">Número de motor:</dt>
-                                <dd>ENG-987654321</dd>
+                                <dd>{{ serviceOrder.motorcycle.motor_num }}</dd>
                             </div>
                         </dl>
+                        <p><strong>Nota:</strong> {{ serviceOrder.note }}</p>
+                        <p>
+                            <strong>Fecha de ingreso:</strong>
+                            {{ formatDate(serviceOrder.entry_date) }}
+                        </p>
                     </div>
                     <CommentSection :privateMessages="privateMessages" />
                 </div>
+
+                <!-- Historial -->
                 <div class="mt-6 grow sm:mt-8 lg:mt-0">
                     <div
                         class="space-y-6 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800"

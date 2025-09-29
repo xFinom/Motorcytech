@@ -3,6 +3,8 @@ import { ArrowUpDown, ChevronDown, MoreVertical } from 'lucide-vue-next'
 
 import { computed, defineProps, ref } from 'vue'
 
+import { router } from '@inertiajs/vue3'
+
 import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar'
 import { Badge } from '@/Components/ui/badge'
 import { Button } from '@/Components/ui/button'
@@ -32,6 +34,8 @@ import { PaginatedServiceOrderList, ServiceOrder } from '@/interfaces/ServiceOrd
 import { formatDate } from '@/utils/date'
 import { generateInitials } from '@/utils/name'
 
+import UpdateServiceOrder from './Partials/UpdateServiceOrder.vue'
+
 const props = defineProps<{
     serviceOrders: PaginatedServiceOrderList
 }>()
@@ -51,6 +55,10 @@ function onClickDelete(order: ServiceOrder) {
 function onClickEdit(order: ServiceOrder) {
     selectedOrder.value = { ...order }
     isEditOpen.value = true
+}
+
+function onUpdated() {
+    router.reload()
 }
 
 // Barra de filtrado
@@ -77,6 +85,10 @@ const columns = [
     { name: 'Estatus', sortable: false },
     { name: 'Acciones', sortable: false },
 ]
+
+function goToTracking(order: ServiceOrder) {
+    router.get(route('service-orders.show', { serviceOrder: order.id }))
+}
 </script>
 
 <template>
@@ -166,8 +178,11 @@ const columns = [
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end">
                                             <DropdownMenuItem @click="onClickEdit(order)"
-                                                >Editar</DropdownMenuItem
+                                                >Cambiar estatus</DropdownMenuItem
                                             >
+                                            <DropdownMenuItem @click="goToTracking(order)">
+                                                Seguimiento de orden
+                                            </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>
                                 </TableCell>
@@ -218,5 +233,11 @@ const columns = [
                 </div>
             </div>
         </div>
+        <UpdateServiceOrder
+            :model-value="isEditOpen"
+            @update:model-value="(val) => (isEditOpen = val)"
+            :service-order="selectedOrder"
+            @updated="onUpdated"
+        />
     </DashboardLayout>
 </template>

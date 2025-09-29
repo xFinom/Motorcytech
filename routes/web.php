@@ -18,9 +18,11 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('/tracking-order', function () {
-    return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
-});
+Route::get('/service-orders/{serviceOrder:id}', [ServiceOrdersController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('service-orders.show');
+Route::patch('/service-orders/{serviceOrder}/status', [ServiceOrdersController::class, 'updateStatus'])
+    ->name('service-orders.update-status');
 
 Route::post('/service/order/message', [PrivateMessagesController::class, 'store'])->name('service.order.message.store');
 
