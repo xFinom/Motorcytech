@@ -60,4 +60,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(ServiceOrders::class, 'client_id');
     }
+
+    public function motorcycles(): HasMany
+    {
+        return $this->hasMany(Motorcycle::class, 'id_cliente');
+    }
 }
