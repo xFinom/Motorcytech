@@ -125,6 +125,7 @@ class ProductionSeeder extends Seeder
                 'status' => ServiceOrderStatus::randomCase(),
                 'client_id' => $client->id,
                 'service_id' => $services->random()->id,
+                'note' => 'Nota',
             ]);
         }
     }
