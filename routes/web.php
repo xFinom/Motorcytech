@@ -54,7 +54,30 @@ Route::get('/AboutUs', function () {
 })->name('aboutUs');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');
+    $totalServiceOrders = \App\Models\ServiceOrders::query()->count();
+    $totalClients = \App\Models\User::query()->count();
+    $totalMotorcycles = \App\Models\ServiceOrders::query()->where('service_orders.status', '!=', \App\Enums\ServiceOrderStatus::Finalizado)->count();
+    $totalPendingReviews = \App\Models\Reviews::query()->where('reviews.status', \App\Enums\ReviewStatus::Pendiente)->count();
+
+    $chartData = \App\Models\ServiceOrders::query()
+        ->selectRaw('service_id, COUNT(*) as total')
+        ->with('service:id,name') // solo carga lo necesario
+        ->groupBy('service_id')
+        ->get()
+        ->map(fn ($order) => [
+            'name' => $order->service->name,
+            'total' => $order->total,
+        ]);
+    $recentClients = \App\Models\User::query()->where('users.role', \App\Enums\UserRole::Cliente)->latest()->take(7)->get();
+
+    return Inertia::render('Dashboard/Overview/Overview', [
+        'totalServiceOrders' => $totalServiceOrders,
+        'totalClients' => $totalClients,
+        'totalMotorcycles' => $totalMotorcycles,
+        'totalPendingReviews' => $totalPendingReviews,
+        'chartData' => $chartData,
+        'recentClients' => $recentClients,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');
