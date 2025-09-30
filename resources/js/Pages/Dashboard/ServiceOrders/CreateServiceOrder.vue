@@ -33,6 +33,7 @@ import { MotorcycleType } from '@/interfaces/MotorcycleType'
 interface Props {
     types: Record<number, MotorcycleType[]>
     brands: Record<number, string>
+    services: Record<number, string>
 }
 
 defineProps<Props>()
@@ -179,7 +180,7 @@ const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSch
                         </template>
 
                         <template v-if="initialStep === ServiceOrderStep.FillingServiceData">
-                            <FormService />
+                            <FormService :services="services" />
                         </template>
                     </div>
 

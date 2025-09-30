@@ -6,6 +6,7 @@ use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
 use App\Models\Brand;
 use App\Models\Motorcycle;
+use App\Models\Service;
 use App\Models\ServiceOrders;
 use App\Models\User;
 use Carbon\Carbon;
@@ -35,7 +36,6 @@ class ServiceOrdersController extends Controller
      */
     public function create()
     {
-        // TODO: crear tabla de servicios
         $groupedTypes = Brand::with('types')->get()->mapWithKeys(function ($brand) {
             return [
                 $brand->id => $brand->types->map(fn ($type) => [
@@ -46,10 +46,12 @@ class ServiceOrdersController extends Controller
         })->toArray();
 
         $brands = Brand::query()->pluck('name', 'id')->toArray();
+        $services = Service::query()->pluck('name', 'id')->toArray();
 
         return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder', [
             'types' => $groupedTypes,
             'brands' => $brands,
+            'services' => $services,
         ]);
     }
 
