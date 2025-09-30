@@ -16,7 +16,7 @@ class MotorcycleTypeSeeder extends Seeder
         $brands = Brand::all();
 
         foreach ($brands as $brand) {
-            $brand->motorcycleTypes()->createMany([
+            $brand->types()->createMany([
                 ['name' => 'Deportiva'],
                 ['name' => 'Enduro'],
                 ['name' => 'Naked'],
