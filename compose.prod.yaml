@@ -5,12 +5,17 @@ services:
       dockerfile: ./docker/production/nginx/Dockerfile
     restart: unless-stopped
     volumes:
-      - laravel-storage-production:/var/www/storage:ro,Z
-      - laravel-public-assets:/var/www/public/build:ro,Z
+      - laravel-storage-production:/var/www/storage:ro,z
+      - laravel-public-assets:/var/www/public/build:ro,z
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.${APP_NAME}.rule=Host(\"${APP_URL_HOST}\")"
+      - "traefik.http.routers.${APP_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.${APP_NAME}.tls=true"
+      - "traefik.http.routers.${APP_NAME}.tls.certresolver=cloudflare"
     networks:
       - laravel-production
-    ports:
-      - "${DOCKER_WEB_PORT:-80}:80"
+      - proxy
     depends_on:
       php-fpm:
         condition: service_healthy
@@ -22,8 +27,8 @@ services:
       target: production
     restart: unless-stopped
     volumes:
-      - laravel-public-assets:/var/www/public/build:Z
-      - laravel-storage-production:/var/www/storage:Z
+      - laravel-public-assets:/var/www/public/build:z
+      - laravel-storage-production:/var/www/storage:z
       - ./docker/common/php-fpm/php.ini:/usr/local/etc/php/conf.d/local.ini:Z
     env_file:
       - .env
@@ -42,8 +47,6 @@ services:
     image: mariadb:10.9.4
     restart: unless-stopped
     tty: true
-    ports:
-      - '${DOCKER_DB_PORT:-3306}:3306'
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
@@ -64,6 +67,8 @@ services:
 
 networks:
   laravel-production:
+  proxy:
+    external: true
 
 volumes:
   mariadb-data-production:
