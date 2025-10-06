@@ -19,9 +19,11 @@ class StoreItemsFactory extends Factory
     public function definition(): array
     {
         return [
-            'name_sparepart' => $this->faker->name(),
+            'name' => $this->faker->name(),
+            'description' => $this->faker->text(),
+            'quantity' => $this->faker->numberBetween(1, 100),
+            'image' => $this->faker->imageUrl(),
             'price' => $this->faker->numberBetween(100, 1000),
-            'status' => $this->faker->randomElement(PaymentStatus::cases()),
         ];
     }
 }
