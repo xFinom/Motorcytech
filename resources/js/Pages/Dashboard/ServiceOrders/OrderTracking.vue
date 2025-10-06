@@ -12,11 +12,11 @@ import {
     StepperTitle,
     StepperTrigger,
 } from '@/Components/ui/stepper'
+import MainLayout from '@/Layouts/MainLayout.vue'
 import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSection.vue'
 import { ServiceOrderStatus } from '@/enums/ServiceOrderStatus'
 import { ServiceOrder } from '@/interfaces/ServiceOrder'
 import { formatDate } from '@/utils/date'
-import MainLayout from '@/Layouts/MainLayout.vue'
 
 // Props
 const props = defineProps<{ serviceOrder: ServiceOrder }>()
@@ -139,11 +139,37 @@ const statusIcons: Record<OrderEvent['status'], string> = {
             Seguimiento de orden de servicio #{{ serviceOrder.id }}
         </h2>
 
-        <Stepper class="flex justify-center bg-white py-6 antialiased dark:bg-gray-900 md:py-10">
-            <StepperItem v-for="item in steps" :key="item.step" class="basis-1/10" :step="item.step">
-                <StepperTrigger>
-                    <StepperIndicator>
-                        <Icon :icon="item.icon" class="h-12 w-12" />
+        <Stepper
+            v-model="currentStep"
+            class="flex w-full items-center justify-center bg-white py-6 antialiased dark:bg-gray-900 md:py-10"
+        >
+            <StepperItem
+                v-for="item in steps"
+                :key="item.step"
+                :step="item.step"
+                :active="item.step <= currentStep"
+                class="basis-1/10"
+            >
+                <StepperTrigger class="pointer-events-none select-none">
+                    <StepperIndicator
+                        :class="[
+                            item.step <= currentStep
+                                ? 'scale-110 border-2 border-primary bg-primary text-white shadow-lg'
+                                : 'bg-gray-200 text-gray-900 dark:bg-gray-700 dark:text-gray-400',
+
+                            'flex h-14 w-14 items-center justify-center rounded-full transition-all duration-300',
+                        ]"
+                    >
+                        <Icon
+                            :icon="item.icon"
+                            :class="[
+                                'h-10 w-10 transition-colors duration-300',
+
+                                item.step <= currentStep
+                                    ? 'text-gray'
+                                    : 'text-gray-400 dark:text-gray-200',
+                            ]"
+                        />
                     </StepperIndicator>
                     <div class="flex flex-col">
                         <StepperTitle>
@@ -234,7 +260,8 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                                     <dt class="font-medium">Número de motor:</dt>
                                     <dd>{{ serviceOrder.motorcycle.motor_num }}</dd>
                                 </div>
-                                <dt class="font-medium">Nota:</dt> {{ serviceOrder.note }}
+                                <dt class="font-medium">Nota:</dt>
+                                {{ serviceOrder.note }}
                             </dl>
                         </div>
                         <CommentSection
@@ -260,40 +287,40 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                                     :key="i"
                                     class="mb-10 ms-6 last:mb-0"
                                     :class="{
-                                    'text-primary-700 dark:text-primary-500': [
-                                        'completed',
-                                        'delivered',
-                                    ].includes(event.status),
-                                }"
-                                >
-                                <span
-                                    class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full ring-8 ring-white dark:ring-gray-800"
-                                    :class="{
-                                        'bg-gray-100 dark:bg-gray-700': [
-                                            'created',
-                                            'in-progress',
-                                            'paused',
-                                            'waiting',
-                                        ].includes(event.status),
-                                        'bg-primary-100 dark:bg-primary-900': [
+                                        'text-primary-700 dark:text-primary-500': [
                                             'completed',
                                             'delivered',
                                         ].includes(event.status),
                                     }"
                                 >
-                                    <Icon
-                                        :icon="statusIcons[event.status]"
-                                        class="h-4 w-4"
+                                    <span
+                                        class="absolute -start-3 flex h-6 w-6 items-center justify-center rounded-full ring-8 ring-white dark:ring-gray-800"
                                         :class="{
-                                            'text-gray-500 dark:text-gray-400': [
+                                            'bg-gray-100 dark:bg-gray-700': [
                                                 'created',
                                                 'in-progress',
                                                 'paused',
                                                 'waiting',
                                             ].includes(event.status),
+                                            'bg-primary-100 dark:bg-primary-900': [
+                                                'completed',
+                                                'delivered',
+                                            ].includes(event.status),
                                         }"
-                                    />
-                                </span>
+                                    >
+                                        <Icon
+                                            :icon="statusIcons[event.status]"
+                                            class="h-4 w-4"
+                                            :class="{
+                                                'text-gray-500 dark:text-gray-400': [
+                                                    'created',
+                                                    'in-progress',
+                                                    'paused',
+                                                    'waiting',
+                                                ].includes(event.status),
+                                            }"
+                                        />
+                                    </span>
 
                                     <h4 class="mb-0.5 font-semibold">{{ event.date }}</h4>
                                     <p class="text-sm font-medium">{{ event.title }}</p>
