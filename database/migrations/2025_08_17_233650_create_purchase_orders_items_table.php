@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('purchase_order-id')->constrained('purchase_orders')->onDelete('cascade');
             $table->foreignId('item_id')->constrained('store_items')->onDelete('cascade');
+            $table->integer('quantity');
         });
     }
 
