@@ -28,7 +28,7 @@ class ReviewsController extends Controller
     {
         $reviews = Reviews::with('client')
             ->where('status', '!=', \App\Enums\ReviewStatus::Validado) // excluye Validados
-            ->get();
+            ->paginate(10);
 
         return Inertia::render('Dashboard/Reviews/ValidReviews', [
             'reviews' => $reviews

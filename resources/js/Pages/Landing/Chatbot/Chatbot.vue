@@ -22,7 +22,7 @@ const sendMessage = () => {
 <template>
   <div class="fixed bottom-6 right-6">
     <Popover>
-      <!-- BOTÓN DEL CHAT (ALARGADO, NO CIRCULAR) -->
+      <!-- BOTÓN DEL CHAT -->
       <PopoverTrigger as-child>
         <Button
           class="rounded-xl px-4 py-2 flex items-center gap-2 shadow-lg 

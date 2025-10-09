@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             MotorcycleTypeSeeder::class,
             MotorcycleSeeder::class,
             SupplierSeeder::class,
+            ReviewsSeeder::class,
         ]);
     }
 }
