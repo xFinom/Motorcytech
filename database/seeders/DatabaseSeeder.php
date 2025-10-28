@@ -19,6 +19,9 @@ class DatabaseSeeder extends Seeder
             MotorcycleSeeder::class,
             SupplierSeeder::class,
             ReviewsSeeder::class,
+            StoreItemsSeeder::class,
+            PurchaseOrdersSeeder::class,
+            PurchaseOrderItemSeeder::class,
         ]);
     }
 }

@@ -97,7 +97,7 @@ export const salesMenu = [
     },
     {
         title: 'Ventas',
-        url: '#',
+        url: route('purchase_orders.index'),
         icon: ShoppingCart,
     },
 ]

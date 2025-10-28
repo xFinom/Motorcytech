@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\PaymentStatus;
 use App\Models\StoreItems;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,17 +10,16 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class StoreItemsFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = StoreItems::class;
+
     public function definition(): array
     {
         return [
-            'name_sparepart' => $this->faker->name(),
-            'price' => $this->faker->numberBetween(100, 1000),
-            'status' => $this->faker->randomElement(PaymentStatus::cases()),
+            'name' => $this->faker->words(3, true),
+            'description' => $this->faker->sentence(),
+            'quantity' => $this->faker->numberBetween(10, 100),
+            'image' => $this->faker->imageUrl(640, 480, 'tech', true),
+            'price' => $this->faker->randomFloat(2, 100, 10000),
         ];
     }
 }
