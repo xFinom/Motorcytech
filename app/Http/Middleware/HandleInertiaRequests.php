@@ -25,7 +25,7 @@ class HandleInertiaRequests extends Middleware
 
     /**
      * Define the props that are shared by default.
-     *
+     *f
      * @return array<string, mixed>
      */
     public function share(Request $request): array
@@ -39,6 +39,14 @@ class HandleInertiaRequests extends Middleware
                 ...(new Ziggy)->toArray(),
                 'location' => $request->url(),
             ],
+            'lex' => [
+                'key' => config('lex.key'),
+                'secret' => config('lex.secret'),
+                'botId' => config('lex.botId'),
+                'botAliasId' => config('lex.botAliasId'),
+                'sessionId' => config('lex.sessionId'),
+                'localeId' => config('lex.localeId'),
+            ]
         ];
     }
 }
