@@ -29,7 +29,7 @@ AWS.config.update({
 
 const lexRuntime = new AWS.LexRuntimeV2();
 
-const messages = ref([])
+const messages = ref([{ from: 'agent', text: '¿Cómo te puedo ayudar hoy?' }])
 
 const newMessage = ref('')
 const sendMessage = async () => {
@@ -119,6 +119,7 @@ const sendMessage = async () => {
                             v-model="newMessage"
                             placeholder="Escribe tu mensaje..."
                             class="border border-gray-200 bg-gray-100 text-gray-900 focus-visible:ring-1 focus-visible:ring-primary dark:border-0 dark:bg-gray-800 dark:text-white"
+                            @keyup.enter="sendMessage"
                         />
                         <Button
                             size="icon"
