@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref } from 'vue'
 
 import { Icon } from '@iconify/vue'
@@ -14,14 +14,49 @@ import {
 } from '@/Components/ui/card'
 import { Input } from '@/Components/ui/input'
 import { Popover, PopoverContent, PopoverTrigger } from '@/Components/ui/popover'
+import AWS from 'aws-sdk';
+import { usePage } from '@inertiajs/vue3'
 
-const messages = ref([{ from: 'agent', text: '¿Cómo te puedo ayudar hoy?' }])
+const page = usePage()
+
+AWS.config.update({
+    region: 'us-west-2',
+    credentials: new AWS.Credentials(
+        page.props.lex.key,
+        page.props.lex.secret
+    )
+})
+
+const lexRuntime = new AWS.LexRuntimeV2();
+
+const messages = ref([])
 
 const newMessage = ref('')
-const sendMessage = () => {
-    if (newMessage.value.trim() !== '') {
-        messages.value.push({ from: 'user', text: newMessage.value })
-        newMessage.value = ''
+const sendMessage = async () => {
+    if (newMessage.value.trim() === '') {
+        return
+    }
+
+    messages.value.push({ from: 'user', text: newMessage.value })
+
+    const params = {
+        botId: page.props.lex.botId,
+        botAliasId: page.props.lex.botAliasId,
+        localeId: page.props.lex.localeId,
+        sessionId: page.props.lex.sessionId,
+        text: newMessage.value,
+    }
+
+    newMessage.value = ''
+
+    try {
+        const respuesta = await lexRuntime.recognizeText(params).promise();
+
+        respuesta.messages.forEach((msg) => {
+            messages.value.push({ from: 'agent', text: msg.content })
+            })
+    } catch (error) {
+        messages.value.push({ from: 'agent', text: 'Ocurrió un error, intentalo más tarde.' })
     }
 }
 </script>
