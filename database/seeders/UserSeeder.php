@@ -18,17 +18,5 @@ class UserSeeder extends Seeder
                 'role' => $role->value,
             ]);
         }
-
-        // Crear al menos 15 clientes
-        User::factory(15)->create([
-            'role' => UserRole::Cliente->value,
-        ]);
-
-        User::factory(15)->create([
-            'role' => UserRole::Trabajador->value,
-        ]);
-
-        // Crear algunos usuarios aleatorios (opcional)
-        User::factory(10)->create();
     }
 }

@@ -16,15 +16,17 @@ class MotorcycleSeeder extends Seeder
     public function run(): void
     {
         // Obtener todas las marcas, tipos y usuarios existentes
-        $types = MotorcycleType::all();
-        $users = User::all();
+//        $types = MotorcycleType::all();
+//        $users = User::all();
+//
+//        // Crear 15 motocicletas
+//        Motorcycle::factory(15)->state(function () use ($types, $users) {
+//            return [
+//                'type_id' => $types->random()->id,
+//                'id_cliente' => $users->random()->id,
+//            ];
+//        })->create();
 
-        // Crear 15 motocicletas
-        Motorcycle::factory(15)->state(function () use ($types, $users) {
-            return [
-                'type_id' => $types->random()->id,
-                'id_cliente' => $users->random()->id,
-            ];
-        })->create();
+
     }
 }

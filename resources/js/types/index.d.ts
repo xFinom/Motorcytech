@@ -6,4 +6,12 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
         user?: User
     }
     ziggy: Config & { location: string }
+    lex: {
+        key: string,
+        secret: string
+        botId: string
+        botAliasId: string
+        sessionId: string
+        localeId: string
+    }
 }

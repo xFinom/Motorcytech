@@ -11,6 +11,8 @@ use App\Http\Controllers\UserListController;
 use App\Http\Controllers\WorkerlistController;
 use App\Http\Controllers\PurchaseOrderItemController;
 use Illuminate\Foundation\Application;
+use App\Http\Controllers\StoreItemsController;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -62,14 +64,22 @@ Route::get('/AboutUs', function () {
 })->name('aboutUs');
 
 Route::get('/dashboard', function () {
-    $totalServiceOrders = \App\Models\ServiceOrders::query()->count();
-    $totalClients = \App\Models\User::query()->count();
-    $totalMotorcycles = \App\Models\ServiceOrders::query()->where('service_orders.status', '!=', \App\Enums\ServiceOrderStatus::Finalizado)->count();
+    $currentYeaServiceOrders = \App\Models\ServiceOrders::query()
+        ->where('service_orders.entry_date', '>=', now()->firstOfYear());
+
+    $totalServiceOrders = $currentYeaServiceOrders->count();
+    $totalClients = $currentYeaServiceOrders
+        ->withCount('client')
+        ->count();
+    $totalMotorcycles = $currentYeaServiceOrders
+        ->where('service_orders.status', '!=', \App\Enums\ServiceOrderStatus::Finalizado)
+        ->count();
     $totalPendingReviews = \App\Models\Reviews::query()->where('reviews.status', \App\Enums\ReviewStatus::Pendiente)->count();
 
     $chartData = \App\Models\ServiceOrders::query()
+        ->where('service_orders.entry_date', '>=', now()->firstOfYear())
         ->selectRaw('service_id, COUNT(*) as total')
-        ->with('service:id,name') // solo carga lo necesario
+        ->with('service:id,name')
         ->groupBy('service_id')
         ->get()
         ->map(fn ($order) => [
@@ -87,6 +97,10 @@ Route::get('/dashboard', function () {
         'recentClients' => $recentClients,
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard/forecast', function () {
+    return Inertia::render('Dashboard/DataMining/ForecastServices');
+})->name('dashboard.forecast');
 
 Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');
 Route::get('/dashboard/service/order/create', [ServiceOrdersController::class, 'create'])->middleware(['auth', 'verified'])->name('service.order.create');
@@ -126,6 +140,8 @@ Route::put('/dashboard/suppliers/{supplier}', [SupplierController::class, 'updat
 Route::post('/dashboard/suppliers', [SupplierController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('suppliers.store');
+
+Route::get('/shop', [StoreItemsController::class, 'index'])->name('storeitems.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

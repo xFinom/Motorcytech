@@ -60,18 +60,8 @@ export const serviceOrderMenu = [
 export const financeMenu = [
     {
         title: 'Proyecciones',
-        url: '#',
+        url: route('dashboard.forecast'),
         icon: ChartNoAxesCombined,
-    },
-    {
-        title: 'Ganancias',
-        url: '#',
-        icon: BanknoteArrowUp,
-    },
-    {
-        title: 'Gastos',
-        url: '#',
-        icon: BanknoteArrowDown,
     },
 ]
 
