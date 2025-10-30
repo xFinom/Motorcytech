@@ -9,6 +9,8 @@ use App\Http\Controllers\ServiceOrdersController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\WorkerlistController;
+use App\Http\Controllers\StoreItemsController;
+
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -130,6 +132,8 @@ Route::put('/dashboard/suppliers/{supplier}', [SupplierController::class, 'updat
 Route::post('/dashboard/suppliers', [SupplierController::class, 'store'])
     ->middleware(['auth', 'verified'])
     ->name('suppliers.store');
+
+Route::get('/shop', [StoreItemsController::class, 'index'])->name('storeitems.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
