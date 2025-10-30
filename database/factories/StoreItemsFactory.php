@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Enums\PaymentStatus;
 use App\Models\StoreItems;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -11,11 +10,8 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class StoreItemsFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+    protected $model = StoreItems::class;
+
     public function definition(): array
     {
         return [

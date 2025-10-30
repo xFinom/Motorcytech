@@ -14,5 +14,17 @@ class StoreItems extends Model
         'name',
         'quantity',
         'price',
+        'description',
+        'image',
     ];
+
+        public function purchaseOrders()
+    {
+        return $this->belongsToMany(
+            PurchaseOrders::class,
+            'purchase_order_items',
+            'item_id',
+            'purchase_order_id'
+        );
+    }
 }

@@ -9,10 +9,18 @@ use App\Http\Controllers\ServiceOrdersController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\WorkerlistController;
+use App\Http\Controllers\PurchaseOrderItemController;
+use Illuminate\Foundation\Application;
 use App\Http\Controllers\StoreItemsController;
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard/purchase-orders', [PurchaseOrderItemController::class, 'index'])
+        ->name('purchase_orders.index');
+});
 
 Route::get('/', function () {
     return Inertia::render('Landing/LandingPage', [

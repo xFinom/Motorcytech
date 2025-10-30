@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { MoreVertical } from 'lucide-vue-next'
-
 import { computed, defineProps, ref } from 'vue'
-
 import { router } from '@inertiajs/vue3'
 
 import { Button } from '@/Components/ui/button'
@@ -23,15 +21,26 @@ import {
 } from '@/Components/ui/table'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import { Review } from '@/interfaces/Review'
+import DeleteReview from './Partials/DeleteReview.vue'
 
-// Recibimos las reviews desde Laravel/Inertia
-const props = defineProps<{ reviews: Review[] }>()
+//Recibimos las reviews paginadas desde Laravel/Inertia
+const props = defineProps<{
+    reviews: {
+        data: Review[]
+        current_page: number
+        last_page: number
+    }
+}>()
 
-// Filtrado
+// Estado del modal y review seleccionada
+const isDeleteOpen = ref(false)
+const selectedReview = ref<Review | null>(null)
+
+//Filtro en frontend
 const filter = ref('')
 const filteredReviews = computed(() => {
-    if (!filter.value) return props.reviews
-    return props.reviews.filter(
+    if (!filter.value) return props.reviews.data
+    return props.reviews.data.filter(
         (r) =>
             r.client.name.toLowerCase().includes(filter.value.toLowerCase()) ||
             r.client.email.toLowerCase().includes(filter.value.toLowerCase()) ||
@@ -39,39 +48,28 @@ const filteredReviews = computed(() => {
     )
 })
 
+//Abrir modal de eliminación
+function onClickDelete(review: Review) {
+    selectedReview.value = { ...review } // guardamos la review seleccionada
+    isDeleteOpen.value = true // abrimos el modal
+}
+
+// Validar review
 const onClickValidate = (review: Review) => {
     router.put(
         route('reviews.validate', review.id),
-        {}, // no necesitas enviar datos adicionales
+        {},
         {
             preserveScroll: true,
-            onSuccess: () => {
-                console.log('Review validada correctamente ✅')
-            },
-            onError: (serverErrors) => {
-                console.error('Error al validar review:', serverErrors)
-            },
+            onSuccess: () => console.log('✅ Review validada correctamente'),
+            onError: (e) => console.error('Error al validar review:', e),
         }
     )
 }
 
-const onClickDelete = (review: Review) => {
-    if (confirm('¿Deseas eliminar esta review?')) {
-        router.delete(route('reviews.destroy', review.id), {
-            preserveScroll: true,
-            onSuccess: () => {
-                console.log('Review eliminada correctamente ✅')
-            },
-            onError: (serverErrors) => {
-                console.error('Error al eliminar review:', serverErrors)
-            },
-        })
-    }
-}
-
-// Columnas visuales
+// 🔹 Columnas de la tabla
 const columns = [
-    { name: 'Cliente', sortable: false},
+    { name: 'Cliente', sortable: false },
     { name: 'Correo', sortable: false },
     { name: 'Comentario', sortable: false },
     { name: 'Fecha', sortable: false },
@@ -98,13 +96,7 @@ const columns = [
                                 :key="col.name"
                                 class="text-left text-primary"
                             >
-                                <div class="flex items-center">
-                                    <span v-if="!col.hideHeader">{{ col.name }}</span>
-                                    <MoreVertical
-                                        v-if="col.sortable"
-                                        class="ml-2 h-4 w-4 text-primary"
-                                    />
-                                </div>
+                                <span v-if="!col.hideHeader">{{ col.name }}</span>
                             </TableHead>
                         </TableRow>
                     </TableHeader>
@@ -155,6 +147,35 @@ const columns = [
                     </TableBody>
                 </Table>
             </div>
+
+            <!-- Paginación -->
+            <div class="mt-4 flex justify-end space-x-2 text-primary">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    :disabled="props.reviews.current_page === 1"
+                    @click="
+                        $inertia.get(route('validreviews'), { page: props.reviews.current_page - 1 })
+                    "
+                >
+                    Anterior
+                </Button>
+
+                <Button
+                    variant="outline"
+                    size="sm"
+                    :disabled="props.reviews.current_page === props.reviews.last_page"
+                    @click="
+                        $inertia.get(route('validreviews'), { page: props.reviews.current_page + 1 })
+                    "
+                >
+                    Siguiente
+                </Button>
+            </div>
         </div>
+
+        <!-- Modal de eliminación -->
+<DeleteReview v-model:open="isDeleteOpen" v-if="selectedReview" :review="selectedReview" />
+
     </DashboardLayout>
 </template>
