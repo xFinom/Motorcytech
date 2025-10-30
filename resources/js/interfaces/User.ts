@@ -3,10 +3,11 @@ import { PrivateMessage } from '@/interfaces/PrivateMessage'
 import { Review } from '@/interfaces/Review'
 
 export interface BaseUser {
-    id?: number
+    id: number
     name: string
     email: string
     role: UserRole
+    email_verified_at?: string|null
     privateMessages: PrivateMessage[]
 }
 
@@ -15,7 +16,7 @@ export interface Client extends BaseUser {
     rfc: string | null
     phone: string
     address: string
-    reviews: Review[]
+    reviews?: Review[]
 }
 
 export interface Worker extends BaseUser {

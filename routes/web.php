@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MotorcycleController;
+use App\Http\Controllers\PrivateMessagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ServiceOrdersController;
@@ -23,17 +24,18 @@ Route::get('/', function () {
     return Inertia::render('Landing/LandingPage', [
         'canLogin' => Route::has('login'),
         'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
     ]);
-});
+})->name('home');
 
-Route::get('/tracking-order', function () {
-    return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
-});
+Route::get('/service-orders/{serviceOrder:id}', [ServiceOrdersController::class, 'show'])
+    ->middleware(['auth', 'verified'])
+    ->name('service-orders.show');
+Route::patch('/service-orders/{serviceOrder}/status', [ServiceOrdersController::class, 'updateStatus'])
+    ->name('service-orders.update-status');
+
+Route::post('/service/order/message', [PrivateMessagesController::class, 'store'])->name('service.order.message.store');
 
 Route::get('/reviews', [ReviewsController::class, 'index'])->name('reviews.index');
-
 
 Route::middleware(['auth', 'verified'])->group(function () {
     // Mostrar formulario
@@ -57,10 +59,33 @@ Route::delete('/reviews/{review}', [ReviewsController::class, 'destroy'])
 
 Route::get('/AboutUs', function () {
     return Inertia::render('Landing/About/AboutUs');
-});
+})->name('aboutUs');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');
+    $totalServiceOrders = \App\Models\ServiceOrders::query()->count();
+    $totalClients = \App\Models\User::query()->count();
+    $totalMotorcycles = \App\Models\ServiceOrders::query()->where('service_orders.status', '!=', \App\Enums\ServiceOrderStatus::Finalizado)->count();
+    $totalPendingReviews = \App\Models\Reviews::query()->where('reviews.status', \App\Enums\ReviewStatus::Pendiente)->count();
+
+    $chartData = \App\Models\ServiceOrders::query()
+        ->selectRaw('service_id, COUNT(*) as total')
+        ->with('service:id,name') // solo carga lo necesario
+        ->groupBy('service_id')
+        ->get()
+        ->map(fn ($order) => [
+            'name' => $order->service->name,
+            'total' => $order->total,
+        ]);
+    $recentClients = \App\Models\User::query()->where('users.role', \App\Enums\UserRole::Cliente)->latest()->take(7)->get();
+
+    return Inertia::render('Dashboard/Overview/Overview', [
+        'totalServiceOrders' => $totalServiceOrders,
+        'totalClients' => $totalClients,
+        'totalMotorcycles' => $totalMotorcycles,
+        'totalPendingReviews' => $totalPendingReviews,
+        'chartData' => $chartData,
+        'recentClients' => $recentClients,
+    ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');

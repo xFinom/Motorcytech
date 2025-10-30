@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { defineProps } from 'vue'
+
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/Components/ui/form'
 import { Input } from '@/Components/ui/input'
 import {
@@ -9,6 +11,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/Components/ui/select'
+
+defineProps<{
+    services: Record<number, string>
+}>()
 </script>
 
 <template>
@@ -24,9 +30,12 @@ import {
                     </FormControl>
                     <SelectContent>
                         <SelectGroup>
-                            <SelectItem :value="1">Lavado</SelectItem>
-                            <SelectItem :value="2">Mantenimiento</SelectItem>
-                            <SelectItem :value="3">Reparación</SelectItem>
+                            <SelectItem
+                                v-for="(service, index) in services"
+                                :key="index"
+                                :value="Number(index)"
+                                >{{ service }}</SelectItem
+                            >
                         </SelectGroup>
                     </SelectContent>
                 </Select>

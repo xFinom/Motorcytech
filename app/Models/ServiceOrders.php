@@ -21,7 +21,10 @@ class ServiceOrders extends Model
     protected $fillable = [
         'entry_date',
         'delivery_date',
+        'motorcycle_id',
         'status',
+        'client_id',
+        'service_id',
         'note',
     ];
 
@@ -49,5 +52,15 @@ class ServiceOrders extends Model
     public function spareParts(): HasMany
     {
         return $this->hasMany(ServiceOrderSparePart::class, 'service_order_id', 'id');
+    }
+
+    public function events(): HasMany
+    {
+        return $this->hasMany(ServiceOrderEvent::class, 'service_order_id', 'id');
+    }
+
+    public function privateMessages(): HasMany
+    {
+        return $this->hasMany(PrivateMessages::class, 'service_order_id', 'id');
     }
 }

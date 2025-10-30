@@ -96,10 +96,10 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="pl-20 pr-20 pt-2">
+        <div class="pl-10 pr-10">
             <!-- Barra de filtrado y selector de columnas -->
             <div class="flex items-center py-4">
-                <Input v-model="filter" class="max-w-sm" placeholder="Filtrar usuarios..." />
+                <Input v-model="filter" class="max-w-sm" placeholder="Buscar" />
             </div>
 
             <!-- Tabla -->

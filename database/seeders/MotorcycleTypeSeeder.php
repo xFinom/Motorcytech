@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Brand;
 use App\Models\MotorcycleType;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,17 @@ class MotorcycleTypeSeeder extends Seeder
      */
     public function run(): void
     {
-        MotorcycleType::factory(4)->create();
+        $brands = Brand::all();
+
+        foreach ($brands as $brand) {
+            $brand->types()->createMany([
+                ['name' => 'Deportiva'],
+                ['name' => 'Enduro'],
+                ['name' => 'Naked'],
+                ['name' => 'Scooter'],
+            ]);
+        }
+
+//        MotorcycleType::factory(4)->create();
     }
 }

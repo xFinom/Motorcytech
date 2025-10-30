@@ -31,13 +31,15 @@ const employeeMenuItems = employeeMenu
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <div class="flex items-center justify-center">
-                            <Icon icon="mdi:tools" class="text-2xl text-primary" />
-                            <div class="text-xl font-black uppercase tracking-wide">
-                                <span> Motorcy</span>
-                                <span class="font-semibold text-primary">tech </span>
+                        <a class="flex items-center justify-center" :href="route('dashboard')">
+                            <div class="flex items-center justify-center">
+                                <Icon icon="mdi:tools" class="mr-1 text-2xl text-primary" />
+                                <div class="text-xl font-black uppercase tracking-wide">
+                                    <span> Motorcy</span>
+                                    <span class="font-semibold text-primary">tech </span>
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
             </SidebarMenu>

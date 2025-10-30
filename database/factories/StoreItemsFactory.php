@@ -15,11 +15,11 @@ class StoreItemsFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->words(3, true),
-            'description' => $this->faker->sentence(),
-            'quantity' => $this->faker->numberBetween(10, 100),
-            'image' => $this->faker->imageUrl(640, 480, 'tech', true),
-            'price' => $this->faker->randomFloat(2, 100, 10000),
+            'name' => $this->faker->name(),
+            'description' => $this->faker->text(),
+            'quantity' => $this->faker->numberBetween(1, 100),
+            'image' => $this->faker->imageUrl(),
+            'price' => $this->faker->numberBetween(100, 1000),
         ];
     }
 }

@@ -1,23 +1,22 @@
 import {
-    AtSign,
     BanknoteArrowDown,
     BanknoteArrowUp,
     Bike,
     ChartNoAxesCombined,
     ShoppingCart,
-    SquareTerminal,
     Star,
     Store,
     UserCog,
     Users,
     Wrench,
+    Bolt,
 } from 'lucide-vue-next'
 
 export const serviceOrderMenu = [
     {
         title: 'Ordenes de Servicio',
         url: '#',
-        icon: SquareTerminal,
+        icon: Wrench,
         isActive: true,
         items: [
             {
@@ -85,7 +84,7 @@ export const employeeMenu = [
     {
         title: 'Proveedores',
         url: route('supplierslist'),
-        icon: Wrench,
+        icon: Bolt,
     },
 ]
 

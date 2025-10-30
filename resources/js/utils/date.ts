@@ -6,3 +6,15 @@ export function formatDate(value: string, locale = 'es-MX') {
         day: '2-digit',
     }).format(new Date(value))
 }
+
+export function formatHour24(value: string, locale = 'es-MX'): string {
+    if (!value) return ''
+
+    const date = new Date(value)
+
+    return new Intl.DateTimeFormat(locale, {
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false,
+    }).format(date)
+}

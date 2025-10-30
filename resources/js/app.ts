@@ -4,7 +4,7 @@ import { DefineComponent, createApp, h } from 'vue'
 
 import { createInertiaApp } from '@inertiajs/vue3'
 
-import { ZiggyVue } from '../../vendor/tightenco/ziggy'
+import { ZiggyVue } from 'ziggy-js'
 import '../css/app.css'
 import './bootstrap'
 
