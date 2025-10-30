@@ -12,6 +12,6 @@ class ServiceOrdersSeeder extends Seeder
      */
     public function run(): void
     {
-        ServiceOrders::factory()->count(15)->create();
+//        ServiceOrders::factory()->count(15)->create();
     }
 }

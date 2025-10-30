@@ -14,6 +14,8 @@ class ServiceOrderSparePart extends Model
     /** @use HasFactory<ServiceOrderSparePartFactory> */
     use HasFactory;
 
+    protected $table = 'service_orders_spare_parts';
+
     protected $fillable = [
         'name',
         'quantity',

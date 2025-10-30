@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +24,7 @@ class BrandSeeder extends Seeder
                 ['id' => 7, 'name' => 'Yamaha', 'logo' => 'logo.png'],
                 ['id' => 8, 'name' => 'Ducati', 'logo' => 'logo.png'],
                 ['id' => 9, 'name' => 'KTM', 'logo' => 'logo.png'],
+                ['id' => 10, 'name' => 'MV Agusta', 'logo' => 'logo.png'],
             ]);
         });
     }
