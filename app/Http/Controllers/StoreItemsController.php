@@ -20,6 +20,17 @@ class StoreItemsController extends Controller
     ]);
     }
 
+    public function indexDasboard()
+    {
+        $products = StoreItems::query()
+            ->latest()
+            ->paginate(10);
+
+        return Inertia::render('Dashboard/StoreItem/Index', [
+            'products' => $products,
+        ]);
+    }
+
     /**
      * Show the form for creating a new resource.
      */

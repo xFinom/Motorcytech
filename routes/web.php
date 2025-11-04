@@ -102,6 +102,10 @@ Route::get('/dashboard/forecast', function () {
     return Inertia::render('Dashboard/DataMining/ForecastServices');
 })->name('dashboard.forecast');
 
+Route::get('dashboard/itemsets', function () {
+    return Inertia::render('Dashboard/DataMining/ItemSets');
+})->name('dashboard.itemsets');
+
 Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');
 Route::get('/dashboard/service/order/create', [ServiceOrdersController::class, 'create'])->middleware(['auth', 'verified'])->name('service.order.create');
 Route::post('/dashboard/service/order', [ServiceOrdersController::class, 'store'])->middleware(['auth', 'verified'])->name('service.order.store');
@@ -109,6 +113,10 @@ Route::post('/dashboard/service/order', [ServiceOrdersController::class, 'store'
 Route::get('/dashboard/userslist', [UserListController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('userslist');
+
+Route::get('/dashboard/store/items', [StoreItemsController::class, 'indexDasboard'])
+    ->middleware(['auth', 'verified'])
+    ->name('store.items');
 
 Route::put('/users/{user}', [UserListController::class, 'update'])->name('users.update');
 Route::delete('/users/{user}', [UserListController::class, 'destroy'])->name('users.destroy');

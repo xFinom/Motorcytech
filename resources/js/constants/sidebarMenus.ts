@@ -1,6 +1,6 @@
 import {
     BanknoteArrowDown,
-    BanknoteArrowUp,
+    Share2,
     Bike,
     ChartNoAxesCombined,
     ShoppingCart,
@@ -63,6 +63,11 @@ export const financeMenu = [
         url: route('dashboard.forecast'),
         icon: ChartNoAxesCombined,
     },
+    {
+        title: 'Refacciones asociadas',
+        url: route('dashboard.itemsets'),
+        icon: Share2,
+    },
 ]
 
 export const employeeMenu = [
@@ -81,7 +86,7 @@ export const employeeMenu = [
 export const salesMenu = [
     {
         title: 'Inventario',
-        url: '#',
+        url: route('store.items'),
         icon: Store,
     },
     {
