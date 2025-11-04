@@ -19,7 +19,7 @@ const toggleDetails = (id: number) => {
 <template>
     <MainLayout>
 
-        
+
         <div
             class="flex flex-col items-center justify-center bg-gray-200 py-2 shadow-md dark:bg-gray-800"
         >
@@ -70,7 +70,7 @@ const toggleDetails = (id: number) => {
 
                     <CardHeader class="p-0">
                         <img
-                            :src="product.name"
+                            src="https://thereddooratrothbury.com/wp-content/uploads/2025/08/Test-Item-Grey-300x300.png"
                             :alt="product.name"
                             class="h-48 w-full rounded-lg object-contain"
                         />
