@@ -7,6 +7,7 @@ use App\Http\Requests\UpdateServiceOrdersRequest;
 use App\Models\Brand;
 use App\Models\ServiceOrders;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceOrdersController extends Controller
 {
@@ -24,6 +25,17 @@ class ServiceOrdersController extends Controller
         ]);
     }
 
+public function profileindex()
+{
+    $serviceOrders = ServiceOrders::query()
+        ->where('client_id', Auth::id()) // Usa el helper directamente
+        ->with(['motorcycle', 'client', 'motorcycle.type', 'motorcycle.type.brand', 'service'])
+        ->paginate(10);
+
+    return Inertia::render('Landing/Profile/ServiceOrdersUser', [
+        'serviceOrders' => $serviceOrders,
+    ]);
+}
     /**
      * Show the form for creating a new resource.
      */
@@ -32,7 +44,7 @@ class ServiceOrdersController extends Controller
         // TODO: crear tabla de servicios
         $groupedTypes = Brand::with('types')->get()->mapWithKeys(function ($brand) {
             return [
-                $brand->id => $brand->types->map(fn ($type) => [
+                $brand->id => $brand->types->map(fn($type) => [
                     'id' => $type->id,
                     'name' => $type->name,
                 ])->toArray(),

@@ -13,12 +13,12 @@
             class="mt-3 flex flex-wrap items-center text-sm font-medium text-white dark:text-white sm:mt-0"
         >
             <li>
-                <a href="#" class="me-4 text-primary hover:underline dark:text-white md:me-6"
+                <a :href="route('privacypolicy')" class="me-4 text-primary hover:underline dark:text-white md:me-6"
                     >Políticas de privacidad</a
                 >
             </li>
             <li>
-                <a href="#" class="me-4 text-primary hover:underline dark:text-white md:me-6"
+                <a :href="route('termsandconditions')" class="me-4 text-primary hover:underline dark:text-white md:me-6"
                     >Términos y condiciones</a
                 >
             </li>

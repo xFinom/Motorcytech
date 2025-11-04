@@ -59,10 +59,20 @@ Route::get('/AboutUs', function () {
     return Inertia::render('Landing/About/AboutUs');
 });
 
+Route::get('/TermsAndConditions', function () {
+    return Inertia::render('Landing/Extras/TermsAndConditions');
+}) ->name('termsandconditions');
+
+Route::get('/PrivacyPolicy', function () {
+    return Inertia::render('Landing/Extras/PrivacyPolicy');
+})->name('privacypolicy');
+
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard/ServiceOrders/CreateServiceOrder');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/userserviceorder', [ServiceOrdersController::class, 'profileindex'])->middleware(['auth', 'verified'])->name('service.order.profileindex');
 Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');
 Route::get('/dashboard/service/order/create', [ServiceOrdersController::class, 'create'])->middleware(['auth', 'verified'])->name('service.order.create');
 Route::post('/dashboard/service/order', [ServiceOrdersController::class, 'store'])->middleware(['auth', 'verified'])->name('service.order.store');
