@@ -31,5 +31,8 @@ export default defineConfig(({ mode }) => {
                 protocol: env.VITE_APP_PROTOCOL,
             },
         },
+        define: {
+            global: 'window',
+        }
     };
 });

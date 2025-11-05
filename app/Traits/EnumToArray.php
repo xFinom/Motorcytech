@@ -8,4 +8,10 @@ trait EnumToArray
     {
         return array_column(self::cases(), 'value');
     }
+
+    public static function randomCase()
+    {
+        $cases = self::cases();
+        return $cases[array_rand($cases)];
+    }
 }

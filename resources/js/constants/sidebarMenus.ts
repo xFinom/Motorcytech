@@ -1,23 +1,22 @@
 import {
-    AtSign,
     BanknoteArrowDown,
-    BanknoteArrowUp,
+    Share2,
     Bike,
     ChartNoAxesCombined,
     ShoppingCart,
-    SquareTerminal,
     Star,
     Store,
     UserCog,
     Users,
     Wrench,
+    Bolt,
 } from 'lucide-vue-next'
 
 export const serviceOrderMenu = [
     {
         title: 'Ordenes de Servicio',
         url: '#',
-        icon: SquareTerminal,
+        icon: Wrench,
         isActive: true,
         items: [
             {
@@ -61,18 +60,13 @@ export const serviceOrderMenu = [
 export const financeMenu = [
     {
         title: 'Proyecciones',
-        url: '#',
+        url: route('dashboard.forecast'),
         icon: ChartNoAxesCombined,
     },
     {
-        title: 'Ganancias',
-        url: '#',
-        icon: BanknoteArrowUp,
-    },
-    {
-        title: 'Gastos',
-        url: '#',
-        icon: BanknoteArrowDown,
+        title: 'Refacciones asociadas',
+        url: route('dashboard.itemsets'),
+        icon: Share2,
     },
 ]
 
@@ -85,14 +79,14 @@ export const employeeMenu = [
     {
         title: 'Proveedores',
         url: route('supplierslist'),
-        icon: Wrench,
+        icon: Bolt,
     },
 ]
 
 export const salesMenu = [
     {
         title: 'Inventario',
-        url: '#',
+        url: route('store.items'),
         icon: Store,
     },
     {

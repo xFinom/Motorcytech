@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStoreItemsRequest;
 use App\Http\Requests\UpdateStoreItemsRequest;
 use App\Models\StoreItems;
+use Inertia\Inertia;
 
 class StoreItemsController extends Controller
 {
@@ -13,7 +14,21 @@ class StoreItemsController extends Controller
      */
     public function index()
     {
-        //
+        $products = StoreItems::all();
+        return Inertia::render('Dashboard/Shop/StoreItems', [
+        'products' => $products,
+    ]);
+    }
+
+    public function indexDasboard()
+    {
+        $products = StoreItems::query()
+            ->latest()
+            ->paginate(10);
+
+        return Inertia::render('Dashboard/StoreItem/Index', [
+            'products' => $products,
+        ]);
     }
 
     /**

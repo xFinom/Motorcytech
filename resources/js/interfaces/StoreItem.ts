@@ -1,4 +1,5 @@
 import { PurchaseOrder } from '@/interfaces/PurchaseOrder'
+import { PaginatedList } from '@/interfaces/PaginatedList'
 
 export interface StoreItem {
     id: number
@@ -8,3 +9,5 @@ export interface StoreItem {
     price: number
     purchaseOrders: PurchaseOrder[]
 }
+
+export type PaginatedStoreItemList = PaginatedList<StoreItem>

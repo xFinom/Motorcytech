@@ -1,58 +1,62 @@
 <template>
     <section class="bg-white px-4 py-16 text-black dark:bg-[#061222] dark:text-white">
-        <div class="mb-12 flex items-center justify-center gap-4">
-            <Icon icon="mdi:tools" class="text-5xl text-[#fb5607]" />
-            <h2 class="slide-up-enter text-4xl font-extrabold text-[#061222] dark:text-white">
-                Nuestros <span class="text-[#fb5607]">Servicios</span>
-            </h2>
-            <Icon icon="mdi:tools" class="text-5xl text-[#fb5607]" />
-        </div>
+        <div class="mx-auto max-w-screen-xl">
+            <div class="mb-12 flex items-center justify-center gap-4">
+                <Icon icon="mdi:tools" class="text-5xl text-[#fb5607]" />
+                <h2 class="slide-up-enter text-4xl font-extrabold text-[#061222] dark:text-white">
+                    Nuestros <span class="text-[#fb5607]">Servicios</span>
+                </h2>
+                <Icon icon="mdi:tools" class="text-5xl text-[#fb5607]" />
+            </div>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            <div
-                v-for="servicio in servicios"
-                :key="servicio.titulo"
-                class="relative overflow-hidden rounded-2xl bg-white/5 shadow-lg backdrop-blur-md"
-            >
+            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 <div
-                    class="aspect-video bg-cover bg-center"
-                    :style="{ backgroundImage: `url(${servicio.imagen})` }"
-                ></div>
+                    v-for="servicio in servicios"
+                    :key="servicio.titulo"
+                    class="relative overflow-hidden rounded-2xl bg-white/5 shadow-lg backdrop-blur-md"
+                >
+                    <div
+                        class="aspect-video bg-cover bg-center"
+                        :style="{ backgroundImage: `url(${servicio.imagen})` }"
+                    ></div>
 
-                <div class="absolute right-3 top-3 z-10">
-                    <div class="group relative">
-                        <button
-                            class="rounded-full bg-black/50 p-2 text-white transition hover:bg-black/70"
-                            title="Ver detalles"
-                        >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                class="h-5 w-5"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke="currentColor"
+                    <div class="absolute right-3 top-3 z-10">
+                        <div class="group relative">
+                            <button
+                                class="rounded-full bg-black/50 p-2 text-white transition hover:bg-black/70"
+                                title="Ver detalles"
                             >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    stroke-width="3"
-                                    d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
-                                />
-                            </svg>
-                        </button>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-5 w-5"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="3"
+                                        d="M13 16h-1v-4h-1m1-4h.01M12 2a10 10 0 100 20 10 10 0 000-20z"
+                                    />
+                                </svg>
+                            </button>
 
-                        <div
-                            class="absolute right-0 top-full z-50 mt-2 hidden w-64 rounded-lg bg-slate-800 p-4 text-sm text-white shadow-xl group-hover:block"
-                        >
-                            <ul class="list-inside list-disc space-y-1">
-                                <li v-for="item in servicio.detalles" :key="item">{{ item }}</li>
-                            </ul>
+                            <div
+                                class="absolute right-0 top-full z-50 mt-2 hidden w-64 rounded-lg bg-slate-800 p-4 text-sm text-white shadow-xl group-hover:block"
+                            >
+                                <ul class="list-inside list-disc space-y-1">
+                                    <li v-for="item in servicio.detalles" :key="item">
+                                        {{ item }}
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="bg-[#0f172a] p-4 text-center text-lg font-semibold text-orange-400">
-                    {{ servicio.titulo }}
+                    <div class="bg-[#0f172a] p-4 text-center text-lg font-semibold text-orange-400">
+                        {{ servicio.titulo }}
+                    </div>
                 </div>
             </div>
         </div>

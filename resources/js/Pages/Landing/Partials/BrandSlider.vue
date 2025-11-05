@@ -9,7 +9,6 @@ const sponsorLogos = [
     { id: 5, name: 'Suzuki', url: 'https://i.ibb.co/wNYBp3Z4/Suzuki-logo-2025.png' },
     { id: 6, name: 'Honda', url: 'https://i.ibb.co/0yk8Mp3n/Honda-logo.png' },
     { id: 7, name: 'Triumph', url: 'https://i.ibb.co/wNnrKV8Z/Logo-Triumph.png' },
-    // { id: 8, name: 'MV Augusta', url: 'https://i.ibb.co/5gt832j6/mv-augusta.png' },
 ]
 
 const duplicatedLogos = computed(() =>
@@ -51,13 +50,12 @@ const handleImageError = (e) => {
         <h1
             class="mb-4 mt-3 text-center text-4xl font-extrabold leading-none tracking-tight text-[#fb5607] md:text-5xl lg:text-6xl"
         >
-            We invest in the world’s potential
+            Las marcas que conoces, en manos de expertos
         </h1>
         <p
             class="mb-8 text-center text-lg font-normal text-white dark:text-gray-400 sm:px-16 lg:text-xl xl:px-48"
         >
-            Here at Flowbite we focus on markets where technology, innovation, and capital can
-            unlock long-term value and drive economic growth.
+            Contamos con alta experiencia en reparación en las mejores marcas líderes en el sector
         </p>
         <div class="relative mx-auto mb-4 h-full overflow-hidden" style="width: 50%">
             <div

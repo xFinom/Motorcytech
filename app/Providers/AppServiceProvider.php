@@ -6,6 +6,7 @@ use App\Models\ServiceOrderEvent;
 use App\Observers\ServiceOrderEventObserver;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
+use URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        if(app()->isProduction()) {
+            URL::forceScheme('https');
+        }
+
         ServiceOrderEvent::observe(ServiceOrderEventObserver::class);
         Vite::prefetch(concurrency: 3);
     }

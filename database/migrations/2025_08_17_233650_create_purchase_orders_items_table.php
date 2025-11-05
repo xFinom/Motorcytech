@@ -16,13 +16,11 @@ return new class extends Migration
             $table->foreignId('purchase_order_id')
                   ->constrained('purchase_orders')
                   ->onDelete('cascade');
-            $table->timestamps(); 
+            $table->timestamps();
             $table->foreignId('item_id')
                   ->constrained('store_items')
                   ->onDelete('cascade');
         });
-
-        
     }
 
     /**
@@ -33,4 +31,3 @@ return new class extends Migration
         Schema::dropIfExists('purchase_order_items');
     }
 };
-
