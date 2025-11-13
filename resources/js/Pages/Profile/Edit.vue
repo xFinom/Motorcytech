@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 
-import AuthenticatedLayout from '@/Layouts/ProfileLayout.vue'
+import ProfileLayout from '@/Layouts/ProfileLayout.vue'
 
 import DeleteUserForm from './Partials/DeleteUserForm.vue'
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue'
@@ -11,7 +11,7 @@ defineProps<{
     mustVerifyEmail?: boolean
     status?: string
 }>()
-</script>   
+</script>
 
 <template>
     <Head title="Profile" />
@@ -37,7 +37,7 @@ defineProps<{
                     <UpdatePasswordForm class="max-w-xl" />
                 </div>
 
-               
+
             </div>
         </div>
     </ProfileLayout>

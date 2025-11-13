@@ -2,9 +2,9 @@
 import { Head } from '@inertiajs/vue3'
 
 import Navbar from '@/Pages/Landing/Partials/Navbar.vue'
-import SidebarProfile from './SidebarProfile.vue'
-import Chatbot from '../../Chatbot/Chatbot.vue'
-import Footer from '../../Partials/Footer.vue'
+import SidebarProfile from '../Pages/Landing/Profile/Partials/SidebarProfile.vue'
+import Chatbot from '../Pages/Landing/Chatbot/Chatbot.vue'
+import Footer from '../Pages/Landing/Partials/Footer.vue'
 </script>
 
 <template>
@@ -19,8 +19,8 @@ import Footer from '../../Partials/Footer.vue'
 
             <!-- Contenido principal -->
             <main
-                class="flex-1 p-10 bg-white text-gray-800 
-                       dark:bg-[#0E1A2B] dark:text-gray-300 
+                class="flex-1 p-10 bg-white text-gray-800
+                       dark:bg-[#0E1A2B] dark:text-gray-300
                        transition-colors duration-300"
             >
                 <slot></slot>

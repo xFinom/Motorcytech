@@ -125,7 +125,37 @@ defineProps<{}>()
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10">
+                <MetricCard
+                    title="Órdenes de Servicio"
+                    :value="1"
+                    description="Generadas este año"
+                    :icon="Wrench"
+                />
+
+                <MetricCard
+                    title="Clientes"
+                    :value="1"
+                    description="Atendidos este año"
+                    :icon="Users"
+                />
+
+                <MetricCard
+                    title="Motocicletas"
+                    :value="1"
+                    description="Actualmente en el taller"
+                    :icon="Bike"
+                />
+
+                <MetricCard
+                    title="Reseñas"
+                    :value="1"
+                    description="Pendientes de validación"
+                    :icon="Star"
+                />
+            </div>
+
             <div>
                 <Tabs v-model="selectedService" >
                     <TabsList class="flex justify-center gap-2 border-b border-border pb-2 pt-2 overflow-x-auto">

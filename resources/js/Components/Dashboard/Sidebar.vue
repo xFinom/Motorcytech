@@ -31,7 +31,7 @@ const employeeMenuItems = employeeMenu
             <SidebarMenu>
                 <SidebarMenuItem>
                     <SidebarMenuButton size="lg" as-child>
-                        <a class="flex items-center justify-center" :href="route('dashboard')">
+                        <a class="flex items-center justify-center" :href="route('dashboard.overview')">
                             <div class="flex items-center justify-center">
                                 <Icon icon="mdi:tools" class="mr-1 text-2xl text-primary" />
                                 <div class="text-xl font-black uppercase tracking-wide">

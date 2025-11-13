@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\ServiceOrderStatus;
+use Carbon\Carbon;
 use Database\Factories\ServiceOrdersFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +13,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * @property string $id
+ * @property Carbon $entry_date
+ * @property Carbon $delivery_date
+ * @property ServiceOrderStatus $status
+ * @property string $note
+ *
+ * @property User $client
+ * @property Motorcycle $motorcycle
+ * @property Service $service
+ * @property Collection<int, ServiceOrderSparePart> $spareParts
+ * @property Collection<int, ServiceOrderEvent> $events
+ * @property Collection<int, PrivateMessages> $privateMessages
+ */
 class ServiceOrders extends Model
 {
     /** @use HasFactory<ServiceOrdersFactory> */

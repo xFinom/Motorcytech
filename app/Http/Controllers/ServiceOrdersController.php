@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ServiceOrderEvents;
 use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
 use App\Models\Brand;
 use App\Models\Motorcycle;
 use App\Models\Service;
+use App\Models\ServiceOrderEvent;
 use App\Models\ServiceOrders;
 use App\Models\User;
+use App\Services\ServiceOrderEventPayloadBuilder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -102,28 +105,11 @@ public function profileindex()
             'service',
             'privateMessages',
             'privateMessages.user',
+            'events'
         ]);
-
-        // Historial de eventos mapeado para el front-end
-        $orderHistory = $serviceOrder->events()
-            ->orderBy('created_at', 'asc')
-            ->get()
-            ->map(function ($event) {
-                return [
-                    'date' => $event->created_at->format('d M Y, H:i'),
-                    'title' => $event->title,
-                    'description' => $event->description,
-                    'status' => match ($event->type) {
-                        'StatusChange' => 'completed', // o mapear según tus tipos
-                        default => 'created',
-                    },
-                ];
-            })
-            ->toArray();
 
         return Inertia::render('Dashboard/ServiceOrders/OrderTracking', [
             'serviceOrder' => $serviceOrder->toArray(),
-            'orderHistory' => $orderHistory,
         ]);
     }
 
@@ -150,8 +136,21 @@ public function profileindex()
 
     public function updateStatus(Request $request, ServiceOrders $serviceOrder)
     {
+        $oldStatus = $serviceOrder->status;
+
         $serviceOrder->status = $request->status;
         $serviceOrder->save();
+
+        ServiceOrderEvent::query()->create([
+            'service_order_id' => $serviceOrder->id,
+            'type' => ServiceOrderEvents::StatusChange,
+            'title' => 'Cambio de estatus',
+            'description' => "Su orden de servicio ahora tiene estatus: {$serviceOrder->status->value}.",
+            'data' => ServiceOrderEventPayloadBuilder::for(ServiceOrderEvents::StatusChange, [
+                'old_status' => $oldStatus,
+                'new_status' => $serviceOrder->status,
+            ]),
+        ]);
 
         return redirect()->back()->with('success', 'Estado actualizado');
     }

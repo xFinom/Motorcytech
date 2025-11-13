@@ -6,6 +6,7 @@ import { Service } from '@/interfaces/Service'
 import { ServiceOrderBill } from '@/interfaces/ServiceOrderBill'
 import { ServiceOrderSparePart } from '@/interfaces/ServiceOrderSparePart'
 import { Client } from '@/interfaces/User'
+import { ServiceOrderEvent } from '@/interfaces/ServiceOrderEvent'
 
 export interface ServiceOrder {
     id: string
@@ -19,6 +20,7 @@ export interface ServiceOrder {
     spareParts?: ServiceOrderSparePart[]
     bills?: ServiceOrderBill[]
     private_messages?: PrivateMessage[]
+    events: ServiceOrderEvent[]
 }
 
 export type PaginatedServiceOrderList = PaginatedList<ServiceOrder>

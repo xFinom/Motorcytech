@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreSparePartsRequest;
 use App\Http\Requests\UpdateSparePartsRequest;
 use App\Models\ServiceOrderSparePart;
+use Inertia\Inertia;
 
 class ServiceOrderSparePartController extends Controller
 {
@@ -21,7 +22,7 @@ class ServiceOrderSparePartController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Dashboard/SpareParts/Create');
     }
 
     /**
@@ -29,7 +30,9 @@ class ServiceOrderSparePartController extends Controller
      */
     public function store(StoreSparePartsRequest $request)
     {
-        //
+        foreach ($request->quotes as $spare_part) {
+            StoreSparePartsRequest::create($spare_part);
+        }
     }
 
     /**

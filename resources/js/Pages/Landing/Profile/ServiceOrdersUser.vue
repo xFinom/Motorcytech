@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import ProfileLayout from './Partials/ProfileLayout.vue';
+import ProfileLayout from '../../../Layouts/ProfileLayout.vue';
 
 import { computed, defineProps, ref } from 'vue'
 
@@ -65,8 +65,8 @@ const columns = [
                 <div class="flex items-center py-4">
                     <Input
                         v-model="filter"
-                        class="max-w-sm border border-gray-300 bg-white text-gray-800 placeholder-gray-400 
-                               focus:border-[#FF6B00] focus:ring-[#FF6B00] 
+                        class="max-w-sm border border-gray-300 bg-white text-gray-800 placeholder-gray-400
+                               focus:border-[#FF6B00] focus:ring-[#FF6B00]
                                dark:border-gray-700 dark:bg-[#141C2E] dark:text-gray-100 dark:placeholder-gray-400"
                         placeholder="Buscar motocicleta"
                     />
@@ -100,7 +100,7 @@ const columns = [
                                     <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                         <Avatar class="h-8 w-8 rounded-lg">
                                             <AvatarFallback
-                                                class="rounded-lg bg-gray-200 text-gray-800 
+                                                class="rounded-lg bg-gray-200 text-gray-800
                                                        dark:bg-[#FF6B00]/20 dark:text-[#FF6B00]"
                                             >
                                                 {{ generateInitials(order.client.name) }}
@@ -148,7 +148,7 @@ const columns = [
                                 <TableCell>
                                     <Badge
                                         :class="['', ServiceOrderStatusBadges[order.status]]"
-                                        class="flex items-center gap-1 px-2 py-1 
+                                        class="flex items-center gap-1 px-2 py-1
                                                dark:bg-[#1B2539] dark:text-gray-200 dark:border dark:border-gray-700"
                                     >
                                         <component
@@ -176,7 +176,7 @@ const columns = [
                 <!-- Paginación -->
                 <div class="mt-4 flex justify-end space-x-2">
                     <Button
-                        class="text-[#FF6B00] border-gray-300 dark:border-gray-700 
+                        class="text-[#FF6B00] border-gray-300 dark:border-gray-700
                                hover:bg-[#FF6B00] hover:text-white transition"
                         variant="outline"
                         size="sm"
@@ -191,7 +191,7 @@ const columns = [
                     </Button>
 
                     <Button
-                        class="text-[#FF6B00] border-gray-300 dark:border-gray-700 
+                        class="text-[#FF6B00] border-gray-300 dark:border-gray-700
                                hover:bg-[#FF6B00] hover:text-white transition"
                         variant="outline"
                         size="sm"

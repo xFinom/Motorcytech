@@ -15,7 +15,7 @@ import { User, ClipboardList } from 'lucide-vue-next'
       <!-- ENLACES -->
       <nav class="mt-6 flex flex-col space-y-1">
         <a
-          href= "#"
+          :href="route('profile.edit')"
           class="flex items-center px-6 py-3 text-gray-300 hover:bg-gray-800 hover:text-white transition-colors"
         >
           <User class="w-5 h-5 mr-3" />

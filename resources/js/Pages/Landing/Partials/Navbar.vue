@@ -12,8 +12,8 @@ const menu = [
     { title: 'Inicio', href: route('home'), },
     { title: 'Seguimiento', href: '/seguimiento' },
     { title: 'Reseñas', href: route('reviews.index') },
-    { title: 'Tienda', href: route('storeitems.index') },
-    { title: 'Sobre nosotros', href: route('aboutUs') }
+    { title: 'Tienda', href: route('shop.index') },
+    { title: 'Sobre nosotros', href: route('about') }
 ];
 
 

@@ -25,7 +25,8 @@ const selectedBrandId = ref<number | null>(null)
     <div class="flex flex-col gap-4">
         <FormField v-slot="{ componentField }" name="serial_num">
             <FormItem>
-                <FormLabel>Número de Serie</FormLabel>
+                <FormLabel>Número de Serie <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>
@@ -35,7 +36,8 @@ const selectedBrandId = ref<number | null>(null)
 
         <FormField v-slot="{ componentField }" name="motor_num">
             <FormItem>
-                <FormLabel>Número de Motor</FormLabel>
+                <FormLabel>Número de Motor <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>
@@ -45,7 +47,8 @@ const selectedBrandId = ref<number | null>(null)
 
         <FormField v-slot="{ componentField }" name="placa">
             <FormItem>
-                <FormLabel>Placas</FormLabel>
+                <FormLabel>Placas <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>
@@ -55,7 +58,8 @@ const selectedBrandId = ref<number | null>(null)
 
         <FormField v-slot="{ componentField }" name="brand_id">
             <FormItem>
-                <FormLabel>Marca</FormLabel>
+                <FormLabel>Marca <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <Select v-bind="componentField" v-model="selectedBrandId">
                     <FormControl>
                         <SelectTrigger>
@@ -80,7 +84,8 @@ const selectedBrandId = ref<number | null>(null)
 
         <FormField v-if="selectedBrandId" v-slot="{ componentField }" name="type_id">
             <FormItem>
-                <FormLabel>Tipo</FormLabel>
+                <FormLabel>Tipo <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <Select v-bind="componentField">
                     <FormControl>
                         <SelectTrigger>
@@ -105,7 +110,8 @@ const selectedBrandId = ref<number | null>(null)
 
         <FormField v-slot="{ componentField }" name="year">
             <FormItem>
-                <FormLabel>Año</FormLabel>
+                <FormLabel>Año <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="number" v-bind="componentField" />
                 </FormControl>

@@ -24,7 +24,7 @@ const filteredData = (brand: string) => {
 <template>
     <DashboardLayout>
         <Head title="ItemSets" />
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
             <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                 <Card
                     v-for="brand in brands"
@@ -52,7 +52,7 @@ const filteredData = (brand: string) => {
                                     :key="i"
                                     class="transition hover:bg-muted/40"
                                 >
-                                    <TableCell class="font-medium">{{
+                                    <TableCell class="capitalize font-medium">{{
                                         set.items.join(', ')
                                     }}</TableCell>
                                     <TableCell>{{ (set.support * 100).toFixed(2) }}%</TableCell>

@@ -58,7 +58,7 @@ function onClickEdit(supplier: ItemRow) {
 
 <template>
     <DashboardLayout>
-    <div class="pl-10 pr-10">
+    <div class="w-full max-w-7xl mx-auto">
         <div class="flex items-center justify-between  py-4">
             <Input class="max-w-sm" placeholder="Buscar" v-model="filterText" />
             <Button @click="showCreateItem = true"> Agregar </Button>
@@ -86,8 +86,8 @@ function onClickEdit(supplier: ItemRow) {
                     <TableRow v-for="item in filteredItems" :key="item.id">
                         <TableCell>{{ item.name }}</TableCell>
                         <TableCell>{{ item.description }}</TableCell>
-                        <TableCell>{{ item.quantity }} unidades</TableCell>
-                        <TableCell>{{ item.price }} pesos</TableCell>
+                        <TableCell>{{ item.quantity }} pz.</TableCell>
+                        <TableCell>$ {{ item.price }}</TableCell>
                         <TableCell>
                             <DropdownMenu>
                                 <DropdownMenuTrigger as-child>

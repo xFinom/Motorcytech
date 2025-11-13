@@ -6,7 +6,9 @@ use App\Enums\ReviewStatus;
 use App\Http\Requests\StoreReviewsRequest;
 use App\Models\Reviews;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Inertia\Inertia;
+use Inertia\Response;
 
 class ReviewsController extends Controller
 {
@@ -38,10 +40,9 @@ class ReviewsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        // Normalmente usamos Inertia para renderizar el formulario
-        // return Inertia::render('Dashboard/ServiceOrders/ReviewsForm');
+        return Inertia::render('Dashboard/Reviews/ReviewsForm');
     }
 
     /**

@@ -93,7 +93,7 @@ const updateStatus = async () => {
 
     try {
         router.patch(
-            route('service-orders.update-status', props.serviceOrder.id),
+            route('service.orders.update-status', props.serviceOrder.id),
             {
                 status: newStatus.value,
             },

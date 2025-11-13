@@ -15,6 +15,7 @@ class StoreItemsController extends Controller
     public function index()
     {
         $products = StoreItems::all();
+
         return Inertia::render('Dashboard/Shop/StoreItems', [
         'products' => $products,
     ]);

@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property string $name
+ * @property int $quantity
+ * @property float $price
+ * @property PaymentStatus $payment_status
+ * @property ApprovalStatus $approval_status
+ *
+ * @property ServiceOrders $serviceOrder
+ */
 class ServiceOrderSparePart extends Model
 {
     /** @use HasFactory<ServiceOrderSparePartFactory> */
@@ -32,6 +41,6 @@ class ServiceOrderSparePart extends Model
 
     public function serviceOrder(): BelongsTo
     {
-        return $this->belongsTo(ServiceOrders::class, 'order_id');
+        return $this->belongsTo(ServiceOrders::class, 'service_order_id');
     }
 }

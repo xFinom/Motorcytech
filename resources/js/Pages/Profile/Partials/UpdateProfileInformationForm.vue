@@ -14,8 +14,12 @@ defineProps<{
 const user = usePage().props.auth.user
 
 const form = useForm({
-    name: user?.name ?? 'John',
-    email: user?.email ?? 'Doe',
+    name: user?.name ?? '',
+    email: user?.email ?? '',
+    rfc: user?.rfc ?? '',
+    address: user?.address ?? '',
+    phone: user?.phone ?? '',
+
 })
 </script>
 
@@ -27,7 +31,7 @@ const form = useForm({
             </h2>
 
             <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Actualiza tu nombre y tu correo electrónico     
+                Actualiza tu nombre y tu correo electrónico
             </p>
         </header>
 
@@ -61,6 +65,51 @@ const form = useForm({
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div>
+                <InputLabel for="rfc" value="RFC" />
+
+                <TextInput
+                    id="rfc"
+                    type=rfc
+                    class="mt-1 block w-full"
+                    v-model="form.rfc"
+                    required
+                    autocomplete="username"
+                />
+
+                <InputError class="mt-2" :message="form.errors.rfc" />
+            </div>
+
+            <div>
+                <InputLabel for="phone" value="Telefono" />
+
+                <TextInput
+                    id="phone"
+                    type=phone
+                    class="mt-1 block w-full"
+                    v-model="form.phone"
+                    required
+                    autocomplete="phone"
+                />
+
+                <InputError class="mt-2" :message="form.errors.phone" />
+            </div>
+
+            <div>
+                <InputLabel for="address" value="Dirección" />
+
+                <TextInput
+                    id="address"
+                    type=address
+                    class="mt-1 block w-full"
+                    v-model="form.address"
+                    required
+                    autocomplete="address"
+                />
+
+                <InputError class="mt-2" :message="form.errors.phone" />
             </div>
 
             <div v-if="mustVerifyEmail && user?.email_verified_at === null">

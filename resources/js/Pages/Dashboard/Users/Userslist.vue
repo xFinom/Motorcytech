@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ArrowUpDown, MoreVertical } from 'lucide-vue-next'
+import { ArrowUpDown, Bike, MoreVertical, Star, Users, Wrench } from 'lucide-vue-next'
 
 import { computed, defineProps, ref } from 'vue'
 
@@ -22,6 +22,8 @@ import {
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import DeleteUser from '@/Pages/Dashboard/Users/Partials/DeleteUser.vue'
 import UpdateUser from '@/Pages/Dashboard/Users/Partials/UpdateUser.vue'
+import UserOverview from '@/Components/UserOverview.vue'
+import MetricCard from '@/Pages/Dashboard/Overview/Partials/MetricCard.vue'
 
 // Recibir usuarios desde el backend (paginados)
 const props = defineProps<{
@@ -84,10 +86,8 @@ const filteredUsers = computed(() => {
 
 // Columnas visuales
 const columns = [
-    { name: 'Nombre', sortable: true },
-    { name: 'Correo electrónico', sortable: false },
+    { name: 'Nombre', sortable: false },
     { name: 'RFC', sortable: false },
-    { name: 'Rol', sortable: false },
     { name: 'Dirección', sortable: false },
     { name: 'Teléfono', sortable: false },
     { name: 'Acciones', sortable: false, hideHeader: true },
@@ -96,7 +96,37 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-2">
+                <MetricCard
+                    title="Órdenes de Servicio"
+                    :value="1"
+                    description="Generadas este año"
+                    :icon="Wrench"
+                />
+
+                <MetricCard
+                    title="Clientes"
+                    :value="1"
+                    description="Atendidos este año"
+                    :icon="Users"
+                />
+
+                <MetricCard
+                    title="Motocicletas"
+                    :value="1"
+                    description="Actualmente en el taller"
+                    :icon="Bike"
+                />
+
+                <MetricCard
+                    title="Reseñas"
+                    :value="1"
+                    description="Pendientes de validación"
+                    :icon="Star"
+                />
+            </div>
+
             <!-- Barra de filtrado y selector de columnas -->
             <div class="flex items-center py-4">
                 <Input v-model="filter" class="max-w-sm" placeholder="Buscar" />
@@ -119,10 +149,10 @@ const columns = [
                     <TableBody>
                         <!-- Mostrar usuarios filtrados -->
                         <TableRow v-for="user in filteredUsers" :key="user.email">
-                            <TableCell>{{ user.name }}</TableCell>
-                            <TableCell>{{ user.email }}</TableCell>
+                            <TableCell>
+                                <UserOverview :name="user.name" :email="user.email" />
+                            </TableCell>
                             <TableCell>{{ user.rfc }}</TableCell>
-                            <TableCell>{{ user.role }}</TableCell>
                             <TableCell>{{ user.address }}</TableCell>
                             <TableCell>{{ user.phone }}</TableCell>
                             <TableCell>
