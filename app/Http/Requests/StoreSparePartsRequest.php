@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreSparePartsRequest extends FormRequest
@@ -11,18 +12,22 @@ class StoreSparePartsRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
         return [
-            //
+            'service_order_id' => 'required|string|exists:service_orders,id',
+            'quotes' => 'required|array',
+            'quotes.*.name' => 'required|string',
+            'quotes.*.price' => 'required|numeric',
+            'quotes.*.quantity' => 'required|integer',
         ];
     }
 }

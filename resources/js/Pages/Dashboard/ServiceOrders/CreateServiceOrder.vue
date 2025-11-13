@@ -118,7 +118,7 @@ const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSch
                         }
                     "
                 >
-                    <div class="flex-start flex w-full gap-2">
+                    <div class="flex-start flex w-full gap-2 mb-5">
                         <StepperItem
                             v-for="step in steps"
                             :key="step.step"
@@ -170,7 +170,7 @@ const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSch
                         </StepperItem>
                     </div>
 
-                    <div class="mt-4 flex flex-col gap-4">
+                    <div class="mt-4 flex flex-col gap-4 mb-5">
                         <template v-if="initialStep === ServiceOrderStep.FillingClientData">
                             <FormClient />
                         </template>
@@ -183,6 +183,11 @@ const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSch
                             <FormService :services="services" />
                         </template>
                     </div>
+
+                    <p class="text-sm text-gray-500">
+                        <span class="text-red-500" aria-hidden="true">*</span>
+                        indica un campo obligatorio
+                    </p>
 
                     <div class="mt-4 flex items-center justify-between">
                         <Button
@@ -212,7 +217,9 @@ const formSchema: ZodObject<any>[] = [clientSchema, motorcycleSchema, serviceSch
                             </Button>
                         </div>
                     </div>
+
                 </form>
+
             </Stepper>
         </Form>
     </DashboardLayout>

@@ -2,17 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ServiceOrderEvents;
 use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
 use App\Models\Brand;
 use App\Models\Motorcycle;
 use App\Models\Service;
+use App\Models\ServiceOrderEvent;
 use App\Models\ServiceOrders;
 use App\Models\User;
+use App\Services\ServiceOrderEventPayloadBuilder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ServiceOrdersController extends Controller
 {
@@ -31,6 +35,17 @@ class ServiceOrdersController extends Controller
         ]);
     }
 
+public function profileindex()
+{
+    $serviceOrders = ServiceOrders::query()
+        ->where('client_id', Auth::id()) // Usa el helper directamente
+        ->with(['motorcycle', 'client', 'motorcycle.type', 'motorcycle.type.brand', 'service'])
+        ->paginate(10);
+
+    return Inertia::render('Landing/Profile/ServiceOrdersUser', [
+        'serviceOrders' => $serviceOrders,
+    ]);
+}
     /**
      * Show the form for creating a new resource.
      */
@@ -38,7 +53,7 @@ class ServiceOrdersController extends Controller
     {
         $groupedTypes = Brand::with('types')->get()->mapWithKeys(function ($brand) {
             return [
-                $brand->id => $brand->types->map(fn ($type) => [
+                $brand->id => $brand->types->map(fn($type) => [
                     'id' => $type->id,
                     'name' => $type->name,
                 ])->toArray(),
@@ -90,28 +105,11 @@ class ServiceOrdersController extends Controller
             'service',
             'privateMessages',
             'privateMessages.user',
+            'events'
         ]);
-
-        // Historial de eventos mapeado para el front-end
-        $orderHistory = $serviceOrder->events()
-            ->orderBy('created_at', 'asc')
-            ->get()
-            ->map(function ($event) {
-                return [
-                    'date' => $event->created_at->format('d M Y, H:i'),
-                    'title' => $event->title,
-                    'description' => $event->description,
-                    'status' => match ($event->type) {
-                        'StatusChange' => 'completed', // o mapear según tus tipos
-                        default => 'created',
-                    },
-                ];
-            })
-            ->toArray();
 
         return Inertia::render('Dashboard/ServiceOrders/OrderTracking', [
             'serviceOrder' => $serviceOrder->toArray(),
-            'orderHistory' => $orderHistory,
         ]);
     }
 
@@ -138,8 +136,21 @@ class ServiceOrdersController extends Controller
 
     public function updateStatus(Request $request, ServiceOrders $serviceOrder)
     {
+        $oldStatus = $serviceOrder->status;
+
         $serviceOrder->status = $request->status;
         $serviceOrder->save();
+
+        ServiceOrderEvent::query()->create([
+            'service_order_id' => $serviceOrder->id,
+            'type' => ServiceOrderEvents::StatusChange,
+            'title' => 'Cambio de estatus',
+            'description' => "Su orden de servicio ahora tiene estatus: {$serviceOrder->status->value}.",
+            'data' => ServiceOrderEventPayloadBuilder::for(ServiceOrderEvents::StatusChange, [
+                'old_status' => $oldStatus,
+                'new_status' => $serviceOrder->status,
+            ]),
+        ]);
 
         return redirect()->back()->with('success', 'Estado actualizado');
     }

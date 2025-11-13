@@ -23,6 +23,7 @@ import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import CreateSupplier from '@/Pages/Dashboard/Supplier/CreateSupplier.vue'
 import DeleteSupplier from '@/Pages/Dashboard/Supplier/DeleteSupplier.vue'
 import UpdateSupplier from '@/Pages/Dashboard/Supplier/UpdateSupplier.vue'
+import UserOverview from '@/Components/UserOverview.vue'
 
 const isScrolled = ref(false)
 // Props del backend
@@ -62,10 +63,9 @@ const filteredSuppliers = computed(() =>
 
 // Columnas de la tabla
 const columns = [
-    { name: 'Compañía', sortable: false },
     { name: 'Representante', sortable: false },
+    { name: 'Compañía', sortable: false },
     { name: 'Dirección', sortable: false },
-    { name: 'Email', sortable: false },
     { name: 'Teléfono', sortable: false },
     { name: 'Producto', sortable: false },
     { name: 'Acciones', sortable: false, hideHeader: true },
@@ -85,7 +85,7 @@ function onClickDelete(supplier: SupplierRow) {
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
             <!-- Barra de filtrado y botón crear -->
             <div class="flex items-center py-4">
                 <Input
@@ -126,10 +126,11 @@ function onClickDelete(supplier: SupplierRow) {
 
                     <TableBody>
                         <TableRow v-for="supplier in filteredSuppliers" :key="supplier.id">
+                            <TableCell>
+                                <UserOverview :name="supplier.representative" :email="supplier.email" />
+                            </TableCell>
                             <TableCell>{{ supplier.company }}</TableCell>
-                            <TableCell>{{ supplier.representative }}</TableCell>
                             <TableCell>{{ supplier.address }}</TableCell>
-                            <TableCell>{{ supplier.email }}</TableCell>
                             <TableCell>{{ supplier.phone }}</TableCell>
                             <TableCell>{{ supplier.product }}</TableCell>
                             <TableCell>

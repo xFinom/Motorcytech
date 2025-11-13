@@ -51,8 +51,8 @@ const filteredOrders = computed(() => {
 
 // Columnas visuales
 const columns = [
-    { name: 'ID Orden', sortable: true },
-    { name: 'Cliente', sortable: true },
+    { name: 'ID Orden', sortable: false },
+    { name: 'Cliente', sortable: false },
     { name: 'Items', sortable: false },
     { name: 'Total', sortable: false },
 ]
@@ -60,7 +60,7 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="pl-20 pr-20 pt-2">
+        <div class="w-full max-w-7xl mx-auto">
             <!-- Barra de filtrado -->
             <div class="flex items-center justify-between py-4">
                 <Input

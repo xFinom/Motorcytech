@@ -11,7 +11,7 @@ class ServiceOrderEventObserver
      */
     public function created(ServiceOrderEvent $serviceOrderEvent): void
     {
-        //
+        // TODO: enviar correos
     }
 
     /**

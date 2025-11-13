@@ -24,6 +24,7 @@ import UpdateWorker from '@/Pages/Dashboard/Workers/Partials/UpdateWorker.vue'
 
 import CreateWorker from './Partials/CreateWorker.vue'
 import DeleteWorker from './Partials/DeleteWorker.vue'
+import UserOverview from '@/Components/UserOverview.vue'
 
 // Recibir trabajadores desde el backend (paginados)
 const props = defineProps<{
@@ -85,9 +86,7 @@ const filteredWorkers = computed(() => {
 
 // Columnas visuales
 const columns = [
-    { name: 'Nombre', sortable: true },
-    { name: 'Correo electrónico', sortable: false },
-    { name: 'Rol', sortable: false },
+    { name: 'Nombre', sortable: false },
     { name: 'Dirección', sortable: false },
     { name: 'Teléfono', sortable: false },
     { name: 'Acciones', sortable: false, hideHeader: true },
@@ -96,7 +95,7 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
             <!-- Barra de filtrado -->
             <div class="flex items-center justify-between py-4">
                 <Input
@@ -124,9 +123,9 @@ const columns = [
                     <TableBody>
                         <!-- Mostrar trabajadores filtrados -->
                         <TableRow v-for="worker in filteredWorkers" :key="worker.email">
-                            <TableCell>{{ worker.name }}</TableCell>
-                            <TableCell>{{ worker.email }}</TableCell>
-                            <TableCell>{{ worker.role }}</TableCell>
+                            <TableCell>
+                                <UserOverview :name="worker.name" :email="worker.email" />
+                            </TableCell>
                             <TableCell>{{ worker.address }}</TableCell>
                             <TableCell>{{ worker.phone }}</TableCell>
                             <TableCell>

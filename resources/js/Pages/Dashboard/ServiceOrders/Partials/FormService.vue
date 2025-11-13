@@ -21,7 +21,10 @@ defineProps<{
     <div class="flex flex-col gap-4">
         <FormField v-slot="{ componentField }" name="service_id">
             <FormItem>
-                <FormLabel>Servicio</FormLabel>
+                <FormLabel
+                    >Servicio <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel
+                >
                 <Select v-bind="componentField">
                     <FormControl>
                         <SelectTrigger>
@@ -45,7 +48,7 @@ defineProps<{
 
         <FormField v-slot="{ componentField }" name="note">
             <FormItem>
-                <FormLabel>Mensaje (opcional)</FormLabel>
+                <FormLabel>Mensaje</FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>

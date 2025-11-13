@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ArrowUpDown, ChevronDown, MoreVertical } from 'lucide-vue-next'
+import { ArrowUpDown, Bike, ChevronDown, MoreVertical, Star, Users, Wrench } from 'lucide-vue-next'
 
 import { computed, defineProps, ref } from 'vue'
 
@@ -35,6 +35,7 @@ import { formatDate } from '@/utils/date'
 import { generateInitials } from '@/utils/name'
 
 import UpdateServiceOrder from './Partials/UpdateServiceOrder.vue'
+import MetricCard from '@/Pages/Dashboard/Overview/Partials/MetricCard.vue'
 
 const props = defineProps<{
     serviceOrders: PaginatedServiceOrderList
@@ -81,13 +82,43 @@ const columns = [
 ]
 
 function goToTracking(order: ServiceOrder) {
-    router.get(route('service-orders.show', { serviceOrder: order.id }))
+    router.get(route('service.orders.show', { serviceOrder: order.id }))
 }
 </script>
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-2">
+                <MetricCard
+                    title="Órdenes de Servicio"
+                    :value="1"
+                    description="Generadas este año"
+                    :icon="Wrench"
+                />
+
+                <MetricCard
+                    title="Clientes"
+                    :value="1"
+                    description="Atendidos este año"
+                    :icon="Users"
+                />
+
+                <MetricCard
+                    title="Motocicletas"
+                    :value="1"
+                    description="Actualmente en el taller"
+                    :icon="Bike"
+                />
+
+                <MetricCard
+                    title="Reseñas"
+                    :value="1"
+                    description="Pendientes de validación"
+                    :icon="Star"
+                />
+            </div>
+
             <!-- Barra de filtrado -->
 
             <div class="flex items-center py-4">
@@ -110,8 +141,8 @@ function goToTracking(order: ServiceOrder) {
                     <TableBody>
                         <!-- Mostrar trabajadores filtrados -->
                         <TableRow v-for="order in fitleredServiceOrders" :key="order.id">
-                            <TableCell
-                                ><div
+                            <TableCell>
+                                <div
                                     class="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
                                 >
                                     <Avatar class="h-8 w-8 rounded-lg">
@@ -127,8 +158,8 @@ function goToTracking(order: ServiceOrder) {
                                             order.client.email
                                         }}</span>
                                     </div>
-                                </div></TableCell
-                            >
+                                </div>
+                            </TableCell>
                             <TableCell>
                                 <div
                                     class="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
@@ -202,7 +233,7 @@ function goToTracking(order: ServiceOrder) {
                     size="sm"
                     :disabled="serviceOrders.current_page === 1"
                     @click="
-                        $inertia.get(route('service.order.index'), {
+                        $inertia.get(route('dashboard.service.orders.index'), {
                             page: serviceOrders.current_page - 1,
                         })
                     "
@@ -216,7 +247,7 @@ function goToTracking(order: ServiceOrder) {
                     size="sm"
                     :disabled="serviceOrders.current_page === serviceOrders.last_page"
                     @click="
-                        $inertia.get(route('service.order.index'), {
+                        $inertia.get(route('dashboard.service.orders.index'), {
                             page: serviceOrders.current_page + 1,
                         })
                     "

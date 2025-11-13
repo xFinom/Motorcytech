@@ -17,6 +17,7 @@ import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSect
 import { ServiceOrderStatus } from '@/enums/ServiceOrderStatus'
 import { ServiceOrder } from '@/interfaces/ServiceOrder'
 import { formatDate } from '@/utils/date'
+import { getEventStatusIcon } from '@/enums/Event'
 
 // Props
 const props = defineProps<{ serviceOrder: ServiceOrder }>()
@@ -76,59 +77,7 @@ const steps = [
     },
 ]
 
-type OrderEvent = {
-    date: string
-    title: string
-    description: string
-    status: 'created' | 'in-progress' | 'paused' | 'waiting' | 'completed' | 'delivered'
-}
-const orderHistory: OrderEvent[] = [
-    {
-        date: '19 Sep 2025, 09:10',
-        title: 'Orden registrada',
-        description: 'Se creó la orden de servicio #A4567',
-        status: 'created',
-    },
-    {
-        date: '19 Sep 2025, 11:20',
-        title: 'En reparación',
-        description: 'Técnico inició el diagnóstico.',
-        status: 'in-progress',
-    },
-    {
-        date: '20 Sep 2025, 14:00',
-        title: 'Trabajo detenido',
-        description: 'En espera de autorización del cliente.',
-        status: 'paused',
-    },
-    {
-        date: '22 Sep 2025, 10:30',
-        title: 'Listo para entrega',
-        description: 'El servicio está finalizado.',
-        status: 'waiting',
-    },
-    {
-        date: '22 Sep 2025, 12:15',
-        title: 'Servicio pagado',
-        description: 'Pago confirmado vía tarjeta.',
-        status: 'completed',
-    },
-    {
-        date: '22 Sep 2025, 13:00',
-        title: 'Entregado',
-        description: 'El equipo salió del taller.',
-        status: 'delivered',
-    },
-]
-
-const statusIcons: Record<OrderEvent['status'], string> = {
-    created: 'mdi:receipt-text',
-    'in-progress': 'mdi:tools',
-    paused: 'mingcute:loading-line',
-    waiting: 'mdi:credit-card-clock',
-    completed: 'mdi:check-bold',
-    delivered: 'mdi:truck-delivery-outline',
-}
+console.log(props.serviceOrder)
 </script>
 
 <template>
@@ -283,7 +232,7 @@ const statusIcons: Record<OrderEvent['status'], string> = {
 
                             <ol class="relative ms-3 border-s border-gray-200 dark:border-gray-700">
                                 <li
-                                    v-for="(event, i) in orderHistory"
+                                    v-for="(event, i) in serviceOrder.events"
                                     :key="i"
                                     class="mb-10 ms-6 last:mb-0"
                                     :class="{
@@ -309,7 +258,7 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                                         }"
                                     >
                                         <Icon
-                                            :icon="statusIcons[event.status]"
+                                            :icon="getEventStatusIcon(event.type)"
                                             class="h-4 w-4"
                                             :class="{
                                                 'text-gray-500 dark:text-gray-400': [
@@ -322,7 +271,7 @@ const statusIcons: Record<OrderEvent['status'], string> = {
                                         />
                                     </span>
 
-                                    <h4 class="mb-0.5 font-semibold">{{ event.date }}</h4>
+                                    <h4 class="mb-0.5 font-semibold">{{ formatDate(event.created_at) }}</h4>
                                     <p class="text-sm font-medium">{{ event.title }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ event.description }}

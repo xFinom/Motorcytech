@@ -1,15 +1,14 @@
 import {
-    BanknoteArrowDown,
-    Share2,
     Bike,
+    Bolt,
     ChartNoAxesCombined,
+    Share2,
     ShoppingCart,
     Star,
     Store,
     UserCog,
     Users,
     Wrench,
-    Bolt,
 } from 'lucide-vue-next'
 
 export const serviceOrderMenu = [
@@ -21,11 +20,11 @@ export const serviceOrderMenu = [
         items: [
             {
                 title: 'Registro',
-                url: route('service.order.create'),
+                url: route('dashboard.service.orders.create'),
             },
             {
                 title: 'Histórico',
-                url: route('service.order.index'),
+                url: route('dashboard.service.orders.index'),
             },
         ],
     },
@@ -36,24 +35,46 @@ export const serviceOrderMenu = [
         isActive: true,
         items: [
             {
-                title: 'Listado',
-                url: route('userslist'),
-            },
-            {
                 title: 'Mensajes',
                 url: '#',
+            },
+            {
+                title: 'Histórico',
+                url: route('dashboard.client.historic'),
             },
         ],
     },
     {
         title: 'Motocicletas',
-        url: route('motorcycleslist'),
+        url: '#',
         icon: Bike,
+        isActive: true,
+        items: [
+            {
+                title: 'En proceso',
+                url: '#',
+            },
+            {
+                title: 'Histórico',
+                url: route('dashboard.motorcycles.index'),
+            },
+        ],
     },
     {
         title: 'Reseñas',
-        url: route('reviews.validreview'),
+        url: '#',
         icon: Star,
+        isActive: true,
+        items: [
+            {
+                title: 'Por validar',
+                url: route('dashboard.reviews.index'),
+            },
+            {
+                title: 'Histórico',
+                url: '#',
+            },
+        ],
     },
 ]
 
@@ -73,12 +94,12 @@ export const financeMenu = [
 export const employeeMenu = [
     {
         title: 'Personal',
-        url: route('workerslist'),
+        url: route('dashboard.workers.index'),
         icon: UserCog,
     },
     {
         title: 'Proveedores',
-        url: route('supplierslist'),
+        url: route('dashboard.suppliers.index'),
         icon: Bolt,
     },
 ]
@@ -86,12 +107,12 @@ export const employeeMenu = [
 export const salesMenu = [
     {
         title: 'Inventario',
-        url: route('store.items'),
+        url: route('dashboard.store.items.index'),
         icon: Store,
     },
     {
         title: 'Ventas',
-        url: route('purchase_orders.index'),
+        url: route('dashboard.purchase.orders.index'),
         icon: ShoppingCart,
     },
 ]

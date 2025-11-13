@@ -7,7 +7,8 @@ import { Input } from '@/Components/ui/input'
     <div class="flex flex-col gap-4">
         <FormField v-slot="{ componentField }" name="email">
             <FormItem>
-                <FormLabel>Correo electrónico</FormLabel>
+                <FormLabel>Correo electrónico <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="email" v-bind="componentField" />
                 </FormControl>
@@ -17,7 +18,8 @@ import { Input } from '@/Components/ui/input'
 
         <FormField v-slot="{ componentField }" name="name">
             <FormItem>
-                <FormLabel>Nombre Completo</FormLabel>
+                <FormLabel>Nombre Completo <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>
@@ -27,7 +29,8 @@ import { Input } from '@/Components/ui/input'
 
         <FormField v-slot="{ componentField }" name="phone">
             <FormItem>
-                <FormLabel>Teléfono</FormLabel>
+                <FormLabel>Teléfono <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>
@@ -37,7 +40,8 @@ import { Input } from '@/Components/ui/input'
 
         <FormField v-slot="{ componentField }" name="address">
             <FormItem>
-                <FormLabel>Dirección</FormLabel>
+                <FormLabel>Dirección <span class="text-red-500" aria-hidden="true">*</span>
+                    <span class="sr-only">required</span></FormLabel>
                 <FormControl>
                     <Input type="text" v-bind="componentField" />
                 </FormControl>

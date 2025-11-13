@@ -1,160 +1,122 @@
 <?php
 
+use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\DashboardOverviewController;
+use App\Http\Controllers\HomepageController;
+use App\Http\Controllers\ItemSetsController;
 use App\Http\Controllers\MotorcycleController;
+use App\Http\Controllers\PrivacyPolicyController;
 use App\Http\Controllers\PrivateMessagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\ServiceForecastController;
+use App\Http\Controllers\ServiceOrderBillController;
 use App\Http\Controllers\ServiceOrdersController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TermsAndConditionsController;
 use App\Http\Controllers\UserListController;
 use App\Http\Controllers\WorkerlistController;
 use App\Http\Controllers\PurchaseOrderItemController;
-use Illuminate\Foundation\Application;
 use App\Http\Controllers\StoreItemsController;
-
+use App\Http\Controllers\ServiceOrderSparePartController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 
+Route::get('/', HomepageController::class)->name('home');
+Route::get('/about', AboutUsController::class)->name('about');
+Route::get('/terms', TermsAndConditionsController::class) ->name('terms');
+Route::get('/privacy', PrivacyPolicyController::class)->name('privacy');
+Route::get('/shop', [StoreItemsController::class, 'index'])->name('shop.index');
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard/purchase-orders', [PurchaseOrderItemController::class, 'index'])
-        ->name('purchase_orders.index');
+Route::prefix('reviews')->as('reviews.')->group(function () {
+    Route::get('/', [ReviewsController::class, 'index'])->name('index');
+
+    Route::middleware(['auth', 'verified'])->group(function () {
+        Route::get('/create', [ReviewsController::class, 'create'])->name('reviews.form');
+        Route::post('/', [ReviewsController::class, 'store'])->name('reviews.store');
+    });
 });
 
-Route::get('/', function () {
-    return Inertia::render('Landing/LandingPage', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-})->name('home');
+Route::prefix('service-orders')
+    ->as('service.orders.')
+    ->middleware(['auth', 'role:Admin,Trabajador'])
+    ->group(function () {
+        Route::get('/{serviceOrder:id}', [ServiceOrdersController::class, 'show'])->name('show');
+        Route::patch('/{serviceOrder}/status', [ServiceOrdersController::class, 'updateStatus'])->name('update-status');
+        Route::post('/message', [PrivateMessagesController::class, 'store'])->name('message.store');
+    });
 
-Route::get('/service-orders/{serviceOrder:id}', [ServiceOrdersController::class, 'show'])
-    ->middleware(['auth', 'verified'])
-    ->name('service-orders.show');
-Route::patch('/service-orders/{serviceOrder}/status', [ServiceOrdersController::class, 'updateStatus'])
-    ->name('service-orders.update-status');
+Route::prefix('dashboard')
+    ->middleware(['auth', 'verified', 'role:Admin,Trabajador'])
+    ->as('dashboard.')
+    ->group(function () {
+        Route::get('/', DashboardOverviewController::class)->name('overview');
+        Route::get('/forecast', ServiceForecastController::class)->name('forecast');
+        Route::get('/itemsets', ItemSetsController::class)->name('itemsets');
 
-Route::post('/service/order/message', [PrivateMessagesController::class, 'store'])->name('service.order.message.store');
+        Route::prefix('purchase-orders')->as('purchase.orders.')->group(function () {
+            Route::get('/', [PurchaseOrderItemController::class, 'index'])->name('index');
+        });
 
-Route::get('/reviews', [ReviewsController::class, 'index'])->name('reviews.index');
+        Route::prefix('motorcycles')->as('motorcycles.')->group(function () {
+            Route::get('/', [MotorcycleController::class, 'index'])->name('index');
+        });
 
-Route::middleware(['auth', 'verified'])->group(function () {
-    // Mostrar formulario
-    Route::get('/ReviewsForm', function () {
-        return Inertia::render('Dashboard/Reviews/ReviewsForm');
-    })->name('reviews.form');
+        Route::prefix('store/items')->as('store.items.')->group(function () {
+            Route::get('/', [StoreItemsController::class, 'indexDasboard'])->name('index');
+        });
 
-    // Guardar review
-    Route::post('/reviews', [ReviewsController::class, 'store'])->name('reviews.store');
-});
+        Route::prefix('bills')->as('bills.')->group(function () {
+           Route::get('/create', [ServiceOrderBillController::class, 'create'])->name('create');
+           Route::post('/', [ServiceOrderBillController::class, 'store'])->name('store');
+           Route::put('/{serviceOrderBill}', [ServiceOrderBillController::class, 'update'])->name('update');
+        });
 
-Route::get('/Validreviews', [ReviewsController::class, 'validreview'])->name('reviews.validreview');
+        Route::prefix('spare-parts')->as('spare.parts.')->group(function () {
+            Route::get('/create', [ServiceOrderSparePartController::class, 'create'])->name('create');
+            Route::post('/', [ServiceOrderSparePartController::class, 'store'])->name('store');
+            Route::put('/{serviceOrderSparePart}', [ServiceOrderSparePartController::class, 'update'])->name('update');
+        });
 
-Route::put('/reviews/{review}/validate', [ReviewsController::class, 'validateReview'])
-    ->middleware(['auth', 'verified'])
-    ->name('reviews.validate');
+        Route::prefix('clients')->as('client.')->group(function () {
+            Route::get('/historic', [UserListController::class, 'index'])->name('historic');
+            Route::put('/{user}', [UserListController::class, 'update'])->name('update');
+            Route::delete('/{user}', [UserListController::class, 'destroy'])->name('destroy')->can('delete', 'user');
+        });
 
-Route::delete('/reviews/{review}', [ReviewsController::class, 'destroy'])
-    ->middleware(['auth', 'verified'])
-    ->name('reviews.destroy');
+        Route::prefix('reviews')->as('reviews.')->group(function () {
+            Route::get('/', [ReviewsController::class, 'validreview'])->name('index');
+            Route::put('/{review}/validate', [ReviewsController::class, 'validateReview'])->name('reviews.validate')->can('validate', 'review');
+            Route::delete('/{review}', [ReviewsController::class, 'destroy'])->name('reviews.destroy')->can('delete', 'review');
+        });
 
-Route::get('/AboutUs', function () {
-    return Inertia::render('Landing/About/AboutUs');
-})->name('aboutUs');
+        Route::prefix('service-orders')->as('service.orders.')->group(function () {
+            Route::get('/', [ServiceOrdersController::class, 'index'])->name('index');
+            Route::get('/create', [ServiceOrdersController::class, 'create'])->name('create');
+            Route::post('/', [ServiceOrdersController::class, 'store'])->name('store');
+        });
 
-Route::get('/dashboard', function () {
-    $currentYeaServiceOrders = \App\Models\ServiceOrders::query()
-        ->where('service_orders.entry_date', '>=', now()->firstOfYear());
+        Route::prefix('suppliers')->as('suppliers.')->group(function () {
+            Route::get('/', [SupplierController::class, 'index'])->name('index');
+            Route::delete('/{supplier}', [SupplierController::class, 'destroy'])->name('destroy')->can('delete', 'supplier');
+            Route::put('/{supplier}', [SupplierController::class, 'update'])->name('update');
+            Route::post('/', [SupplierController::class, 'store'])->name('store');
+        });
 
-    $totalServiceOrders = $currentYeaServiceOrders->count();
-    $totalClients = $currentYeaServiceOrders
-        ->withCount('client')
-        ->count();
-    $totalMotorcycles = $currentYeaServiceOrders
-        ->where('service_orders.status', '!=', \App\Enums\ServiceOrderStatus::Finalizado)
-        ->count();
-    $totalPendingReviews = \App\Models\Reviews::query()->where('reviews.status', \App\Enums\ReviewStatus::Pendiente)->count();
+        Route::prefix('workers')->as('workers.')->group(function () {
+            Route::get('/', [WorkerlistController::class, 'index'])->name('index')->can('viewAny', User::class);
+            Route::post('/', [WorkerlistController::class, 'store'])->name('store')->can('create', User::class);
+            Route::put('/{worker}', [WorkerlistController::class, 'update'])->name('update')->can('update', 'worker');
+            Route::delete('/{worker}', [WorkerlistController::class, 'destroy'])->name('destroy')->can('delete', 'worker');
+        });
+    });
 
-    $chartData = \App\Models\ServiceOrders::query()
-        ->where('service_orders.entry_date', '>=', now()->firstOfYear())
-        ->selectRaw('service_id, COUNT(*) as total')
-        ->with('service:id,name')
-        ->groupBy('service_id')
-        ->get()
-        ->map(fn ($order) => [
-            'name' => $order->service->name,
-            'total' => $order->total,
-        ]);
-    $recentClients = \App\Models\User::query()->where('users.role', \App\Enums\UserRole::Cliente)->latest()->take(7)->get();
-
-    return Inertia::render('Dashboard/Overview/Overview', [
-        'totalServiceOrders' => $totalServiceOrders,
-        'totalClients' => $totalClients,
-        'totalMotorcycles' => $totalMotorcycles,
-        'totalPendingReviews' => $totalPendingReviews,
-        'chartData' => $chartData,
-        'recentClients' => $recentClients,
-    ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/dashboard/forecast', function () {
-    return Inertia::render('Dashboard/DataMining/ForecastServices');
-})->name('dashboard.forecast');
-
-Route::get('dashboard/itemsets', function () {
-    return Inertia::render('Dashboard/DataMining/ItemSets');
-})->name('dashboard.itemsets');
-
-Route::get('/dashboard/service/order', [ServiceOrdersController::class, 'index'])->middleware(['auth', 'verified'])->name('service.order.index');
-Route::get('/dashboard/service/order/create', [ServiceOrdersController::class, 'create'])->middleware(['auth', 'verified'])->name('service.order.create');
-Route::post('/dashboard/service/order', [ServiceOrdersController::class, 'store'])->middleware(['auth', 'verified'])->name('service.order.store');
-
-Route::get('/dashboard/userslist', [UserListController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('userslist');
-
-Route::get('/dashboard/store/items', [StoreItemsController::class, 'indexDasboard'])
-    ->middleware(['auth', 'verified'])
-    ->name('store.items');
-
-Route::put('/users/{user}', [UserListController::class, 'update'])->name('users.update');
-Route::delete('/users/{user}', [UserListController::class, 'destroy'])->name('users.destroy');
-
-// Trabajadores
-Route::get('/dashboard/workerslist', [WorkerlistController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('workerslist');
-
-Route::prefix('workers')->name('workers.')->group(function () {
-    Route::post('/', [WorkerlistController::class, 'store'])->name('store');
-    Route::put('/{worker}', [WorkerlistController::class, 'update'])->name('update');
-    Route::delete('/{worker}', [WorkerlistController::class, 'destroy'])->name('destroy');
-});
-
-Route::get('/dashboard/motorcycleslist', [MotorcycleController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('motorcycleslist');
-
-Route::get('/dashboard/supplierslist', [SupplierController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('supplierslist');
-Route::delete('/dashboard/suppliers/{supplier}', [SupplierController::class, 'destroy'])
-    ->middleware(['auth', 'verified'])
-    ->name('suppliers.destroy');
-Route::put('/dashboard/suppliers/{supplier}', [SupplierController::class, 'update'])
-    ->middleware(['auth', 'verified'])
-    ->name('suppliers.update');
-Route::post('/dashboard/suppliers', [SupplierController::class, 'store'])
-    ->middleware(['auth', 'verified'])
-    ->name('suppliers.store');
-
-Route::get('/shop', [StoreItemsController::class, 'index'])->name('storeitems.index');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::middleware('auth')->as('profile.')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('destroy');
+    Route::get('/profile/service-orders', [ServiceOrdersController::class, 'profileindex'])->name('service.order.index');
 });
 
 Route::post('/login', [LoginController::class, 'store'])->name('login');

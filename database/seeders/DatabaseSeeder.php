@@ -13,22 +13,17 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            ServiceSeeder::class,
+            UserSeeder::class,
             BrandSeeder::class,
             MotorcycleTypeSeeder::class,
+            MotorcycleSeeder::class,
+            SupplierSeeder::class,
+            ReviewsSeeder::class,
+            StoreItemsSeeder::class,
+            PurchaseOrdersSeeder::class,
+            PurchaseOrderItemSeeder::class,
+            ServiceSeeder::class,
+            ServiceOrdersSeeder::class,
         ]);
-
-        if(app()->environment('production')) {
-            $this->call([
-               ProductionSeeder::class,
-            ]);
-        } else {
-            $this->call([
-                UserSeeder::class,
-                MotorcycleSeeder::class,
-                ServiceOrdersSeeder::class,
-                SupplierSeeder::class,
-            ]);
-        }
     }
 }

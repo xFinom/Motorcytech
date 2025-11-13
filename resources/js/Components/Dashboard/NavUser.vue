@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { BadgeCheck, Bell, ChevronsUpDown, LogOut } from 'lucide-vue-next'
 
-import { usePage } from '@inertiajs/vue3'
+import { router, usePage } from '@inertiajs/vue3'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar'
 import {
@@ -24,6 +24,10 @@ import { generateInitials } from '@/utils/name'
 const user = usePage().props.auth.user
 
 const { isMobile } = useSidebar()
+
+const logout = () => {
+    router.post(route('logout'))
+}
 </script>
 
 <template>
@@ -74,13 +78,9 @@ const { isMobile } = useSidebar()
                             <BadgeCheck class="text-primary" />
                             Cuenta
                         </DropdownMenuItem>
-                        <DropdownMenuItem>
-                            <Bell class="text-primary" />
-                            Notificaciones
-                        </DropdownMenuItem>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem>
+                    <DropdownMenuItem @click="logout" class="cursor-pointer">
                         <LogOut class="text-primary" />
                         Cerrar Sesión
                     </DropdownMenuItem>

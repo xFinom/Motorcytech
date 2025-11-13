@@ -3,12 +3,22 @@
 namespace App\Models;
 
 use App\Enums\PaymentStatus;
+use Database\Factories\ServiceOrderBillFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property string $description
+ * @property float $price
+ * @property PaymentStatus $payment_status
+ *
+ * @property ServiceOrders $serviceOrder
+ */
 class ServiceOrderBill extends Model
 {
-    /** @use HasFactory<\Database\Factories\ServiceOrderBillFactory> */
+    /** @use HasFactory<ServiceOrderBillFactory> */
     use HasFactory;
 
     protected $fillable = [
@@ -21,4 +31,9 @@ class ServiceOrderBill extends Model
     protected $casts = [
         'payment_status' => PaymentStatus::class,
     ];
+
+    public function serviceOrder(): BelongsTo
+    {
+        return $this->belongsTo(ServiceOrders::class, 'service_order_id');
+    }
 }

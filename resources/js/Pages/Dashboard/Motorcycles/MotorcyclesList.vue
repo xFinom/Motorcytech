@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ArrowUpDown, ChevronDown, MoreVertical } from 'lucide-vue-next'
+import { ArrowUpDown, Bike, ChevronDown, MoreVertical, Star, Users, Wrench } from 'lucide-vue-next'
 
 import { defineProps } from 'vue'
 import { computed, ref } from 'vue'
 
+import { Avatar, AvatarFallback } from '@/Components/ui/avatar'
 import { Button } from '@/Components/ui/button'
 import {
     DropdownMenu,
@@ -22,6 +23,9 @@ import {
 } from '@/Components/ui/table'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import { Motorcycle, PaginatedMotorcycleList } from '@/interfaces/Motorcycle'
+import { generateInitials } from '@/utils/name'
+import UserOverview from '@/Components/UserOverview.vue'
+import MetricCard from '@/Pages/Dashboard/Overview/Partials/MetricCard.vue'
 
 const filterText = ref('')
 const filteredMotorcycles = computed(() =>
@@ -37,19 +41,49 @@ const props = defineProps<{
 
 // Columnas visuales
 const columns = [
-    { name: 'Placa', sortable: true },
+    { name: 'Cliente', sortable: false },
+    { name: 'Placa', sortable: false },
     { name: 'Número de serie', sortable: false },
     { name: 'Número de motor', sortable: false },
     { name: 'Marca', sortable: false },
-    { name: 'Tipo', sortable: false },
-    { name: 'Cliente', sortable: false },
+    { name: 'Modelo', sortable: false },
     { name: 'Acciones', sortable: false, hideHeader: true },
 ]
 </script>
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full mx-auto max-w-7xl">
+            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-2">
+                <MetricCard
+                    title="Órdenes de Servicio"
+                    :value="1"
+                    description="Generadas este año"
+                    :icon="Wrench"
+                />
+
+                <MetricCard
+                    title="Clientes"
+                    :value="1"
+                    description="Atendidos este año"
+                    :icon="Users"
+                />
+
+                <MetricCard
+                    title="Motocicletas"
+                    :value="1"
+                    description="Actualmente en el taller"
+                    :icon="Bike"
+                />
+
+                <MetricCard
+                    title="Reseñas"
+                    :value="1"
+                    description="Pendientes de validación"
+                    :icon="Star"
+                />
+            </div>
+
             <!-- Barra de filtrado -->
             <div class="flex items-center py-4">
                 <Input class="max-w-sm" placeholder="Buscar" v-model="filterText" />
@@ -76,12 +110,14 @@ const columns = [
                     <TableBody>
                         <!-- Mostrar motocicletas -->
                         <TableRow v-for="moto in filteredMotorcycles" :key="moto.serial_num">
+                            <TableCell>
+                                <UserOverview :name="moto.cliente.name" :email="moto.cliente.email" />
+                            </TableCell>
                             <TableCell>{{ moto.placa }}</TableCell>
                             <TableCell>{{ moto.serial_num }}</TableCell>
                             <TableCell>{{ moto.motor_num }}</TableCell>
                             <TableCell>{{ moto.type.brand.name }}</TableCell>
                             <TableCell>{{ moto.type.name }}</TableCell>
-                            <TableCell>{{ moto.cliente.name }}</TableCell>
                             <TableCell>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger as-child> </DropdownMenuTrigger>

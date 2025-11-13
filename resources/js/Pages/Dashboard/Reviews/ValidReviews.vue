@@ -22,6 +22,8 @@ import {
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
 import { Review } from '@/interfaces/Review'
 import DeleteReview from './Partials/DeleteReview.vue'
+import UserOverview from '@/Components/UserOverview.vue'
+import { Badge } from '@/Components/ui/badge'
 
 //Recibimos las reviews paginadas desde Laravel/Inertia
 const props = defineProps<{
@@ -70,7 +72,6 @@ const onClickValidate = (review: Review) => {
 // 🔹 Columnas de la tabla
 const columns = [
     { name: 'Cliente', sortable: false },
-    { name: 'Correo', sortable: false },
     { name: 'Comentario', sortable: false },
     { name: 'Fecha', sortable: false },
     { name: 'Estado', sortable: false },
@@ -80,7 +81,7 @@ const columns = [
 
 <template>
     <DashboardLayout>
-        <div class="pl-10 pr-10">
+        <div class="w-full max-w-7xl mx-auto">
             <!-- Filtro -->
             <div class="flex items-center py-4">
                 <Input v-model="filter" class="max-w-sm" placeholder="Buscar" />
@@ -107,13 +108,20 @@ const columns = [
                             :key="review.id"
                             class="border-b"
                         >
-                            <TableCell>{{ review.client.name }}</TableCell>
-                            <TableCell>{{ review.client.email }}</TableCell>
+                            <TableCell>
+                                <UserOverview :name="review.client.name" :email="review.client.email" />
+                            </TableCell>
                             <TableCell class="max-w-xs truncate">{{ review.comment }}</TableCell>
                             <TableCell>{{
                                 new Date(review.created_at).toLocaleDateString()
                             }}</TableCell>
-                            <TableCell>{{ review.status }}</TableCell>
+                            <TableCell>
+                                <Badge
+                                    class="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+                                >
+                                    {{ review.status }}
+                                </Badge>
+                            </TableCell>
                             <TableCell>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger as-child>

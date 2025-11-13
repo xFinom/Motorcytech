@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { Head } from '@inertiajs/vue3'
 
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue'
+import ProfileLayout from '@/Layouts/ProfileLayout.vue'
 
 import DeleteUserForm from './Partials/DeleteUserForm.vue'
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue'
@@ -16,10 +16,10 @@ defineProps<{
 <template>
     <Head title="Profile" />
 
-    <AuthenticatedLayout>
+    <ProfileLayout>
         <template #header>
             <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-                Profile
+                Perfil
             </h2>
         </template>
 
@@ -37,10 +37,8 @@ defineProps<{
                     <UpdatePasswordForm class="max-w-xl" />
                 </div>
 
-                <div class="bg-white p-4 shadow dark:bg-gray-800 sm:rounded-lg sm:p-8">
-                    <DeleteUserForm class="max-w-xl" />
-                </div>
+
             </div>
         </div>
-    </AuthenticatedLayout>
+    </ProfileLayout>
 </template>

@@ -17,7 +17,7 @@ defineProps<{
             <component v-if="icon" :is="icon" class="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-            <div class="text-2xl font-bold">{{ value }}</div>
+            <div class="text-xl font-bold">{{ value }}</div>
             <p class="mt-2 text-xs text-muted-foreground">
                 <span v-if="description"> {{ description }}</span>
             </p>
