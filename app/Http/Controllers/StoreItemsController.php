@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreStoreItemsRequest;
 use App\Http\Requests\UpdateStoreItemsRequest;
 use App\Models\StoreItems;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class StoreItemsController extends Controller
@@ -69,7 +70,17 @@ class StoreItemsController extends Controller
      */
     public function update(UpdateStoreItemsRequest $request, StoreItems $storeItems)
     {
-        //
+        if ($request->hasFile('image')) {
+            if ($storeItems->image && Storage::disk('public')->exists($storeItems->image)) {
+                Storage::disk('public')->delete($storeItems->image);
+            }
+
+            $validated['image'] = $request->file('image')->store('store-items', 'public');
+        }
+
+        $storeItems->update($request->all());
+
+        return back()->with('success', 'Artículo actualizado correctamente');
     }
 
     /**

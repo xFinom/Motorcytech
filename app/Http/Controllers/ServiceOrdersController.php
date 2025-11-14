@@ -12,6 +12,8 @@ use App\Models\Service;
 use App\Models\ServiceOrderEvent;
 use App\Models\ServiceOrders;
 use App\Models\User;
+use App\Notifications\NewServiceOrderNotification;
+use App\Notifications\NewUserNotification;
 use App\Services\ServiceOrderEventPayloadBuilder;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -51,7 +53,7 @@ class ServiceOrdersController extends Controller
 
     public function tracking()
     {
-        return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
+        return Inertia::render('Tracking');
     }
 
 public function profileindex()
@@ -106,6 +108,9 @@ public function profileindex()
             'service_id' => $request->service['service_id'],
             'note' => $request->service['note'] ?? '',
         ]);
+
+        $user->notify(new NewUserNotification($user));
+        $user->notify(new NewServiceOrderNotification($user));
 
         return redirect()->route('dashboard.service.orders.index');
     }

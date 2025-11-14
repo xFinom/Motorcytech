@@ -100,15 +100,15 @@ export const employeeMenu = [
     },
 ]
 
-export const salesMenu = [
-    {
-        title: 'Inventario',
-        url: route('dashboard.store.items.index'),
-        icon: Store,
-    },
-    {
-        title: 'Ventas',
-        url: route('dashboard.purchase.orders.index'),
-        icon: ShoppingCart,
-    },
-]
+// export const salesMenu = [
+//     {
+//         title: 'Inventario',
+//         url: route('dashboard.store.items.index'),
+//         icon: Store,
+//     },
+//     {
+//         title: 'Ventas',
+//         url: route('dashboard.purchase.orders.index'),
+//         icon: ShoppingCart,
+//     },
+// ]

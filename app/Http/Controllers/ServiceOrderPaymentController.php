@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Enums\ApprovalStatus;
 use App\Enums\PaymentStatus;
 use App\Enums\ServiceOrderEvents;
+use App\Enums\UserRole;
 use App\Models\ServiceOrderBill;
 use App\Models\ServiceOrderEvent;
 use App\Models\ServiceOrderSparePart;
+use App\Models\User;
+use App\Notifications\QuotePaidNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Laravel\Cashier\Checkout;
 
 class ServiceOrderPaymentController extends Controller
@@ -67,6 +71,10 @@ class ServiceOrderPaymentController extends Controller
             'approval_status' => ApprovalStatus::Approved,
         ]);
         $event->save();
+
+        $adminUsers = User::where('role', UserRole::Admin)->get();
+
+        Notification::send($adminUsers, new QuotePaidNotification());
 
         return redirect()->route('service.orders.show', $serviceOrderId);
     }

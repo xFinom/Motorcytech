@@ -21,6 +21,7 @@ import {
 } from '@/Components/ui/table'
 import { PaginatedStoreItemList } from '@/interfaces/StoreItem'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+import StoreForm from '@/Pages/Dashboard/StoreItem/Partials/StoreForm.vue'
 
 const props = defineProps<{
     products: PaginatedStoreItemList
@@ -86,8 +87,9 @@ function onClickEdit(supplier: ItemRow) {
                     <TableRow v-for="item in filteredItems" :key="item.id">
                         <TableCell>{{ item.name }}</TableCell>
                         <TableCell>{{ item.description }}</TableCell>
-                        <TableCell>{{ item.quantity }} pz.</TableCell>
-                        <TableCell>$ {{ item.price }}</TableCell>
+                        <TableCell>{{ item.quantity }}</TableCell>
+                        <TableCell>${{ item.price }}</TableCell>
+
                         <TableCell>
                             <DropdownMenu>
                                 <DropdownMenuTrigger as-child>
@@ -96,20 +98,17 @@ function onClickEdit(supplier: ItemRow) {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem @click="onClickEdit(item)"
-                                        >Editar</DropdownMenuItem
-                                    >
+                                    <DropdownMenuItem @click="onClickEdit(item)">
+                                        Editar
+                                    </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
                         </TableCell>
                     </TableRow>
 
                     <TableRow v-if="filteredItems.length === 0">
-                        <TableCell
-                            :colspan="columns.length"
-                            class="h-24 text-center text-muted-foreground"
-                        >
-                            No data.
+                        <TableCell :colspan="columns.length" class="h-24 text-center text-muted-foreground">
+                            No se encontraron resultados.
                         </TableCell>
                     </TableRow>
                 </TableBody>
@@ -148,4 +147,9 @@ function onClickEdit(supplier: ItemRow) {
         </div>
     </div>
     </DashboardLayout>
+    <StoreForm
+        v-model:open="isEditOpen"
+        v-if="selectedItem"
+        :item="selectedItem"
+    />
 </template>

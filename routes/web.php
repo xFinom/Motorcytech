@@ -39,7 +39,7 @@ Route::prefix('reviews')->as('reviews.')->group(function () {
     });
 });
 
-Route::post('/service-orders/tracking', [ServiceOrdersController::class, 'tracking'])->name('service-orders.tracking');
+Route::get('/seguimiento', [ServiceOrdersController::class, 'tracking'])->name('service-orders.tracking');
 
 Route::prefix('service-orders')
     ->as('service.orders.')
@@ -68,6 +68,7 @@ Route::prefix('dashboard')
 
         Route::prefix('store/items')->as('store.items.')->group(function () {
             Route::get('/', [StoreItemsController::class, 'indexDasboard'])->name('index');
+            Route::put('/', [StoreItemsController::class, 'update'])->name('update');
         });
 
         Route::prefix('bills')->as('bills.')->group(function () {
