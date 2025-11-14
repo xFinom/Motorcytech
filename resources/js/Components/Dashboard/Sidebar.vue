@@ -13,7 +13,7 @@ import {
     SidebarMenuItem,
     SidebarProps,
 } from '@/Components/ui/sidebar'
-import { employeeMenu, financeMenu, salesMenu, serviceOrderMenu } from '@/constants/sidebarMenus'
+import { employeeMenu, financeMenu, serviceOrderMenu } from '@/constants/sidebarMenus'
 
 const props = withDefaults(defineProps<SidebarProps>(), {
     variant: 'inset',
@@ -21,7 +21,6 @@ const props = withDefaults(defineProps<SidebarProps>(), {
 
 const servideOrderMenuItems = serviceOrderMenu
 const financeMenuItems = financeMenu
-const salesMenuItems = salesMenu
 const employeeMenuItems = employeeMenu
 </script>
 
