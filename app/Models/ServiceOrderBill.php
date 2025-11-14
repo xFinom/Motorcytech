@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string $description
  * @property float $price
  * @property PaymentStatus $payment_status
+ * @property string $service_order_id
  *
  * @property ServiceOrders $serviceOrder
  */
@@ -20,6 +21,8 @@ class ServiceOrderBill extends Model
 {
     /** @use HasFactory<ServiceOrderBillFactory> */
     use HasFactory;
+
+    protected $table = 'service_orders_bills';
 
     protected $fillable = [
         'description',

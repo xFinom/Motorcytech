@@ -124,7 +124,7 @@ function onClickEdit(supplier: ItemRow) {
                 size="sm"
                 :disabled="products.current_page === 1"
                 @click="
-                    $inertia.get(route('store.items'), {
+                    $inertia.get(route('dashboard.store.items.index'), {
                         page: products.current_page - 1,
                     })
                 "
@@ -138,7 +138,7 @@ function onClickEdit(supplier: ItemRow) {
                 size="sm"
                 :disabled="products.current_page === products.last_page"
                 @click="
-                    $inertia.get(route('store.items'), {
+                    $inertia.get(route('dashboard.store.items.index'), {
                         page: products.current_page + 1,
                     })
                 "

@@ -54,36 +54,6 @@ const columns = [
 <template>
     <DashboardLayout>
         <div class="w-full mx-auto max-w-7xl">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-2">
-                <MetricCard
-                    title="Órdenes de Servicio"
-                    :value="1"
-                    description="Generadas este año"
-                    :icon="Wrench"
-                />
-
-                <MetricCard
-                    title="Clientes"
-                    :value="1"
-                    description="Atendidos este año"
-                    :icon="Users"
-                />
-
-                <MetricCard
-                    title="Motocicletas"
-                    :value="1"
-                    description="Actualmente en el taller"
-                    :icon="Bike"
-                />
-
-                <MetricCard
-                    title="Reseñas"
-                    :value="1"
-                    description="Pendientes de validación"
-                    :icon="Star"
-                />
-            </div>
-
             <!-- Barra de filtrado -->
             <div class="flex items-center py-4">
                 <Input class="max-w-sm" placeholder="Buscar" v-model="filterText" />
@@ -146,7 +116,7 @@ const columns = [
                     size="sm"
                     :disabled="props.motorcycles.current_page === 1"
                     @click="
-                        $inertia.get(route('motorcycleslist'), {
+                        $inertia.get(route('dashboard.motorcycles.index'), {
                             page: props.motorcycles.current_page - 1,
                         })
                     "
@@ -160,7 +130,7 @@ const columns = [
                     size="sm"
                     :disabled="props.motorcycles.current_page === props.motorcycles.last_page"
                     @click="
-                        $inertia.get(route('motorcycleslist'), {
+                        $inertia.get(route('dashboard.motorcycles.index'), {
                             page: props.motorcycles.current_page + 1,
                         })
                     "

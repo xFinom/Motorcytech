@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property ServiceOrderEvents $type
- * @property ApprovalStatus $status
+ * @property ApprovalStatus $approval_status
  * @property string $title
  * @property string $description
  * @property array<string, mixed> $data
@@ -27,14 +27,14 @@ class ServiceOrderEvent extends Model
 
     protected $casts = [
         'type' => ServiceOrderEvents::class,
-        'status' => ApprovalStatus::class,
+        'approval_status' => ApprovalStatus::class,
         'data' => 'array',
     ];
 
     protected $fillable = [
         'service_order_id',
         'type',
-        'status',
+        'approval_status',
         'title',
         'description',
         'data',

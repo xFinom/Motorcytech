@@ -85,7 +85,7 @@ function guardarCambios() {
     }
 
     // Si pasa, enviar al backend
-    router.put(route('users.update', formData.id), formData, {
+    router.put(route('dashboard.client.update', formData.id), formData, {
         preserveScroll: true,
         onSuccess: () => {
             console.log('Usuario actualizado correctamente ✅')

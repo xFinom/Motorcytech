@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { Link, useForm, usePage } from '@inertiajs/vue3'
 
 import InputError from '@/Components/InputError.vue'
@@ -6,10 +6,16 @@ import InputLabel from '@/Components/InputLabel.vue'
 import PrimaryButton from '@/Components/PrimaryButton.vue'
 import TextInput from '@/Components/TextInput.vue'
 
-defineProps<{
-    mustVerifyEmail?: Boolean
-    status?: String
-}>()
+defineProps({
+    mustVerifyEmail: {
+        type: Boolean,
+        default: false,
+    },
+    status: {
+        type: String,
+        default: null,
+    },
+})
 
 const user = usePage().props.auth.user
 
@@ -72,7 +78,7 @@ const form = useForm({
 
                 <TextInput
                     id="rfc"
-                    type=rfc
+                    type="text"
                     class="mt-1 block w-full"
                     v-model="form.rfc"
                     required
@@ -87,7 +93,7 @@ const form = useForm({
 
                 <TextInput
                     id="phone"
-                    type=phone
+                    type="text"
                     class="mt-1 block w-full"
                     v-model="form.phone"
                     required
@@ -102,7 +108,7 @@ const form = useForm({
 
                 <TextInput
                     id="address"
-                    type=address
+                    type="text"
                     class="mt-1 block w-full"
                     v-model="form.address"
                     required
@@ -129,7 +135,7 @@ const form = useForm({
                     v-show="status === 'verification-link-sent'"
                     class="mt-2 text-sm font-medium text-green-600 dark:text-green-400"
                 >
-                    Un nuevo link de verificación se ha enviado a tu dirección de correo electronico.
+                    Un nuevo link de verificación se ha enviado a tu dirección de correo electrónico.
                 </div>
             </div>
 

@@ -125,7 +125,12 @@ onUnmounted(() => {
                 </li>
             </ul>
 
-            <a :href="route('login')">
+            <a :href="!$page.props.auth.user
+                ? route('login')
+                : $page.props.auth.user.role === 'Cliente'
+                    ? route('profile.edit')
+                    : route('dashboard.overview')
+            ">
                 <button
                     class="ml-auto hidden rounded-md px-4 py-2 font-semibold transition duration-300 md:block"
                     :class="
@@ -134,7 +139,11 @@ onUnmounted(() => {
                             : 'border border-primary text-white hover:bg-primary hover:text-[#fefcf9]'
                     "
                 >
-                    {{$page.props.auth.user ? 'Dashboard' :'Iniciar Sesión'}}
+                    {{!$page.props.auth.user ? 'Iniciar sesión'
+                        : $page.props.auth.user.role === 'Cliente'
+                            ? 'Perfil'
+                            : 'Dashboard'
+                    }}
                 </button>
             </a>
 

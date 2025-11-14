@@ -6,6 +6,7 @@ use App\Enums\UserRole;
 use App\http\Requests\WorkerStoreRequest;
 use App\Http\Requests\WorkerUpdateRequest;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class WorkerlistController extends Controller
@@ -22,7 +23,7 @@ class WorkerlistController extends Controller
         ]);
     }
 
-    public function store(WorkerStoreRequest $request)
+    public function store(Request $request)
     {
         User::create([
             'name' => $request->name,
@@ -34,7 +35,7 @@ class WorkerlistController extends Controller
             'password' => bcrypt('defaultpassword123'),
         ]);
 
-        return redirect()->route('workerslist')
+        return redirect()->route('dashboard.workers.index')
             ->with('success', 'Trabajador creado correctamente.');
     }
 
@@ -42,13 +43,13 @@ class WorkerlistController extends Controller
     {
         $worker->update($request->validated());
 
-        return redirect()->route('workerslist')->with('success', 'Trabajador actualizado correctamente.');
+        return redirect()->route('dashboard.workers.index')->with('success', 'Trabajador actualizado correctamente.');
     }
 
     public function destroy(User $worker)
     {
         $worker->delete();
 
-        return redirect()->route('workerslist')->with('success', 'Trabajador eliminado correctamente.');
+        return redirect()->route('dashboard.workers.index')->with('success', 'Trabajador eliminado correctamente.');
     }
 }

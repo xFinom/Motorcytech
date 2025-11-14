@@ -12,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\ServiceForecastController;
 use App\Http\Controllers\ServiceOrderBillController;
+use App\Http\Controllers\ServiceOrderPaymentController;
 use App\Http\Controllers\ServiceOrdersController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TermsAndConditionsController;
@@ -37,6 +38,8 @@ Route::prefix('reviews')->as('reviews.')->group(function () {
         Route::post('/', [ReviewsController::class, 'store'])->name('reviews.store');
     });
 });
+
+Route::post('/service-orders/tracking', [ServiceOrdersController::class, 'tracking'])->name('service-orders.tracking');
 
 Route::prefix('service-orders')
     ->as('service.orders.')
@@ -73,42 +76,50 @@ Route::prefix('dashboard')
            Route::put('/{serviceOrderBill}', [ServiceOrderBillController::class, 'update'])->name('update');
         });
 
-        Route::prefix('spare-parts')->as('spare.parts.')->group(function () {
-            Route::get('/create', [ServiceOrderSparePartController::class, 'create'])->name('create');
-            Route::post('/', [ServiceOrderSparePartController::class, 'store'])->name('store');
-            Route::put('/{serviceOrderSparePart}', [ServiceOrderSparePartController::class, 'update'])->name('update');
-        });
-
         Route::prefix('clients')->as('client.')->group(function () {
             Route::get('/historic', [UserListController::class, 'index'])->name('historic');
             Route::put('/{user}', [UserListController::class, 'update'])->name('update');
-            Route::delete('/{user}', [UserListController::class, 'destroy'])->name('destroy')->can('delete', 'user');
+            Route::delete('/{user}', [UserListController::class, 'destroy'])->name('destroy');
         });
 
         Route::prefix('reviews')->as('reviews.')->group(function () {
             Route::get('/', [ReviewsController::class, 'validreview'])->name('index');
-            Route::put('/{review}/validate', [ReviewsController::class, 'validateReview'])->name('reviews.validate')->can('validate', 'review');
-            Route::delete('/{review}', [ReviewsController::class, 'destroy'])->name('reviews.destroy')->can('delete', 'review');
+            Route::get('/historic', [ReviewsController::class, 'historic'])->name('historic');
+            Route::put('/{review}/validate', [ReviewsController::class, 'validateReview'])->name('reviews.validate');
+            Route::delete('/{review}', [ReviewsController::class, 'destroy'])->name('reviews.destroy');
         });
 
         Route::prefix('service-orders')->as('service.orders.')->group(function () {
             Route::get('/', [ServiceOrdersController::class, 'index'])->name('index');
+            Route::get('/historic', [ServiceOrdersController::class, 'historic'])->name('historic');
             Route::get('/create', [ServiceOrdersController::class, 'create'])->name('create');
             Route::post('/', [ServiceOrdersController::class, 'store'])->name('store');
+
+            Route::prefix('spare-parts')->as('spare.parts.')->group(function () {
+                Route::get('{serviceOrder}/create', [ServiceOrderSparePartController::class, 'create'])->name('create');
+                Route::post('/', [ServiceOrderSparePartController::class, 'store'])->name('store');
+                Route::put('/{serviceOrderSparePart}', [ServiceOrderSparePartController::class, 'update'])->name('update');
+            });
+
+            Route::prefix('bills')->as('bills.')->group(function () {
+                Route::get('{serviceOrder}/create', [ServiceOrderBillController::class, 'create'])->name('create');
+                Route::post('/', [ServiceOrderBillController::class, 'store'])->name('store');
+                Route::put('/{serviceOrderSparePart}', [ServiceOrderBillController::class, 'update'])->name('update');
+            });
         });
 
         Route::prefix('suppliers')->as('suppliers.')->group(function () {
             Route::get('/', [SupplierController::class, 'index'])->name('index');
-            Route::delete('/{supplier}', [SupplierController::class, 'destroy'])->name('destroy')->can('delete', 'supplier');
+            Route::delete('/{supplier}', [SupplierController::class, 'destroy'])->name('destroy');
             Route::put('/{supplier}', [SupplierController::class, 'update'])->name('update');
             Route::post('/', [SupplierController::class, 'store'])->name('store');
         });
 
         Route::prefix('workers')->as('workers.')->group(function () {
-            Route::get('/', [WorkerlistController::class, 'index'])->name('index')->can('viewAny', User::class);
-            Route::post('/', [WorkerlistController::class, 'store'])->name('store')->can('create', User::class);
-            Route::put('/{worker}', [WorkerlistController::class, 'update'])->name('update')->can('update', 'worker');
-            Route::delete('/{worker}', [WorkerlistController::class, 'destroy'])->name('destroy')->can('delete', 'worker');
+            Route::get('/', [WorkerlistController::class, 'index'])->name('index');
+            Route::post('/', [WorkerlistController::class, 'store'])->name('store');
+            Route::put('/{worker}', [WorkerlistController::class, 'update'])->name('update');
+            Route::delete('/{worker}', [WorkerlistController::class, 'destroy'])->name('destroy');
         });
     });
 
@@ -118,6 +129,9 @@ Route::middleware('auth')->as('profile.')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('destroy');
     Route::get('/profile/service-orders', [ServiceOrdersController::class, 'profileindex'])->name('service.order.index');
 });
+
+Route::get('/pay', [ServiceOrderPaymentController::class, 'pay'])->name('service.orders.pay');
+Route::get('/pay/{event}/process', [ServiceOrderPaymentController::class, 'process'])->name('service.orders.process');
 
 Route::post('/login', [LoginController::class, 'store'])->name('login');
 Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');

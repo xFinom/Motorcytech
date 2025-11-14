@@ -58,7 +58,7 @@ function guardarCambios() {
     }
 
     // Si pasa, mandamos al backend
-    router.post(route('workers.store'), formData, {
+    router.post(route('dashboard.workers.store'), formData, {
         preserveScroll: true,
         onSuccess: () => {
             console.log('Trabajador creado correctamente')
@@ -67,9 +67,6 @@ function guardarCambios() {
             formData.email = ''
             formData.address = ''
             formData.phone = ''
-
-            // Recargar lista de trabajadores
-            router.get(route('workerslist'))
         },
     })
 }

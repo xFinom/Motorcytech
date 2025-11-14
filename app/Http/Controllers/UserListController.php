@@ -25,7 +25,7 @@ class UserListController extends Controller
     {
         $user->update($request->validated());
 
-        return redirect()->route('userslist')->with('success', 'Usuario actualizado correctamente.');
+        return redirect()->route('dashboard.client.historic')->with('success', 'Usuario actualizado correctamente.');
     }
 
     /**
@@ -35,6 +35,6 @@ class UserListController extends Controller
     {
         $user->delete(); // elimina el usuario
 
-        return redirect()->route('userslist')->with('success', 'Usuario eliminado correctamente.');
+        return redirect()->route('dashboard.client.historic')->with('success', 'Usuario eliminado correctamente.');
     }
 }

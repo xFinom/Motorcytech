@@ -7,6 +7,12 @@ import { Card, CardContent } from "@/Components/ui/card"
 import { Label } from "@/Components/ui/label"
 import { Trash2, Plus } from "lucide-vue-next"
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+import { router } from '@inertiajs/vue3'
+import { ServiceOrder } from '@/interfaces/ServiceOrder'
+
+const props = defineProps<{
+    service_order: ServiceOrder
+}>();
 
 // --- Zod validation schema ---
 const quoteSchema = z.object({
@@ -60,16 +66,17 @@ function submitForm() {
         return
     }
 
-    // Submit (emit or handle API call)
-    console.log("✅ Datos válidos:", result.data)
+    router.post(route("dashboard.service.orders.spare.parts.store"), {
+        service_order_id: props.service_order.id,
+        quotes: result.data,
+    })
 }
 </script>
 
 <template>
     <DashboardLayout>
-        <div class="w-full max-w-5xl mx-auto space-y-4">
-            <div class="flex items-center justify-between">
-                <h2 class="text-xl font-semibold">Cotización de repuestos</h2>
+        <div class="w-full max-w-7xl mx-auto space-y-4">
+            <div class="flex items-center justify-end">
                 <Button
                     type="button"
                     variant="outline"
@@ -77,7 +84,7 @@ function submitForm() {
                     @click="addQuote"
                 >
                     <Plus class="w-4 h-4" />
-                    Agregar repuesto
+                    Agregar cotización
                 </Button>
             </div>
 
@@ -105,7 +112,7 @@ function submitForm() {
 
                             </Button>
                         </div>
-                        <div class="grid grid-cols-3 gap-4 items-end">
+                        <div class="grid grid-cols-3 gap-4 items-start">
                             <div>
                                 <Label :for="`name-${index}`">Nombre</Label>
                                 <Input

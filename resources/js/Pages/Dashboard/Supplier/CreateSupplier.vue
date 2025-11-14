@@ -42,7 +42,7 @@ const formData = reactive<SupplierForm>({
 
 // Función para crear proveedor
 function crearProveedor() {
-    router.post(route('suppliers.store'), formData, {
+    router.post(route('dashboard.suppliers.store'), formData, {
         preserveScroll: true,
         onSuccess: () => {
             console.log('Proveedor creado correctamente')

@@ -29,7 +29,7 @@ const props = defineProps<{
 const deleteSupplier = () => {
     if (!props.supplier) return
 
-    router.delete(route('suppliers.destroy', props.supplier.id), {
+    router.delete(route('dashboard.suppliers.destroy', props.supplier.id), {
         onSuccess: () => {
             console.log('Proveedor eliminado correctamente')
         },

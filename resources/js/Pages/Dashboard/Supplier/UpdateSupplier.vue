@@ -53,7 +53,7 @@ watch(
 )
 
 function guardarCambios() {
-    router.put(route('suppliers.update', formData.id), formData, {
+    router.put(route('dashboard.suppliers.update', formData.id), formData, {
         preserveScroll: true,
         onSuccess: () => {
             console.log('Proveedor actualizado correctamente')

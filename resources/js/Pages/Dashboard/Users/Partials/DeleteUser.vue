@@ -29,7 +29,7 @@ const props = defineProps<{
 const deleteUser = () => {
     if (!props.user) return
 
-    router.delete(route('users.destroy', props.user.id), {
+    router.delete(route('dashboard.client.destroy', props.user.id), {
         onSuccess: () => {
             console.log('Usuario eliminado correctamente')
         },

@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import { ArrowUpDown, Bike, ChevronDown, MoreVertical, Star, Users, Wrench } from 'lucide-vue-next'
+import { Bike, MoreVertical, Star, Users, Wrench } from 'lucide-vue-next'
 
 import { computed, defineProps, ref } from 'vue'
 
 import { router } from '@inertiajs/vue3'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/Components/ui/avatar'
 import { Badge } from '@/Components/ui/badge'
 import { Button } from '@/Components/ui/button'
 import {
@@ -24,6 +24,7 @@ import {
     TableRow,
 } from '@/Components/ui/table'
 import DashboardLayout from '@/Layouts/DashboardLayout.vue'
+import MetricCard from '@/Pages/Dashboard/Overview/Partials/MetricCard.vue'
 import {
     ServiceOrderStatus,
     ServiceOrderStatusBadges,
@@ -35,7 +36,6 @@ import { formatDate } from '@/utils/date'
 import { generateInitials } from '@/utils/name'
 
 import UpdateServiceOrder from './Partials/UpdateServiceOrder.vue'
-import MetricCard from '@/Pages/Dashboard/Overview/Partials/MetricCard.vue'
 
 const props = defineProps<{
     serviceOrders: PaginatedServiceOrderList
@@ -84,41 +84,15 @@ const columns = [
 function goToTracking(order: ServiceOrder) {
     router.get(route('service.orders.show', { serviceOrder: order.id }))
 }
+
+function goToSpare(order: ServiceOrder) {
+    router.get(route('dashboard.service.orders.spare.parts.create', { serviceOrder: order.id }))
+}
 </script>
 
 <template>
     <DashboardLayout>
-        <div class="w-full max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-2">
-                <MetricCard
-                    title="Órdenes de Servicio"
-                    :value="1"
-                    description="Generadas este año"
-                    :icon="Wrench"
-                />
-
-                <MetricCard
-                    title="Clientes"
-                    :value="1"
-                    description="Atendidos este año"
-                    :icon="Users"
-                />
-
-                <MetricCard
-                    title="Motocicletas"
-                    :value="1"
-                    description="Actualmente en el taller"
-                    :icon="Bike"
-                />
-
-                <MetricCard
-                    title="Reseñas"
-                    :value="1"
-                    description="Pendientes de validación"
-                    :icon="Star"
-                />
-            </div>
-
+        <div class="mx-auto w-full max-w-7xl">
             <!-- Barra de filtrado -->
 
             <div class="flex items-center py-4">
@@ -142,9 +116,7 @@ function goToTracking(order: ServiceOrder) {
                         <!-- Mostrar trabajadores filtrados -->
                         <TableRow v-for="order in fitleredServiceOrders" :key="order.id">
                             <TableCell>
-                                <div
-                                    class="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
-                                >
+                                <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                     <Avatar class="h-8 w-8 rounded-lg">
                                         <AvatarFallback class="rounded-lg text-primary">
                                             {{ generateInitials(order.client.name) }}
@@ -161,9 +133,7 @@ function goToTracking(order: ServiceOrder) {
                                 </div>
                             </TableCell>
                             <TableCell>
-                                <div
-                                    class="flex items-center gap-2 px-1 py-1.5 text-left text-sm"
-                                >
+                                <div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                                     <div class="grid flex-1 text-left text-sm leading-tight">
                                         <span class="truncate font-semibold">{{
                                             order.motorcycle.type.brand.name +
@@ -206,6 +176,12 @@ function goToTracking(order: ServiceOrder) {
                                         </DropdownMenuItem>
                                         <DropdownMenuItem @click="goToTracking(order)">
                                             Seguimiento de orden
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem
+                                            v-if="order.status !== ServiceOrderStatus.FINALIZADO"
+                                            @click="goToSpare(order)"
+                                        >
+                                            Cotizar refacciones
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>

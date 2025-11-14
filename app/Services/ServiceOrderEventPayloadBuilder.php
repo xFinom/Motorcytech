@@ -24,12 +24,13 @@ class ServiceOrderEventPayloadBuilder
 
             ServiceOrderEvents::SparePartQuote => [
                 'parts_count' => $context['parts_count'] ?? 0,
+                'item_ids' => $context['parts_id'] ?? null,
                 'total_cost' => $context['total_cost'] ?? 0,
                 'quoted_by' => Auth::id(),
             ],
 
             ServiceOrderEvents::BillGenerated => [
-                'bill_id' => $context['bill_id'] ?? null,
+                'item_ids' => $context['bills_id'] ?? null,
                 'amount' => $context['amount'] ?? 0,
                 'generated_by' => Auth::id(),
             ],

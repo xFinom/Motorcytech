@@ -25,7 +25,7 @@ const emit = defineEmits(['update:open'])
 const deleteReview = () => {
     if (!props.review) return
 
-    router.delete(route('reviews.destroy', props.review.id), {
+    router.delete(route('dashboard.reviews.reviews.destroy', props.review.id), {
         preserveScroll: true,
         onSuccess: () => {
             console.log('🗑️ Review eliminada correctamente')

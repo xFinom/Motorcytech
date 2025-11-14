@@ -72,7 +72,7 @@ function guardarCambios() {
     }
 
     // Si pasa, mandamos al backend
-    router.put(route('workers.update', formData.id), formData, {
+    router.put(route('dashboard.workers.update', formData.id), formData, {
         preserveScroll: true,
         onSuccess: () => {
             console.log('Trabajador actualizado correctamente ✅')

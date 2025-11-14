@@ -24,6 +24,7 @@ import { Review } from '@/interfaces/Review'
 import DeleteReview from './Partials/DeleteReview.vue'
 import UserOverview from '@/Components/UserOverview.vue'
 import { Badge } from '@/Components/ui/badge'
+import { getReviewStatusBadge } from '@/enums/ReviewStatus'
 
 //Recibimos las reviews paginadas desde Laravel/Inertia
 const props = defineProps<{
@@ -59,7 +60,7 @@ function onClickDelete(review: Review) {
 // Validar review
 const onClickValidate = (review: Review) => {
     router.put(
-        route('reviews.validate', review.id),
+        route('dashboard.reviews.reviews.validate', review.id),
         {},
         {
             preserveScroll: true,
@@ -117,7 +118,7 @@ const columns = [
                             }}</TableCell>
                             <TableCell>
                                 <Badge
-                                    class="bg-neutral-100 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200"
+                                    :class="getReviewStatusBadge(review.status)"
                                 >
                                     {{ review.status }}
                                 </Badge>
@@ -163,7 +164,7 @@ const columns = [
                     size="sm"
                     :disabled="props.reviews.current_page === 1"
                     @click="
-                        $inertia.get(route('validreviews'), { page: props.reviews.current_page - 1 })
+                        $inertia.get(route('dashboard.reviews.index'), { page: props.reviews.current_page - 1 })
                     "
                 >
                     Anterior
@@ -174,7 +175,7 @@ const columns = [
                     size="sm"
                     :disabled="props.reviews.current_page === props.reviews.last_page"
                     @click="
-                        $inertia.get(route('validreviews'), { page: props.reviews.current_page + 1 })
+                        $inertia.get(route('dashboard.reviews.index'), { page: props.reviews.current_page + 1 })
                     "
                 >
                     Siguiente

@@ -172,7 +172,7 @@ function onClickDelete(supplier: SupplierRow) {
                     size="sm"
                     :disabled="props.suppliers.current_page === 1"
                     @click="
-                        $inertia.get(route('supplierslist'), {
+                        $inertia.get(route('dashboard.suppliers.index'), {
                             page: props.suppliers.current_page - 1,
                         })
                     "
@@ -185,7 +185,7 @@ function onClickDelete(supplier: SupplierRow) {
                     size="sm"
                     :disabled="props.suppliers.current_page === props.suppliers.last_page"
                     @click="
-                        $inertia.get(route('supplierslist'), {
+                        $inertia.get(route('dashboard.suppliers.index'), {
                             page: props.suppliers.current_page + 1,
                         })
                     "

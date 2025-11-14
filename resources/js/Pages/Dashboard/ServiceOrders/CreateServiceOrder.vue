@@ -86,7 +86,7 @@ function onSubmit(values: any) {
     const validation = serviceOrderSchema.safeParse(formattedValues)
 
     if (validation.success) {
-        router.post(route('service.order.store'), formattedValues)
+        router.post(route('dashboard.service.orders.store'), formattedValues)
     }
 }
 

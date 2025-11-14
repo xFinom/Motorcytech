@@ -26,6 +26,16 @@ class ReviewsController extends Controller
         ]);
     }
 
+    public function historic()
+    {
+        $reviews = Reviews::with('client')
+            ->paginate(10);
+
+        return Inertia::render('Dashboard/Reviews/ValidReviews', [
+            'reviews' => $reviews,
+        ]);
+    }
+
     public function validreview()
     {
         $reviews = Reviews::with('client')

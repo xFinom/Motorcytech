@@ -23,6 +23,10 @@ export const serviceOrderMenu = [
                 url: route('dashboard.service.orders.create'),
             },
             {
+                title: 'En proceso',
+                url: route('dashboard.service.orders.historic'),
+            },
+            {
                 title: 'Histórico',
                 url: route('dashboard.service.orders.index'),
             },
@@ -35,10 +39,6 @@ export const serviceOrderMenu = [
         isActive: true,
         items: [
             {
-                title: 'Mensajes',
-                url: '#',
-            },
-            {
                 title: 'Histórico',
                 url: route('dashboard.client.historic'),
             },
@@ -50,10 +50,6 @@ export const serviceOrderMenu = [
         icon: Bike,
         isActive: true,
         items: [
-            {
-                title: 'En proceso',
-                url: '#',
-            },
             {
                 title: 'Histórico',
                 url: route('dashboard.motorcycles.index'),
@@ -72,7 +68,7 @@ export const serviceOrderMenu = [
             },
             {
                 title: 'Histórico',
-                url: '#',
+                url: route('dashboard.reviews.historic'),
             },
         ],
     },

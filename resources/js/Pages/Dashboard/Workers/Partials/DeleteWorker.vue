@@ -23,7 +23,7 @@ type WorkerRow = {
 const props = defineProps<{ worker: WorkerRow | null }>()
 
 const deleteUser = () => {
-    router.delete(route('workers.destroy', props.worker!.id), {
+    router.delete(route('dashboard.workers.destroy', props.worker!.id), {
         onSuccess: () => console.log('Trabajador eliminado correctamente'),
         onError: (errors) => console.error(errors),
     })

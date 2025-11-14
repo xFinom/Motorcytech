@@ -14,10 +14,11 @@ import {
 } from '@/Components/ui/stepper'
 import MainLayout from '@/Layouts/MainLayout.vue'
 import CommentSection from '@/Pages/Dashboard/ServiceOrders/Partials/CommentSection.vue'
+import { ApprovalStatus } from '@/enums/ApprovalStatus'
+import { getEventStatusIcon } from '@/enums/Event'
 import { ServiceOrderStatus } from '@/enums/ServiceOrderStatus'
 import { ServiceOrder } from '@/interfaces/ServiceOrder'
 import { formatDate } from '@/utils/date'
-import { getEventStatusIcon } from '@/enums/Event'
 
 // Props
 const props = defineProps<{ serviceOrder: ServiceOrder }>()
@@ -76,8 +77,6 @@ const steps = [
         icon: 'hugeicons:time-schedule',
     },
 ]
-
-console.log(props.serviceOrder)
 </script>
 
 <template>
@@ -239,7 +238,7 @@ console.log(props.serviceOrder)
                                         'text-primary-700 dark:text-primary-500': [
                                             'completed',
                                             'delivered',
-                                        ].includes(event.status),
+                                        ].includes(event.approval_status),
                                     }"
                                 >
                                     <span
@@ -250,11 +249,11 @@ console.log(props.serviceOrder)
                                                 'in-progress',
                                                 'paused',
                                                 'waiting',
-                                            ].includes(event.status),
+                                            ].includes(event.approval_status),
                                             'bg-primary-100 dark:bg-primary-900': [
                                                 'completed',
                                                 'delivered',
-                                            ].includes(event.status),
+                                            ].includes(event.approval_status),
                                         }"
                                     >
                                         <Icon
@@ -266,16 +265,41 @@ console.log(props.serviceOrder)
                                                     'in-progress',
                                                     'paused',
                                                     'waiting',
-                                                ].includes(event.status),
+                                                ].includes(event.approval_status),
                                             }"
                                         />
                                     </span>
 
-                                    <h4 class="mb-0.5 font-semibold">{{ formatDate(event.created_at) }}</h4>
+                                    <h4 class="mb-0.5 font-semibold">
+                                        {{ formatDate(event.created_at) }}
+                                    </h4>
                                     <p class="text-sm font-medium">{{ event.title }}</p>
                                     <p class="text-sm text-gray-500 dark:text-gray-400">
                                         {{ event.description }}
                                     </p>
+
+
+                                    <div
+                                        v-if="
+                                            ['BillGenerated', 'SparePartQuote'].includes(
+                                                event.type
+                                            ) && event.approval_status !== ApprovalStatus.APPROVED
+                                        "
+                                        class="mt-3"
+                                    >
+                                        <a
+                                            :href="
+                                                route('service.orders.pay', { event_id: event.id })
+                                            "
+                                            class="inline-block"
+                                        >
+                                            <button
+                                                class="rounded bg-primary px-4 py-2 text-white shadow"
+                                            >
+                                                Pagar
+                                            </button>
+                                        </a>
+                                    </div>
                                 </li>
                             </ol>
                         </div>

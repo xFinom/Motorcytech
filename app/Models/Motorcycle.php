@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Motorcycle extends Model
 {
@@ -26,5 +27,10 @@ class Motorcycle extends Model
     public function cliente()
     {
         return $this->belongsTo(User::class, 'id_cliente');
+    }
+
+    public function serviceOrder(): BelongsTo
+    {
+        return $this->belongsTo(ServiceOrders::class);
     }
 }

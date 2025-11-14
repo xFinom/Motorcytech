@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ServiceOrderEvents;
+use App\Enums\ServiceOrderStatus;
 use App\Http\Requests\StoreServiceOrdersRequest;
 use App\Http\Requests\UpdateServiceOrdersRequest;
 use App\Models\Brand;
@@ -33,6 +34,24 @@ class ServiceOrdersController extends Controller
         return Inertia::render('Dashboard/ServiceOrders/IndexServiceOrder', [
             'serviceOrders' => $serviceOrders,
         ]);
+    }
+
+    public function historic()
+    {
+        $serviceOrders = ServiceOrders::query()
+            ->with(['motorcycle', 'client', 'motorcycle.type', 'motorcycle.type.brand', 'service'])
+            ->where('status', '!=', ServiceOrderStatus::Finalizado)
+            ->latest()
+            ->paginate(10);
+
+        return Inertia::render('Dashboard/ServiceOrders/IndexServiceOrder', [
+            'serviceOrders' => $serviceOrders,
+        ]);
+    }
+
+    public function tracking()
+    {
+        return Inertia::render('Dashboard/ServiceOrders/OrderTracking');
     }
 
 public function profileindex()
@@ -85,10 +104,10 @@ public function profileindex()
             'entry_date' => Carbon::now(),
             'motorcycle_id' => $motorcycle->id,
             'service_id' => $request->service['service_id'],
-            'note' => $request->service['note'],
+            'note' => $request->service['note'] ?? '',
         ]);
 
-        return redirect()->route('service.order.index');
+        return redirect()->route('dashboard.service.orders.index');
     }
 
     /**
