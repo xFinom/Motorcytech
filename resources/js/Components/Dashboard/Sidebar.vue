@@ -46,7 +46,6 @@ const employeeMenuItems = employeeMenu
         </SidebarHeader>
         <SidebarContent>
             <MenuSection label="Servicios" :items="servideOrderMenuItems" />
-            <MenuSection label="Tienda" :items="salesMenuItems" />
             <MenuSection label="Agenda" :items="employeeMenuItems" />
             <MenuSection label="Business Intelligence" :items="financeMenuItems" />
         </SidebarContent>

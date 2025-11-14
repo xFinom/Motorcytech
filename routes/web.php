@@ -66,11 +66,6 @@ Route::prefix('dashboard')
             Route::get('/', [MotorcycleController::class, 'index'])->name('index');
         });
 
-        Route::prefix('store/items')->as('store.items.')->group(function () {
-            Route::get('/', [StoreItemsController::class, 'indexDasboard'])->name('index');
-            Route::put('/', [StoreItemsController::class, 'update'])->name('update');
-        });
-
         Route::prefix('bills')->as('bills.')->group(function () {
            Route::get('/create', [ServiceOrderBillController::class, 'create'])->name('create');
            Route::post('/', [ServiceOrderBillController::class, 'store'])->name('store');
